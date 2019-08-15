@@ -6,14 +6,20 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.TravelMode;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
 
+@Configuration
+@PropertySource("classpath:api.properties")
 public class GoogleMapServices {
 
-    private static final String API_KEY = "AIzaSyCYlpEWUItcCXYUuzdLHlaYM5xvjnkN5_E";
+    @Value("${api.key}")
+    private String API_KEY;
 
-    public static DistanceMatrix getDrivingDistance(String origin, String destination)
+    public DistanceMatrix getDrivingDistance(String origin, String destination)
             throws InterruptedException, ApiException, IOException {
 
         GeoApiContext distCalc = new GeoApiContext.Builder()

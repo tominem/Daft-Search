@@ -21,11 +21,13 @@ public class Bootstrap implements CommandLineRunner {
 
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
+    private GoogleMapServices googleMapServices;
 
     private Set<String> propertyLinks = new HashSet<>();
 
-    public Bootstrap(PropertyRepository propertyRepository) {
+    public Bootstrap(PropertyRepository propertyRepository, GoogleMapServices googleMapServices) {
         this.propertyRepository = propertyRepository;
+        this.googleMapServices = googleMapServices;
     }
 
     @Override
@@ -91,7 +93,7 @@ public class Bootstrap implements CommandLineRunner {
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
             property.setPrice(price.text().equals("Price On Application") ? 0 : Integer.parseInt(price.text().replaceAll("[^0-9.]", "")));
 
-            DistanceMatrix distanceMatrix = GoogleMapServices.getDrivingDistance(address, DESTINATION);
+            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
 
             Long distance = distanceMatrix.rows[0].elements[0].distance.inMeters;
             Long duration = distanceMatrix.rows[0].elements[0].duration.inSeconds;
