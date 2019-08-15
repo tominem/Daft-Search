@@ -18,6 +18,11 @@ public class Property {
     private int baths;
     private String propertyType;
     private int price;
+    private String link;
+
+    private Long distanceInMetres;
+    private Long duration;
+    private Long durationInTraffic;
 
     @Lob
     private String description;

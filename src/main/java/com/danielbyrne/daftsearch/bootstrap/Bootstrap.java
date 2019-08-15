@@ -3,6 +3,8 @@ package com.danielbyrne.daftsearch.bootstrap;
 import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
+import com.danielbyrne.daftsearch.services.GoogleMapServices;
+import com.google.maps.model.DistanceMatrix;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,7 +19,9 @@ import java.util.Set;
 @Component
 public class Bootstrap implements CommandLineRunner {
 
+    private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
+
     private Set<String> propertyLinks = new HashSet<>();
 
     public Bootstrap(PropertyRepository propertyRepository) {
@@ -63,7 +67,7 @@ public class Bootstrap implements CommandLineRunner {
 
         for (String link : propertyLinks) {
 
-            System.out.println(link);
+//            System.out.println(link);
 
             Document doc = Jsoup.connect(link).get();
 
@@ -72,18 +76,35 @@ public class Bootstrap implements CommandLineRunner {
             Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
             Element price = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
 
-            Property property = new Property();
+            String address = doc.select(".PropertyMainInformation__address").first().text();
 
+            Property property = new Property();
+            property.setLink(doc.select(".PropertyShortcode__link").text());
             property.setId(Long.valueOf(doc.select(".PropertyShortcode__link").text().replace("https://www.daft.ie/", "")));
             property.setPropertyType(doc.select(".QuickPropertyDetails__propertyType").first().text());
-            property.setAddress(doc.select(".PropertyMainInformation__address").first().text());
+            property.setAddress(address);
             property.setEircode(eircode == null ? null : eircode.text().replace("Eircode: ", ""));
             property.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
             property.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
             property.setPrice(price.text().equals("Price On Application") ? 0 : Integer.parseInt(price.text().replaceAll("[^0-9.]", "")));
 
+            DistanceMatrix distanceMatrix = GoogleMapServices.getDrivingDistance(address, DESTINATION);
+
+            Long distance = distanceMatrix.rows[0].elements[0].distance.inMeters;
+            Long duration = distanceMatrix.rows[0].elements[0].duration.inSeconds;
+            Long durationInTraffic = distanceMatrix.rows[0].elements[0].durationInTraffic == null
+                                    ? Long.valueOf(0) : distanceMatrix.rows[0].elements[0].durationInTraffic.inSeconds;
+
+            property.setDistanceInMetres(distance);
+            property.setDuration(duration);
+            property.setDurationInTraffic(durationInTraffic);
+
             propertyRepository.save(property);
+
+            if (property.getDuration()/60 < 60 ) {
+                System.out.println(property.toString());
+            }
         }
     }
 }
