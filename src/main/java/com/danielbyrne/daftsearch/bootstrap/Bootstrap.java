@@ -1,5 +1,6 @@
 package com.danielbyrne.daftsearch.bootstrap;
 
+import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import org.jsoup.Jsoup;
@@ -25,20 +26,36 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         loadLinks();
         loadProperties();
+        System.out.println("Done");
     }
 
     private void loadLinks() throws IOException {
-        Document document = Jsoup.connect("https://www.daft.ie/wicklow/property-for-sale/").get();
 
-        Elements newsHeadlines = document.select(".PropertyCardContainer__container > a, " +
-                ".PropertyImage__mainImageContainerStandard > a");
+        for (Enum county : County.values()) {
 
-        for (Element headline : newsHeadlines) {
-            propertyLinks.add(headline.absUrl("href"));
+            int offset = 0;
+            boolean propertiesExist = true;
+
+            while (propertiesExist) {
+
+                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=200000&s[mnb]=2/?offset=" + offset;
+
+                Document document = Jsoup.connect(url).get();
+
+                Elements newsHeadlines = document.select(".PropertyCardContainer__container > a, " +
+                        ".PropertyImage__mainImageContainerStandard > a");
+
+                if (newsHeadlines.size() == 0) propertiesExist = false;
+
+                for (Element headline : newsHeadlines) {
+                    propertyLinks.add(headline.absUrl("href"));
+                }
+                offset = offset+20;
+            }
         }
-
         System.out.println(propertyLinks.size());
     }
 
@@ -61,10 +78,10 @@ public class Bootstrap implements CommandLineRunner {
             property.setPropertyType(doc.select(".QuickPropertyDetails__propertyType").first().text());
             property.setAddress(doc.select(".PropertyMainInformation__address").first().text());
             property.setEircode(eircode == null ? null : eircode.text().replace("Eircode: ", ""));
-            property.setBeds(beds == null ? 0 : Integer.valueOf(beds.text()));
-            property.setBaths(baths == null ? 0 : Integer.valueOf(baths.text()));
+            property.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
+            property.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
-            property.setPrice(price.text().equals("Price On Application") ? 0 : Integer.valueOf(price.text().replaceAll("[^0-9.]", "")));
+            property.setPrice(price.text().equals("Price On Application") ? 0 : Integer.parseInt(price.text().replaceAll("[^0-9.]", "")));
 
             propertyRepository.save(property);
         }
