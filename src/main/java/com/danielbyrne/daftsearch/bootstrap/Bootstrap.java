@@ -33,7 +33,8 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        loadLinks();
+        propertyLinks.add("https://www.daft.ie/wexford/new-homes-for-sale/roxborough-manor-mulgannon-wexford-town-wexford-120127/");
+//        loadLinks();
         loadProperties();
         System.out.println("Done");
     }
@@ -69,7 +70,7 @@ public class Bootstrap implements CommandLineRunner {
 
         for (String link : propertyLinks) {
 
-//            System.out.println(link);
+            System.out.println(link);
 
             Document doc = Jsoup.connect(link).get();
 
@@ -77,7 +78,23 @@ public class Bootstrap implements CommandLineRunner {
             Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
             Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
             Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
-            Element price = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
+            Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
+
+            int price;
+            if (priceElement.getAllElements().select(".priceFrom") != null) {
+                price = Integer.parseInt(priceElement.getAllElements()
+                        .select(".priceFrom")
+                        .text()
+                        .replaceAll("[^0-9.]", ""));
+            } else {
+                price = priceElement
+                        .text()
+                        .equals("Price On Application") ? 0 : Integer.parseInt(priceElement
+                                                        .text()
+                                                        .replaceAll("[^0-9.]", ""));
+            }
+
+            String pr = priceElement.getAllElements().select(".priceFrom").text();
 
             String address = doc.select(".PropertyMainInformation__address").first().text();
 
@@ -91,7 +108,7 @@ public class Bootstrap implements CommandLineRunner {
             property.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
             property.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
-            property.setPrice(price.text().equals("Price On Application") ? 0 : Integer.parseInt(price.text().replaceAll("[^0-9.]", "")));
+            property.setPrice(price);
 
             DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
 
