@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Data
 @Entity
@@ -16,5 +17,8 @@ public class Property {
     private int beds;
     private int baths;
     private String propertyType;
+    private int price;
+
+    @Lob
     private String description;
 }
