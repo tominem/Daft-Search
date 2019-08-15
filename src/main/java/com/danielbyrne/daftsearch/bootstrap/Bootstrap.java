@@ -53,7 +53,7 @@ public class Bootstrap implements CommandLineRunner {
                 for (Element headline : newsHeadlines) {
                     propertyLinks.add(headline.absUrl("href"));
                 }
-                offset = offset+20;
+                offset += 20;
             }
         }
         System.out.println(propertyLinks.size());
