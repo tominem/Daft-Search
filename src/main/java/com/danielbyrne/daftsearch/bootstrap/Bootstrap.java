@@ -5,6 +5,7 @@ import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,7 +34,7 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        propertyLinks.add("https://www.daft.ie/wexford/new-homes-for-sale/roxborough-manor-mulgannon-wexford-town-wexford-120127/");
+        propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
 //        loadLinks();
         loadProperties();
         System.out.println("Done");
@@ -81,7 +82,8 @@ public class Bootstrap implements CommandLineRunner {
             Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
 
             int price;
-            if (priceElement.getAllElements().select(".priceFrom") != null) {
+            if (priceElement.getAllElements().select(".priceFrom") != null
+                    && !priceElement.getAllElements().select(".priceFrom").text().equals("") ) {
                 price = Integer.parseInt(priceElement.getAllElements()
                         .select(".priceFrom")
                         .text()
@@ -111,19 +113,16 @@ public class Bootstrap implements CommandLineRunner {
             property.setPrice(price);
 
             DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
+            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
 
-            Long distance = distanceMatrix.rows[0].elements[0].distance.inMeters;
-            Long duration = distanceMatrix.rows[0].elements[0].duration.inSeconds;
-            Long durationInTraffic = distanceMatrix.rows[0].elements[0].durationInTraffic == null
-                                    ? Long.valueOf(0) : distanceMatrix.rows[0].elements[0].durationInTraffic.inSeconds;
-
-            property.setDistanceInMetres(distance);
-            property.setDuration(duration);
-            property.setDurationInTraffic(durationInTraffic);
+            if (distanceMatrixElement.distance != null) {
+                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+                property.setDuration(distanceMatrixElement.duration.inSeconds);
+            }
 
             propertyRepository.save(property);
 
-            if (property.getDuration()/60 < 60 ) {
+            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
                 System.out.println(property.toString());
             }
         }

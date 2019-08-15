@@ -22,7 +22,6 @@ public class Property {
 
     private Long distanceInMetres;
     private Long duration;
-    private Long durationInTraffic;
 
     @Lob
     private String description;
@@ -36,7 +35,6 @@ public class Property {
                 ", link='" + link + '\'' +
                 ", distanceInMetres=" + distanceInMetres +
                 ", duration=" + duration +
-                ", durationInTraffic=" + durationInTraffic +
                 '}';
     }
 }
