@@ -27,10 +27,6 @@ public class GoogleMapServices {
                 .language("en-US")
                 .await();
 
-        return result; //result.rows[0].elements[0].distance.inMeters;
+        return result;
     }
-
-//    public static void main(String[] args) throws InterruptedException, ApiException, IOException {
-//        System.out.println(GoogleMapServices.getDrivingDistance());
-//    }
 }

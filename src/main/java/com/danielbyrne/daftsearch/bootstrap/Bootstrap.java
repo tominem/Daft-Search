@@ -72,6 +72,7 @@ public class Bootstrap implements CommandLineRunner {
             Document doc = Jsoup.connect(link).get();
 
             Element eircode = doc.select(".PropertyMainInformation__eircode").first();
+            Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
             Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
             Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
             Element price = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
@@ -80,10 +81,11 @@ public class Bootstrap implements CommandLineRunner {
 
             Property property = new Property();
             property.setLink(doc.select(".PropertyShortcode__link").text());
-            property.setId(Long.valueOf(doc.select(".PropertyShortcode__link").text().replace("https://www.daft.ie/", "")));
-            property.setPropertyType(doc.select(".QuickPropertyDetails__propertyType").first().text());
+
+            property.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+            property.setPropertyType(checkIfElementIsNull(propertyType));
             property.setAddress(address);
-            property.setEircode(eircode == null ? null : eircode.text().replace("Eircode: ", ""));
+            property.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
             property.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
             property.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
@@ -106,5 +108,9 @@ public class Bootstrap implements CommandLineRunner {
                 System.out.println(property.toString());
             }
         }
+    }
+
+    private String checkIfElementIsNull(Element e) {
+        return e == null ? "" : e.text();
     }
 }

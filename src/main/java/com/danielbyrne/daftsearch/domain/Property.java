@@ -26,4 +26,17 @@ public class Property {
 
     @Lob
     private String description;
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                "address='" + address + '\'' +
+                ", propertyType='" + propertyType + '\'' +
+                ", price=" + price +
+                ", link='" + link + '\'' +
+                ", distanceInMetres=" + distanceInMetres +
+                ", duration=" + duration +
+                ", durationInTraffic=" + durationInTraffic +
+                '}';
+    }
 }
