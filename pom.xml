@@ -64,6 +64,16 @@
             <version>${org.mapstruct.version}</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/com.google.maps/google-maps-services -->
+        <dependency>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
