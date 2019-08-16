@@ -23,9 +23,7 @@ public class PropertyServiceImpl implements PropertyService {
     public List<PropertyDTO> getAllProperties() {
         return propertyRepository.findAll()
                 .stream()
-                .map(property -> {
-                    return propertyMapper.propertyToPropertyDTO(property);
-                })
+                .map(propertyMapper::propertyToPropertyDTO)
                 .collect(Collectors.toList());
     }
 }
