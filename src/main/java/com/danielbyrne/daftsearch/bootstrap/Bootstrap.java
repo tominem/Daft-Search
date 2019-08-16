@@ -49,7 +49,7 @@ public class Bootstrap implements CommandLineRunner {
 
             while (propertiesExist) {
 
-                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=200000&s[mnb]=2/?offset=" + offset;
+                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=150000&s[mnb]=2/?offset=" + offset;
 
                 Document document = Jsoup.connect(url).get();
 
@@ -80,6 +80,8 @@ public class Bootstrap implements CommandLineRunner {
             Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
             Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
             Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
+            Elements image = doc.select("img[\\.(jpg)]");
+
 
             int price;
             String priceString;
