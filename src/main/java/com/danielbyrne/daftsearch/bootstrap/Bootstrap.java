@@ -4,8 +4,6 @@ import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixElement;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -112,19 +110,19 @@ public class Bootstrap implements CommandLineRunner {
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
             property.setPrice(price);
 
-            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
-            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
-
-            if (distanceMatrixElement.distance != null) {
-                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-                property.setDuration(distanceMatrixElement.duration.inSeconds);
-            }
+//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
+//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
+//
+//            if (distanceMatrixElement.distance != null) {
+//                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+//                property.setDuration(distanceMatrixElement.duration.inSeconds);
+//            }
 
             propertyRepository.save(property);
 
-            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
-                System.out.println(property.toString());
-            }
+//            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
+//                System.out.println(property.toString());
+//            }
         }
     }
 
