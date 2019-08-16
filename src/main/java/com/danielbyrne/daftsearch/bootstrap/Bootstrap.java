@@ -80,18 +80,16 @@ public class Bootstrap implements CommandLineRunner {
             Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
 
             int price;
+            String priceString;
             if (priceElement.getAllElements().select(".priceFrom") != null
                     && !priceElement.getAllElements().select(".priceFrom").text().equals("") ) {
-                price = Integer.parseInt(priceElement.getAllElements()
-                        .select(".priceFrom")
-                        .text()
-                        .replaceAll("[^0-9.]", ""));
+
+                priceString = priceElement.getAllElements().select(".priceFrom").text();
+                price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
             } else {
-                price = priceElement
-                        .text()
-                        .equals("Price On Application") ? 0 : Integer.parseInt(priceElement
-                                                        .text()
-                                                        .replaceAll("[^0-9.]", ""));
+                priceString = priceElement.text();
+                price = priceString.equals("Price On Application")
+                        ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
             }
 
             String pr = priceElement.getAllElements().select(".priceFrom").text();
@@ -99,6 +97,8 @@ public class Bootstrap implements CommandLineRunner {
             String address = doc.select(".PropertyMainInformation__address").first().text();
 
             Property property = new Property();
+
+            property.setPriceString(priceString);
             property.setLink(doc.select(".PropertyShortcode__link").text());
 
             property.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));

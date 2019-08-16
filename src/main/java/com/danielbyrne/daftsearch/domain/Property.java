@@ -18,6 +18,7 @@ public class Property {
     private int baths;
     private String propertyType;
     private int price;
+    private String priceString;
     private String link;
 
     private Long distanceInMetres;
