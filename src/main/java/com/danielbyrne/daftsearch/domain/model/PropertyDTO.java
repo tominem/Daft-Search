@@ -14,5 +14,11 @@ public class PropertyDTO {
     private int beds;
     private int baths;
     private String propertyType;
+    private int price;
+    private String link;
+
+    private Long distanceInMetres;
+    private Long duration;
+
     private String description;
 }

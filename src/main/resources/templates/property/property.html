@@ -9,7 +9,7 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
           th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
 
-    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -25,10 +25,10 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
-                    <h1 class="panel-title">My Recipes!</h1>
+                    <h1 class="panel-title">Properties</h1>
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(properties)}">
                         <table class="table table-hover ">
                             <thead class="thead-inverse">
                             <tr>
@@ -62,7 +62,7 @@
                                 <td th:text="${property.price}">Price</td>
                                 <td th:text="${property.distanceInMetres}">Tasty Goodnees 3</td>
                                 <td th:text="${property.duration}">Duration</td>
-                                <td><a href="#" th:href="${property.link}}">View</a></td>
+                                <td><a href="#" th:href="${property.link}">View</a></td>
                             </tr>
                         </table>
                     </div>

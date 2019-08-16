@@ -47,7 +47,7 @@ public class Bootstrap implements CommandLineRunner {
 
             while (propertiesExist) {
 
-                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=200000&s[mnb]=2/?offset=" + offset;
+                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=150000&s[mnb]=2/?offset=" + offset;
 
                 Document document = Jsoup.connect(url).get();
 
