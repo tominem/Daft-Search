@@ -36,7 +36,7 @@
                                 <th>Address</th>
                                 <th>Price</th>
                                 <th>Distance</th>
-                                <th>Duration</th>
+                                <th>Drive Time</th>
                                 <th>Link</th>
                             </tr>
                             </thead>
@@ -60,8 +60,8 @@
                                 <td th:text="${property.propertyType}">334</td>
                                 <td th:text="${property.address}">Tasty Goodnees 3</td>
                                 <td th:text="${property.priceString}">Price</td>
-                                <td th:text="${property.distanceInMetres}">Tasty Goodnees 3</td>
-                                <td th:text="${property.duration}">Duration</td>
+                                <td th:text="${property.readableDistance}">Tasty Goodnees 3</td>
+                                <td th:text="${property.readableDuration}">Duration</td>
                                 <td><a href="#" th:href="${property.link}">View</a></td>
                             </tr>
                         </table>

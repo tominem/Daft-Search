@@ -24,6 +24,9 @@ public class Property {
     private Long distanceInMetres;
     private Long duration;
 
+    private String readableDistance;
+    private String readableDuration;
+
     @Lob
     private String description;
 

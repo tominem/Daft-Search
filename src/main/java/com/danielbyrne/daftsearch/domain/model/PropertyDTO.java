@@ -17,8 +17,8 @@ public class PropertyDTO {
     private String priceString;
     private String link;
 
-    private Long distanceInMetres;
-    private Long duration;
+    private String readableDistance;
+    private String readableDuration;
 
     private String description;
 }

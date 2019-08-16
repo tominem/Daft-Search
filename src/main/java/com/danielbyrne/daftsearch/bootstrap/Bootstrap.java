@@ -4,6 +4,8 @@ import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -47,7 +49,7 @@ public class Bootstrap implements CommandLineRunner {
 
             while (propertiesExist) {
 
-                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=150000&s[mnb]=2/?offset=" + offset;
+                String url = "https://www.daft.ie/" + county + "/houses-for-sale/?s[mxp]=200000&s[mnb]=2/?offset=" + offset;
 
                 Document document = Jsoup.connect(url).get();
 
@@ -110,13 +112,15 @@ public class Bootstrap implements CommandLineRunner {
             property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
             property.setPrice(price);
 
-//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
-//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
-//
-//            if (distanceMatrixElement.distance != null) {
-//                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-//                property.setDuration(distanceMatrixElement.duration.inSeconds);
-//            }
+            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
+            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
+
+            if (distanceMatrixElement.distance != null) {
+                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+                property.setDuration(distanceMatrixElement.duration.inSeconds);
+                property.setReadableDistance(distanceMatrixElement.distance.humanReadable);
+                property.setReadableDuration(distanceMatrixElement.duration.humanReadable);
+            }
 
             propertyRepository.save(property);
 
