@@ -7,4 +7,7 @@ import javax.persistence.Entity;
 @Data
 @Entity
 public class PropertyForRent extends Property {
+
+    private String moveInDate;
+    private String leaseLength;
 }

@@ -7,8 +7,6 @@ import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import com.google.maps.errors.ApiException;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixElement;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,17 +35,18 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
-//        loadLinks();
-        loadPropertiesForSale();
+////        propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
+//        loadSaleLinks();
+//        loadPropertiesForSale();
 
-        propertyLinks.add("https://www.daft.ie/wicklow/houses-for-sale/greystones/25-charlesland-grove-greystones-wicklow-2223344/");
+//        propertyLinks.add("https://www.daft.ie/wicklow/apartments-for-rent/delgany/church-drive-eden-gate-delgany-wicklow-1958532/");
+        loadRentalLinks();
         loadPropertiesForRent();
 
         System.out.println("Done");
     }
 
-    private void loadLinks() throws IOException {
+    private void loadSaleLinks() throws IOException {
 
         for (Enum county : County.values()) {
 
@@ -73,6 +72,33 @@ public class Bootstrap implements CommandLineRunner {
         }
         System.out.println(propertyLinks.size());
     }
+
+    private void loadRentalLinks() throws IOException {
+
+        for (Enum county : County.values()) {
+
+            int offset = 0;
+            boolean propertiesExist = true;
+
+            while (propertiesExist) {
+
+                String url = "https://www.daft.ie/" + county + "/residential-property-for-rent/?offset=" + offset;
+
+                Document document = Jsoup.connect(url).get();
+
+                Elements newsHeadlines = document.select("div.image a");
+
+                if (newsHeadlines.size() == 0) propertiesExist = false;
+
+                for (Element headline : newsHeadlines) {
+                    propertyLinks.add(headline.absUrl("href"));
+                }
+                offset += 20;
+            }
+        }
+        System.out.println(propertyLinks.size());
+    }
+
 
     private void loadPropertiesForSale() throws Exception {
 
@@ -121,15 +147,15 @@ public class Bootstrap implements CommandLineRunner {
             propertyForSale.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
             propertyForSale.setPrice(price);
 
-            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
-            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
-
-            if (distanceMatrixElement.distance != null) {
-                propertyForSale.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-                propertyForSale.setDuration(distanceMatrixElement.duration.inSeconds);
-                propertyForSale.setReadableDistance(distanceMatrixElement.distance.humanReadable);
-                propertyForSale.setReadableDuration(distanceMatrixElement.duration.humanReadable);
-            }
+//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
+//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
+//
+//            if (distanceMatrixElement.distance != null) {
+//                propertyForSale.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+//                propertyForSale.setDuration(distanceMatrixElement.duration.inSeconds);
+//                propertyForSale.setReadableDistance(distanceMatrixElement.distance.humanReadable);
+//                propertyForSale.setReadableDuration(distanceMatrixElement.duration.humanReadable);
+//            }
 
             propertyRepository.save(propertyForSale);
 
@@ -148,45 +174,47 @@ public class Bootstrap implements CommandLineRunner {
 
             Document doc = Jsoup.connect(link).get();
 
-            Element eircode = doc.select(".PropertyMainInformation__eircode").first();
-            Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
-            Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
-            Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
-            Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
-            Elements image = doc.select("img[\\.(jpg)]");
-
-
-            int price;
-            String priceString;
-            if (priceElement.getAllElements().select(".priceFrom") != null
-                    && !priceElement.getAllElements().select(".priceFrom").text().equals("") ) {
-
-                priceString = priceElement.getAllElements().select(".priceFrom").text();
-                price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
-            } else {
-                priceString = priceElement.text();
-                price = priceString.equals("Price On Application")
-                        ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
+            if (doc.getElementsByClass("warning").text().contains("This Property Has been" +
+                    " either let or withdrawn from Daft.ie")) {
+                break;
             }
 
-            String pr = priceElement.getAllElements().select(".priceFrom").text();
+            Elements summaryItems = doc.getElementById("smi-summary-items").select(".header_text");
 
-            String address = doc.select(".PropertyMainInformation__address").first().text();
+            Element eircode = doc.select(".PropertyMainInformation__eircode").first();
+            Element propertyType = summaryItems.get(0);
+
+            int beds = 0;
+            int baths = 0;
+            for (int i = 0; i < summaryItems.size(); i++) {
+                if (summaryItems.get(i).text().contains("Beds")) {
+                    beds = Integer.parseInt(summaryItems.get(i).text().replaceAll("[^0-9]", ""));
+                } else if (summaryItems.get(i).text().contains("Bath")) {
+                    baths = Integer.parseInt(summaryItems.get(i).text().replaceAll("[^0-9]", ""));
+                }
+            }
+
+            String priceString = doc.getElementById("smi-price-string").text();
+            int price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
+
+            String address = doc.getElementsByClass("smi-object-header").select("h1").text();
 
             Property propertyForRent = new PropertyForRent();
 
+            propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
+            propertyForRent.setBeds(beds);
+            propertyForRent.setBaths(baths);
+
             propertyForRent.setPriceString(priceString);
-            propertyForRent.setLink(doc.select(".PropertyShortcode__link").text());
+            propertyForRent.setLink(link);
 
             propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
-            propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
             propertyForRent.setAddress(address);
             propertyForRent.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
-            propertyForRent.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
-            propertyForRent.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
-            propertyForRent.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
+            propertyForRent.setDescription(doc.getElementById("description").text());
             propertyForRent.setPrice(price);
 
+            // todo move into separate method
 //            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
 //            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
 //
