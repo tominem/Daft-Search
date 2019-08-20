@@ -13,10 +13,6 @@ import java.io.IOException;
 @Entity
 public class PropertyForSale extends Property {
 
-    public PropertyForSale() {
-        super();
-    }
-
     public void setImage(String imageUrl) throws IOException {
 
         BufferedImage bImage = ImageIO.read(new File(imageUrl));

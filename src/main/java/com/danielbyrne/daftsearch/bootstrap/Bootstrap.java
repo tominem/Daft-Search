@@ -2,9 +2,11 @@ package com.danielbyrne.daftsearch.bootstrap;
 
 import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
+import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
+import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
 import org.jsoup.Jsoup;
@@ -37,7 +39,11 @@ public class Bootstrap implements CommandLineRunner {
 
         propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
 //        loadLinks();
-        loadProperties();
+        loadPropertiesForSale();
+
+        propertyLinks.add("https://www.daft.ie/wicklow/houses-for-sale/greystones/25-charlesland-grove-greystones-wicklow-2223344/");
+        loadPropertiesForRent();
+
         System.out.println("Done");
     }
 
@@ -68,7 +74,7 @@ public class Bootstrap implements CommandLineRunner {
         System.out.println(propertyLinks.size());
     }
 
-    private void loadProperties() throws Exception {
+    private void loadPropertiesForSale() throws Exception {
 
         for (String link : propertyLinks) {
 
@@ -131,6 +137,73 @@ public class Bootstrap implements CommandLineRunner {
 //                System.out.println(property.toString());
 //            }
         }
+        propertyLinks.clear();
+    }
+
+    private void loadPropertiesForRent() throws InterruptedException, ApiException, IOException {
+
+        for (String link : propertyLinks) {
+
+            System.out.println(link);
+
+            Document doc = Jsoup.connect(link).get();
+
+            Element eircode = doc.select(".PropertyMainInformation__eircode").first();
+            Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
+            Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
+            Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
+            Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
+            Elements image = doc.select("img[\\.(jpg)]");
+
+
+            int price;
+            String priceString;
+            if (priceElement.getAllElements().select(".priceFrom") != null
+                    && !priceElement.getAllElements().select(".priceFrom").text().equals("") ) {
+
+                priceString = priceElement.getAllElements().select(".priceFrom").text();
+                price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
+            } else {
+                priceString = priceElement.text();
+                price = priceString.equals("Price On Application")
+                        ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
+            }
+
+            String pr = priceElement.getAllElements().select(".priceFrom").text();
+
+            String address = doc.select(".PropertyMainInformation__address").first().text();
+
+            Property propertyForRent = new PropertyForRent();
+
+            propertyForRent.setPriceString(priceString);
+            propertyForRent.setLink(doc.select(".PropertyShortcode__link").text());
+
+            propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+            propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
+            propertyForRent.setAddress(address);
+            propertyForRent.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
+            propertyForRent.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
+            propertyForRent.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
+            propertyForRent.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
+            propertyForRent.setPrice(price);
+
+//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
+//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
+//
+//            if (distanceMatrixElement.distance != null) {
+//                propertyForRent.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+//                propertyForRent.setDuration(distanceMatrixElement.duration.inSeconds);
+//                propertyForRent.setReadableDistance(distanceMatrixElement.distance.humanReadable);
+//                propertyForRent.setReadableDuration(distanceMatrixElement.duration.humanReadable);
+//            }
+
+            propertyRepository.save(propertyForRent);
+
+//            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
+//                System.out.println(property.toString());
+//            }
+        }
+        propertyLinks.clear();
     }
 
     private String checkIfElementIsNull(Element e) {
