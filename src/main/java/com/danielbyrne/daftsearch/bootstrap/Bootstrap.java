@@ -1,7 +1,6 @@
 package com.danielbyrne.daftsearch.bootstrap;
 
 import com.danielbyrne.daftsearch.domain.County;
-import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
@@ -39,8 +38,8 @@ public class Bootstrap implements CommandLineRunner {
 //        loadSaleLinks();
 //        loadPropertiesForSale();
 
-//        propertyLinks.add("https://www.daft.ie/wicklow/apartments-for-rent/delgany/church-drive-eden-gate-delgany-wicklow-1958532/");
-        loadRentalLinks();
+        propertyLinks.add("https://www.daft.ie/wicklow/studio-apartments-for-rent/greystones/new-road-greystones-wicklow-1953887/");
+//        loadRentalLinks();
         loadPropertiesForRent();
 
         System.out.println("Done");
@@ -129,11 +128,11 @@ public class Bootstrap implements CommandLineRunner {
                         ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
             }
 
-            String pr = priceElement.getAllElements().select(".priceFrom").text();
+//            String pr = priceElement.getAllElements().select(".priceFrom").text();
 
             String address = doc.select(".PropertyMainInformation__address").first().text();
 
-            Property propertyForSale = new PropertyForSale();
+            PropertyForSale propertyForSale = new PropertyForSale();
 
             propertyForSale.setPriceString(priceString);
             propertyForSale.setLink(doc.select(".PropertyShortcode__link").text());
@@ -181,7 +180,6 @@ public class Bootstrap implements CommandLineRunner {
 
             Elements summaryItems = doc.getElementById("smi-summary-items").select(".header_text");
 
-            Element eircode = doc.select(".PropertyMainInformation__eircode").first();
             Element propertyType = summaryItems.get(0);
 
             int beds = 0;
@@ -200,8 +198,16 @@ public class Bootstrap implements CommandLineRunner {
 
             String address = doc.getElementsByClass("smi-object-header").select("h1").text();
 
-            Property propertyForRent = new PropertyForRent();
+//            String leaseAndAvailString = doc.getElementsByClass("description_block")
+//                                                    .get(1)
+//                                                    .getAllElements()
+//                                                    .first()
+//                                                    .text();
 
+            PropertyForRent propertyForRent = new PropertyForRent();
+
+//            propertyForRent.setLeaseLength(leaseAndAvailString.substring(leaseAndAvailString.indexOf("Lease: ") + "Lease: ".length()));
+//            propertyForRent.setMoveInDate(leaseAndAvailString.substring(22, leaseAndAvailString.indexOf(" Lease: ")));
             propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
             propertyForRent.setBeds(beds);
             propertyForRent.setBaths(baths);
@@ -211,7 +217,6 @@ public class Bootstrap implements CommandLineRunner {
 
             propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
             propertyForRent.setAddress(address);
-            propertyForRent.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
             propertyForRent.setDescription(doc.getElementById("description").text());
             propertyForRent.setPrice(price);
 
