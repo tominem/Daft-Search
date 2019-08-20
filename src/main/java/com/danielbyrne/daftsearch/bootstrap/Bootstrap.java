@@ -187,10 +187,11 @@ public class Bootstrap implements CommandLineRunner {
             int beds = 0;
             int baths = 0;
             for (int i = 0; i < summaryItems.size(); i++) {
-                if (summaryItems.get(i).text().contains("Beds")) {
-                    beds = Integer.parseInt(summaryItems.get(i).text().replaceAll("[^0-9]", ""));
-                } else if (summaryItems.get(i).text().contains("Bath")) {
-                    baths = Integer.parseInt(summaryItems.get(i).text().replaceAll("[^0-9]", ""));
+                String str = summaryItems.get(i).text();
+                if (str.contains("Beds")) {
+                    beds = Integer.parseInt(str.replaceAll("[^0-9]", ""));
+                } else if (str.contains("Bath")) {
+                    baths = Integer.parseInt(str.replaceAll("[^0-9]", ""));
                 }
             }
 
