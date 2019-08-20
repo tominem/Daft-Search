@@ -2,6 +2,7 @@ package com.danielbyrne.daftsearch.bootstrap;
 
 import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.Property;
+import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import com.google.maps.model.DistanceMatrix;
@@ -34,8 +35,8 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
-        loadLinks();
+        propertyLinks.add("https://www.daft.ie/wexford/houses-for-sale/rosslare-harbour/glenelg-barryville-court-rosslare-harbour-wexford-2151678/");
+//        loadLinks();
         loadProperties();
         System.out.println("Done");
     }
@@ -100,31 +101,31 @@ public class Bootstrap implements CommandLineRunner {
 
             String address = doc.select(".PropertyMainInformation__address").first().text();
 
-            Property property = new Property();
+            Property propertyForSale = new PropertyForSale();
 
-            property.setPriceString(priceString);
-            property.setLink(doc.select(".PropertyShortcode__link").text());
+            propertyForSale.setPriceString(priceString);
+            propertyForSale.setLink(doc.select(".PropertyShortcode__link").text());
 
-            property.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
-            property.setPropertyType(checkIfElementIsNull(propertyType));
-            property.setAddress(address);
-            property.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
-            property.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
-            property.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
-            property.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
-            property.setPrice(price);
+            propertyForSale.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+            propertyForSale.setPropertyType(checkIfElementIsNull(propertyType));
+            propertyForSale.setAddress(address);
+            propertyForSale.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
+            propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
+            propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
+            propertyForSale.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
+            propertyForSale.setPrice(price);
 
             DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
             DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
 
             if (distanceMatrixElement.distance != null) {
-                property.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-                property.setDuration(distanceMatrixElement.duration.inSeconds);
-                property.setReadableDistance(distanceMatrixElement.distance.humanReadable);
-                property.setReadableDuration(distanceMatrixElement.duration.humanReadable);
+                propertyForSale.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
+                propertyForSale.setDuration(distanceMatrixElement.duration.inSeconds);
+                propertyForSale.setReadableDistance(distanceMatrixElement.distance.humanReadable);
+                propertyForSale.setReadableDuration(distanceMatrixElement.duration.humanReadable);
             }
 
-            propertyRepository.save(property);
+            propertyRepository.save(propertyForSale);
 
 //            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
 //                System.out.println(property.toString());

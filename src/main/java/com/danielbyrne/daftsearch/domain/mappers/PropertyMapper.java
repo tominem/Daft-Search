@@ -1,6 +1,7 @@
 package com.danielbyrne.daftsearch.domain.mappers;
 
 import com.danielbyrne.daftsearch.domain.Property;
+import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.domain.model.PropertyDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,7 +11,7 @@ public interface PropertyMapper {
 
     PropertyMapper INSTANCE = Mappers.getMapper(PropertyMapper.class);
 
-    PropertyDTO propertyToPropertyDTO(Property property);
+    PropertyDTO propertyToPropertyDTO(Property propertyForSale);
 
-    Property propertyDTOtoProperty(PropertyDTO propertyDTO);
+    PropertyForSale propertyDTOtoProperty(PropertyDTO propertyDTO);
 }
