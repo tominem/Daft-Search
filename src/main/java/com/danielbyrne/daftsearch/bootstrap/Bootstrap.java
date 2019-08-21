@@ -36,16 +36,14 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        System.out.println("\nLoading Shared Properties...");
-//        loadSharedProperties();
-//
+        System.out.println("\nLoading Shared Properties...");
+        loadSharedProperties();
 
         System.out.println("\nLoading Sales...");
         loadSales();
 
-        loadPropertyForSharing("https://www.daft.ie/dublin/house-share/dublin-1/11-12-richmond-crescent-dublin-1-dublin-786831/");
-//        System.out.println("\nLoading Rentals...");
-//        loadRentals();
+        System.out.println("\nLoading Rentals...");
+        loadRentals();
     }
 
     private void loadSales() throws Exception {
