@@ -21,7 +21,7 @@ public class Bootstrap implements CommandLineRunner {
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
     private GoogleMapServices googleMapServices;
-    private Enum county;
+    private County county;
 
     private final String BASE_URL = "https://www.daft.ie/";
     private String FOR_SALE = "/property-for-sale/?offset=";
@@ -40,16 +40,19 @@ public class Bootstrap implements CommandLineRunner {
 //        System.out.println("\nLoading Shared Properties...");
 //        loadSharedProperties();
 //
+        loadPropertyForSale("https://www.daft.ie/dublin/new-homes-for-sale/glenveagh-cnoc-dubh-ballyboughal-dublin-114474/");
+
 //        System.out.println("\nLoading Sales...");
 //        loadSales();
-//
+
+        loadPropertyForSharing("https://www.daft.ie/dublin/house-share/dublin-1/11-12-richmond-crescent-dublin-1-dublin-786831/");
 //        System.out.println("\nLoading Rentals...");
 //        loadRentals();
     }
 
     private void loadSales() throws Exception {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
 
             this.county = county;
 
@@ -78,7 +81,7 @@ public class Bootstrap implements CommandLineRunner {
 
     private void loadRentals() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;
@@ -104,7 +107,7 @@ public class Bootstrap implements CommandLineRunner {
 
     private void loadSharedProperties() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;

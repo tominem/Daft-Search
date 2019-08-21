@@ -22,7 +22,7 @@ public abstract class Property {
     private int price;
     private String priceString;
     private String link;
-    private Enum county;
+    private County county;
 
     private Long distanceInMetres;
     private Long duration;

@@ -1,12 +1,11 @@
 package com.danielbyrne.daftsearch.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.danielbyrne.daftsearch.domain.County;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class PropertyDTO {
 
     private String address;
@@ -16,6 +15,7 @@ public class PropertyDTO {
     private String propertyType;
     private String priceString;
     private String link;
+    private County county;
 
     private String readableDistance;
     private String readableDuration;
