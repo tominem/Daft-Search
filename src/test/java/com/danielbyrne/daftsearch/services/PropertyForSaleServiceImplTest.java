@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -38,7 +39,7 @@ public class PropertyForSaleServiceImplTest {
         when(propertyRepository.findAll()).thenReturn(properties);
 
         //when
-        List<PropertyDTO> propertyDTOS = propertyService.getAllProperties();
+        Set<PropertyDTO> propertyDTOS = propertyService.getAllProperties();
 
         //then
         assertEquals(3, propertyDTOS.size());

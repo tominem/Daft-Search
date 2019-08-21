@@ -11,7 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,7 +37,7 @@ public class PropertyForSaleControllerTest {
     @Test
     public void getAllProperties() throws Exception {
 
-        List<PropertyDTO> propertyDTO = Arrays.asList(new PropertyDTO(), new PropertyDTO());
+        Set<PropertyDTO> propertyDTO = new HashSet<>(Arrays.asList(new PropertyDTO(), new PropertyDTO()));
         given(propertyService.getAllProperties()).willReturn(propertyDTO);
 
         mockMvc.perform(get("/properties"))

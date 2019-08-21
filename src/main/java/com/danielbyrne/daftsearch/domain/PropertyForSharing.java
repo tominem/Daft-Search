@@ -1,11 +1,12 @@
 package com.danielbyrne.daftsearch.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-
-@Data
-@Entity
+@Getter
+@Setter
+@Document
 public class PropertyForSharing extends Property {
 
     private boolean malesOnly;

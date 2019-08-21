@@ -1,7 +1,7 @@
 package com.danielbyrne.daftsearch.repositories;
 
 import com.danielbyrne.daftsearch.domain.Property;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface PropertyRepository extends JpaRepository<Property, Long> {
+public interface PropertyRepository extends CrudRepository<Property, Long> {
 }
