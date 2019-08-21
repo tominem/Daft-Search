@@ -12,4 +12,6 @@ public class PropertyForSharing extends Property {
     private boolean femalesOnly;
     private boolean ownerOccupied;
     private int currentOccupants;
+    private boolean hasSingle;
+    private boolean hasDouble;
 }

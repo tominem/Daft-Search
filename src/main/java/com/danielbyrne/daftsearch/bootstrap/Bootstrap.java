@@ -3,6 +3,7 @@ package com.danielbyrne.daftsearch.bootstrap;
 import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
+import com.danielbyrne.daftsearch.domain.PropertyForSharing;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import org.jsoup.Jsoup;
@@ -25,6 +26,7 @@ public class Bootstrap implements CommandLineRunner {
     private final String BASE_URL = "https://www.daft.ie/";
     private String FOR_SALE = "/property-for-sale/?offset=";
     private String TO_LET = "/residential-property-for-rent/?offset=";
+    private String TO_SHARE = "/rooms-to-share/?offset=";
 
     public Bootstrap(PropertyRepository propertyRepository, GoogleMapServices googleMapServices) {
         this.propertyRepository = propertyRepository;
@@ -34,11 +36,14 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println("Loading Sales...");
-        loadSales();
+//        loadPropertyForSharing("https://www.daft.ie/donegal/house-share/ballybofey/carrick-crescent-ballybofey-donegal-1025599/");
+        loadSharedProperties();
 
-        System.out.println("\nLoading Rentals...");
-        loadRentals();
+//        System.out.println("Loading Sales...");
+//        loadSales();
+//
+//        System.out.println("\nLoading Rentals...");
+//        loadRentals();
     }
 
     private void loadSales() throws Exception {
@@ -90,6 +95,32 @@ public class Bootstrap implements CommandLineRunner {
                 for (Element headline : propertyElements) {
                     System.out.println("\nSource URL: " + url);
                     loadPropertyForRent(headline.absUrl("href"));
+                }
+                offset += 20;
+                // todo this needs to be removed in order to load all properties
+                propertiesExist=false;
+            }
+        }
+    }
+
+    private void loadSharedProperties() throws IOException {
+
+        for (Enum county : County.values()) {
+            this.county = county;
+
+            int offset = 0;
+            boolean propertiesExist = true;
+            while (propertiesExist) {
+
+                String url = "https://www.daft.ie/" + county + TO_SHARE + offset;
+                Document document = Jsoup.connect(url).get();
+                Elements propertyElements = document.select("div.image a");
+
+                if (propertyElements.size() == 0) propertiesExist = false;
+
+                for (Element headline : propertyElements) {
+                    System.out.println("\nSource URL: " + url);
+                    loadPropertyForSharing(headline.absUrl("href"));
                 }
                 offset += 20;
                 // todo this needs to be removed in order to load all properties
@@ -243,6 +274,60 @@ public class Bootstrap implements CommandLineRunner {
 //            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
 //                System.out.println(property.toString());
 //            }
+    }
+
+    private void loadPropertyForSharing(String link) throws IOException {
+
+        System.out.println("Creating Shared Property From: " + link);
+
+        Document doc = Jsoup.connect(link).get();
+
+        if (doc.getElementsByClass("warning").text().contains("This Property Has been" +
+                " either let or withdrawn from Daft.ie")) {
+            return;
+        }
+
+        Elements summaryItems = doc.getElementById("smi-summary-items").select(".header_text");
+        Element propertyType = summaryItems.get(0);
+
+        int beds = 0;
+        for (int i = 0; i < summaryItems.size(); i++) {
+            String str = summaryItems.get(i).text();
+            if (str.toLowerCase().contains("bed")) {
+                beds = Integer.parseInt(str.substring(0 , 1));
+            }
+        }
+
+        String priceString = doc.getElementById("smi-price-string").text();
+        int price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
+
+        String address = doc.getElementsByClass("smi-object-header").select("h1").text();
+
+        Elements propertyOverview = doc.getElementById("overview").select("li");
+
+        PropertyForSharing propertyForRent = new PropertyForSharing();
+
+        for (int i = 0; i < propertyOverview.size(); i++) {
+            String str = propertyOverview.get(i).text().toLowerCase();
+            if (str.contains("single")) propertyForRent.setHasSingle(true);
+            if (str.contains("double")) propertyForRent.setHasDouble(true);
+            if (str.contains("currently")) propertyForRent.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
+            if (str.contains("is owner occupied")) propertyForRent.setOwnerOccupied(true);
+            if (str.contains("males only")) propertyForRent.setMalesOnly(true);
+            if (str.contains("females only")) propertyForRent.setFemalesOnly(true);
+        }
+
+        propertyForRent.setCounty(county);
+        propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
+        propertyForRent.setBeds(beds);
+        propertyForRent.setPriceString(priceString);
+        propertyForRent.setLink(link);
+        propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+        propertyForRent.setAddress(address);
+        propertyForRent.setDescription(doc.getElementById("description").text());
+        propertyForRent.setPrice(price);
+
+        propertyRepository.save(propertyForRent);
     }
 
     private String checkIfElementIsNull(Element e) {
