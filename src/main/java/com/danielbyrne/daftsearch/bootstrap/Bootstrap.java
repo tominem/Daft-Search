@@ -5,7 +5,6 @@ import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
-import com.google.maps.errors.ApiException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,14 +34,13 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        loadSaleLinks();
-        // issue with this one
-        loadPropertyForSale("https://www.daft.ie/wicklow/new-homes-for-sale/the-friary-church-road-bray-wicklow-133663/");
-
-//        loadRentals();
+        System.out.println("Loading Sales...");
+        loadSales();
+        System.out.println("Loading Rentals...");
+        loadRentals();
     }
 
-    private void loadSaleLinks() throws Exception {
+    private void loadSales() throws Exception {
 
         for (Enum county : County.values()) {
 
@@ -67,11 +65,12 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSale(headline.absUrl("href"));
                 }
                 offset += 20;
+                propertiesExist=false;
             }
         }
     }
 
-    private void loadRentals() throws IOException, ApiException, InterruptedException {
+    private void loadRentals() throws IOException {
 
         for (Enum county : County.values()) {
             this.county = county;
@@ -87,14 +86,14 @@ public class Bootstrap implements CommandLineRunner {
                 if (propertyElements.size() == 0) propertiesExist = false;
 
                 for (Element headline : propertyElements) {
-                    System.out.println("Source URL: " + url);
+                    System.out.println("\nSource URL: " + url);
                     loadPropertyForRent(headline.absUrl("href"));
                 }
                 offset += 20;
+                propertiesExist=false;
             }
         }
     }
-
 
     private void loadPropertyForSale(String link) throws Exception {
 
@@ -103,12 +102,13 @@ public class Bootstrap implements CommandLineRunner {
         Document doc = Jsoup.connect(link).get();
 
         Element eircode = doc.select(".PropertyMainInformation__eircode").first();
+        Element description = doc.select(".PropertyDescription__propertyDescription").first();
         Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
         Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
         Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
         Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
-        Elements image = doc.select("img[\\.(jpg)]");
-
+//        Elements image = doc.select("img[\\.(jpg)]");
+        Element address = doc.select(".PropertyMainInformation__address").first();
 
         int price;
         String priceString;
@@ -123,24 +123,18 @@ public class Bootstrap implements CommandLineRunner {
                     ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
         }
 
-//            String pr = priceElement.getAllElements().select(".priceFrom").text();
-
-        String address = doc.select(".PropertyMainInformation__address").first().text();
-
         PropertyForSale propertyForSale = new PropertyForSale();
 
         propertyForSale.setCounty(county);
-
         propertyForSale.setPriceString(priceString);
-        propertyForSale.setLink(doc.select(".PropertyShortcode__link").text());
-
+        propertyForSale.setLink(link);
         propertyForSale.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
         propertyForSale.setPropertyType(checkIfElementIsNull(propertyType));
-        propertyForSale.setAddress(address);
+        propertyForSale.setAddress(checkIfElementIsNull(address));
         propertyForSale.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
         propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
         propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
-        propertyForSale.setDescription(doc.select(".PropertyDescription__propertyDescription").first().text());
+        propertyForSale.setDescription(checkIfElementIsNull(description));
         propertyForSale.setPrice(price);
 
 //            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
