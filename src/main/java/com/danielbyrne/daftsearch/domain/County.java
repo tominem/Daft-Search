@@ -1,6 +1,36 @@
 package com.danielbyrne.daftsearch.domain;
 
 public enum County {
-
-    dublin //wicklow, dublin, kildare, wexford, meath
+//    antrim,
+//    armagh,
+    carlow,
+    cavan,
+    clare,
+    cork,
+//    derry,
+    donegal,
+//    down,
+    dublin,
+//    fermanagh,
+    galway,
+    kerry,
+    kildare,
+    kilkenny,
+    laois,
+    leitrim,
+    limerick,
+    longford,
+    louth,
+    mayo,
+    meath,
+    monaghan,
+    offaly,
+    roscommon,
+    sligo,
+    tipperary,
+//    tyrone,
+    waterford,
+    westmeath,
+    wexford,
+    wicklow,
 }

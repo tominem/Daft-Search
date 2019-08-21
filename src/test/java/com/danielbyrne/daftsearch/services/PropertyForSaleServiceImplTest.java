@@ -1,6 +1,7 @@
 package com.danielbyrne.daftsearch.services;
 
 import com.danielbyrne.daftsearch.domain.Property;
+import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.domain.mappers.PropertyMapper;
 import com.danielbyrne.daftsearch.domain.model.PropertyDTO;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class PropertyServiceImplTest {
+public class PropertyForSaleServiceImplTest {
 
     PropertyService propertyService;
 
@@ -32,7 +33,7 @@ public class PropertyServiceImplTest {
     public void getAllProperties() {
 
         //given
-        List<Property> properties = Arrays.asList(new Property(), new Property(), new Property());
+        List<Property> properties = Arrays.asList(new PropertyForSale(), new PropertyForSale(), new PropertyForSale());
 
         when(propertyRepository.findAll()).thenReturn(properties);
 
