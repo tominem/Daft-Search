@@ -36,14 +36,12 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        loadPropertyForSharing("https://www.daft.ie/cavan/flat-to-share/cavan/75-main-street-cavan-cavan-1100787/");
 //        System.out.println("\nLoading Shared Properties...");
 //        loadSharedProperties();
 //
-        loadPropertyForSale("https://www.daft.ie/dublin/new-homes-for-sale/glenveagh-cnoc-dubh-ballyboughal-dublin-114474/");
 
-//        System.out.println("\nLoading Sales...");
-//        loadSales();
+        System.out.println("\nLoading Sales...");
+        loadSales();
 
         loadPropertyForSharing("https://www.daft.ie/dublin/house-share/dublin-1/11-12-richmond-crescent-dublin-1-dublin-786831/");
 //        System.out.println("\nLoading Rentals...");
@@ -52,9 +50,9 @@ public class Bootstrap implements CommandLineRunner {
 
     private void loadSales() throws Exception {
 
-        for (County county : County.values()) {
+        for (County c : County.values()) {
 
-            this.county = county;
+            this.county = c;
 
             int offset = 0;
             boolean propertiesExist = true;
@@ -99,8 +97,6 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForRent(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
@@ -125,8 +121,6 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSharing(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
