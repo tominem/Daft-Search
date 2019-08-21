@@ -195,6 +195,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setCounty(county);
 
         //todo bit of a pain to parse, need to focus more time on it
+
 //            propertyForRent.setLeaseLength(leaseAndAvailString.substring(leaseAndAvailString.indexOf("Lease: ") + "Lease: ".length()));
 //            propertyForRent.setMoveInDate(leaseAndAvailString.substring(22, leaseAndAvailString.indexOf(" Lease: ")));
         propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
@@ -210,6 +211,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setPrice(price);
 
         // todo move into separate method
+
 //            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
 //            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
 //
