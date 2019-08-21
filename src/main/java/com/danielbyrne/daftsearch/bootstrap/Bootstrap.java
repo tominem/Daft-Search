@@ -72,8 +72,6 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSale(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
