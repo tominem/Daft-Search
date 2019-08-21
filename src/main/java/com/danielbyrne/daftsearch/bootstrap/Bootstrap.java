@@ -22,8 +22,8 @@ public class Bootstrap implements CommandLineRunner {
     private PropertyRepository propertyRepository;
     private GoogleMapServices googleMapServices;
     private Enum county;
-    private final String BASE_URL = "https://www.daft.ie/";
 
+    private final String BASE_URL = "https://www.daft.ie/";
     private String FOR_SALE = "/property-for-sale/?offset=";
     private String TO_LET = "/residential-property-for-rent/?offset=";
 
@@ -119,7 +119,7 @@ public class Bootstrap implements CommandLineRunner {
             price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
         } else {
             priceString = priceElement.text();
-            price = priceString.equals("Price On Application")
+            price = priceString.toLowerCase().equals("price on application")
                     ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
         }
 
