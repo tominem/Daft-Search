@@ -21,7 +21,7 @@ public class Bootstrap implements CommandLineRunner {
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
     private GoogleMapServices googleMapServices;
-    private Enum county;
+    private County county;
 
     private final String BASE_URL = "https://www.daft.ie/";
     private String FOR_SALE = "/property-for-sale/?offset=";
@@ -36,22 +36,23 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        loadPropertyForSharing("https://www.daft.ie/cavan/flat-to-share/cavan/75-main-street-cavan-cavan-1100787/");
-        System.out.println("\nLoading Shared Properties...");
-        loadSharedProperties();
+//        System.out.println("\nLoading Shared Properties...");
+//        loadSharedProperties();
+//
 
         System.out.println("\nLoading Sales...");
         loadSales();
 
-        System.out.println("\nLoading Rentals...");
-        loadRentals();
+        loadPropertyForSharing("https://www.daft.ie/dublin/house-share/dublin-1/11-12-richmond-crescent-dublin-1-dublin-786831/");
+//        System.out.println("\nLoading Rentals...");
+//        loadRentals();
     }
 
     private void loadSales() throws Exception {
 
-        for (Enum county : County.values()) {
+        for (County c : County.values()) {
 
-            this.county = county;
+            this.county = c;
 
             int offset = 0;
             boolean propertiesExist = true;
@@ -72,15 +73,13 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSale(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
 
     private void loadRentals() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;
@@ -104,7 +103,7 @@ public class Bootstrap implements CommandLineRunner {
 
     private void loadSharedProperties() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;
@@ -302,29 +301,29 @@ public class Bootstrap implements CommandLineRunner {
 
         Elements propertyOverview = doc.getElementById("overview").select("li");
 
-        PropertyForSharing propertyForSharing = new PropertyForSharing();
+        PropertyForSharing propertyForRent = new PropertyForSharing();
 
         for (int i = 0; i < propertyOverview.size(); i++) {
             String str = propertyOverview.get(i).text().toLowerCase();
-            if (str.contains("single")) propertyForSharing.setHasSingle(true);
-            if (str.contains("double")) propertyForSharing.setHasDouble(true);
-            if (str.contains("currently")) propertyForSharing.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
-            if (str.contains("is owner occupied")) propertyForSharing.setOwnerOccupied(true);
-            if (str.contains(" males only")) propertyForSharing.setMalesOnly(true);
-            if (str.contains("females only")) propertyForSharing.setFemalesOnly(true);
+            if (str.contains("single")) propertyForRent.setHasSingle(true);
+            if (str.contains("double")) propertyForRent.setHasDouble(true);
+            if (str.contains("currently")) propertyForRent.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
+            if (str.contains("is owner occupied")) propertyForRent.setOwnerOccupied(true);
+            if (str.contains("males only")) propertyForRent.setMalesOnly(true);
+            if (str.contains("females only")) propertyForRent.setFemalesOnly(true);
         }
 
-        propertyForSharing.setCounty(county);
-        propertyForSharing.setPropertyType(checkIfElementIsNull(propertyType));
-        propertyForSharing.setBeds(beds);
-        propertyForSharing.setPriceString(priceString);
-        propertyForSharing.setLink(link);
-        propertyForSharing.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
-        propertyForSharing.setAddress(address);
-        propertyForSharing.setDescription(doc.getElementById("description").text());
-        propertyForSharing.setPrice(price);
+        propertyForRent.setCounty(county);
+        propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
+        propertyForRent.setBeds(beds);
+        propertyForRent.setPriceString(priceString);
+        propertyForRent.setLink(link);
+        propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+        propertyForRent.setAddress(address);
+        propertyForRent.setDescription(doc.getElementById("description").text());
+        propertyForRent.setPrice(price);
 
-        propertyRepository.save(propertyForSharing);
+        propertyRepository.save(propertyForRent);
     }
 
     private String checkIfElementIsNull(Element e) {

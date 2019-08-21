@@ -34,6 +34,7 @@
                             <tr>
                                 <th>Property Type</th>
                                 <th>Address</th>
+                                <th>County</th>
                                 <th>Price</th>
                                 <th>Distance</th>
                                 <th>Drive Time</th>
@@ -43,6 +44,7 @@
                             <tr th:remove="all">
                                 <td>Test Type</td>
                                 <td>Test Address</td>
+                                <td>Test County</td>
                                 <td>Test Price</td>
                                 <td>Test Distance</td>
                                 <td>Test Duration</td>
@@ -51,6 +53,7 @@
                             <tr th:remove="all">
                                 <td>Test Type</td>
                                 <td>Test Address</td>
+                                <td>Test County</td>
                                 <td>Test Price</td>
                                 <td>Test Distance</td>
                                 <td>Test Duration</td>
@@ -59,6 +62,7 @@
                             <tr th:each="propertyForSale : ${properties}">
                                 <td th:text="${propertyForSale.propertyType}">334</td>
                                 <td th:text="${propertyForSale.address}">Tasty Goodnees 3</td>
+                                <td th:text="${propertyForSale.county}"}>County</td>
                                 <td th:text="${propertyForSale.priceString}">Price</td>
                                 <td th:text="${propertyForSale.readableDistance}">Tasty Goodnees 3</td>
                                 <td th:text="${propertyForSale.readableDuration}">Duration</td>
