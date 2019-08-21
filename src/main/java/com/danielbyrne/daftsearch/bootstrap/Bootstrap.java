@@ -36,7 +36,8 @@ public class Bootstrap implements CommandLineRunner {
 
         System.out.println("Loading Sales...");
         loadSales();
-        System.out.println("Loading Rentals...");
+
+        System.out.println("\nLoading Rentals...");
         loadRentals();
     }
 
@@ -103,6 +104,7 @@ public class Bootstrap implements CommandLineRunner {
 
         Element eircode = doc.select(".PropertyMainInformation__eircode").first();
         Element description = doc.select(".PropertyDescription__propertyDescription").first();
+        Element developmentDescription = doc.selectFirst(".PropertyDescription__developmentDescription");
         Element propertyType = doc.select(".QuickPropertyDetails__propertyType").first();
         Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
         Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
@@ -134,7 +136,19 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSale.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
         propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
         propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
-        propertyForSale.setDescription(checkIfElementIsNull(description));
+
+        if (developmentDescription != null) {
+            propertyForSale.setDescription(developmentDescription.text());
+            propertyForSale.setPropertyType("New Development");
+        } else {
+            propertyForSale.setDescription(checkIfElementIsNull(description));
+        }
+
+        if (propertyForSale.getPropertyType().equals("New Development")
+                && !propertyForSale.getPriceString().toLowerCase().equals("price on application")) {
+            propertyForSale.setPriceString("Prices start at " + propertyForSale.getPriceString());
+        }
+
         propertyForSale.setPrice(price);
 
 //            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
