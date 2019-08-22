@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @Service
 public class PropertyForSharingServiceImpl implements PropertyForSharingService {
 
-    PropertyForSharingMapper propertyForSharingMapper;
-    PropertyForSharingRepository propertyForSharingRepository;
+    private final PropertyForSharingMapper propertyForSharingMapper;
+    private final PropertyForSharingRepository propertyForSharingRepository;
 
     public PropertyForSharingServiceImpl(PropertyForSharingMapper propertyForSharingMapper,
                                          PropertyForSharingRepository propertyForSharingRepository) {

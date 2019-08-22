@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @Service
 public class PropertyForRentServiceImpl implements PropertyForRentService {
 
-    PropertyForRentMapper propertyForRentMapper;
-    PropertyForRentRepository propertyForRentRepository;
+    private final PropertyForRentMapper propertyForRentMapper;
+    private final PropertyForRentRepository propertyForRentRepository;
 
     public PropertyForRentServiceImpl(PropertyForRentMapper propertyForRentMapper,
                                       PropertyForRentRepository propertyForRentRepository) {
