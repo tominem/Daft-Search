@@ -51,8 +51,8 @@ public class Bootstrap implements CommandLineRunner {
 //        System.out.println("\nLoading Sales...");
 //        loadSales();
 //
-        System.out.println("\nLoading Rentals...");
-        loadRentals();
+//        System.out.println("\nLoading Rentals...");
+//        loadRentals();
     }
 
     private void loadSales() throws Exception {
