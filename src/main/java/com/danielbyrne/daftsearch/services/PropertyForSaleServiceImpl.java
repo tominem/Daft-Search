@@ -25,7 +25,10 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
 
         return propertyForSaleRepository.findAll()
                 .stream()
-                .map(propertyForSaleMapper::propertyForSaleToPropertyForSaleDTO)
+                .map(propertyForSale -> {
+                    PropertyForSaleDTO dto = propertyForSaleMapper.propertyForSaleToPropertyForSaleDTO(propertyForSale);
+                    return dto;
+                })
                 .collect(Collectors.toSet());
     }
 }

@@ -1,7 +1,7 @@
 package com.danielbyrne.daftsearch.controllers;
 
-import com.danielbyrne.daftsearch.domain.model.PropertyDTO;
-import com.danielbyrne.daftsearch.services.PropertyService;
+import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
+import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -21,28 +21,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PropertyForSaleControllerTest {
 
     @Mock
-    PropertyService propertyService;
+    PropertyForSaleService propertyForSaleService;
 
     @InjectMocks
-    PropertyController propertyController;
+    PropertyForSaleController propertyForSaleController;
 
     MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(propertyController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(propertyForSaleController).build();
     }
 
     @Test
     public void getAllProperties() throws Exception {
 
-        Set<PropertyDTO> propertyDTO = new HashSet<>(Arrays.asList(new PropertyDTO(), new PropertyDTO()));
-        given(propertyService.getAllProperties()).willReturn(propertyDTO);
+        Set<PropertyForSaleDTO> propertyForSaleDTOS = new HashSet<>(Arrays.asList(
+                                                        new PropertyForSaleDTO(), new PropertyForSaleDTO()));
 
-        mockMvc.perform(get("/properties"))
+        given(propertyForSaleService.getAllProperties()).willReturn(propertyForSaleDTOS);
+
+        mockMvc.perform(get("/properties/sales"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("property/property"))
-                .andExpect(model().attributeExists("properties"));
+                .andExpect(view().name("property/sales"))
+                .andExpect(model().attributeExists("propertiesforsale"));
     }
 }
