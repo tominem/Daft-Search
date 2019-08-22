@@ -7,7 +7,6 @@ import com.danielbyrne.daftsearch.domain.PropertyForSharing;
 import com.danielbyrne.daftsearch.repositories.PropertyForRentRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository;
-import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,7 +21,6 @@ import java.io.IOException;
 public class Bootstrap implements CommandLineRunner {
 
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
-    private PropertyRepository propertyRepository;
     private PropertyForSaleRepository propertyForSaleRepository;
     private PropertyForRentRepository propertyForRentRepository;
     private PropertyForSharingRepository propertyForSharingRepository;
@@ -34,10 +32,8 @@ public class Bootstrap implements CommandLineRunner {
     private String TO_LET = "/residential-property-for-rent/?offset=";
     private String TO_SHARE = "/rooms-to-share/?offset=";
 
-    public Bootstrap(PropertyRepository propertyRepository, PropertyForSaleRepository propertyForSaleRepository,
-                     PropertyForRentRepository propertyForRentRepository, PropertyForSharingRepository propertyForSharingRepository,
-                     GoogleMapServices googleMapServices) {
-        this.propertyRepository = propertyRepository;
+    public Bootstrap(PropertyForSaleRepository propertyForSaleRepository, PropertyForRentRepository propertyForRentRepository,
+                     PropertyForSharingRepository propertyForSharingRepository, GoogleMapServices googleMapServices) {
         this.propertyForSaleRepository = propertyForSaleRepository;
         this.propertyForRentRepository = propertyForRentRepository;
         this.propertyForSharingRepository = propertyForSharingRepository;
