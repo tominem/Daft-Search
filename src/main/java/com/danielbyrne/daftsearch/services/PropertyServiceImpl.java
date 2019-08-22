@@ -27,11 +27,6 @@ public class PropertyServiceImpl implements PropertyService {
             PropertyDTO dto = propertyMapper.propertyToPropertyDTO(property);
             propertyDTOS.add(dto);
         });
-
         return propertyDTOS;
-//        return propertyRepository.findAll()
-//                .stream()
-//                .map(propertyMapper::propertyToPropertyDTO)
-//                .collect(Collectors.toList());
     }
 }
