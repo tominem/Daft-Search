@@ -16,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -68,14 +70,20 @@ public class Bootstrap implements CommandLineRunner {
 
                 Document document = Jsoup.connect(url).get();
 
-                Elements newsHeadlines = document.select(".PropertyCardContainer__container > a, " +
+                Elements sales = document.select(".PropertyCardContainer__container > a, " +
                         ".PropertyImage__mainImageContainerStandard > a");
 
-                if (newsHeadlines.size() == 0) propertiesExist = false;
+                if (sales.size() == 0) propertiesExist = false;
 
-                for (Element headline : newsHeadlines) {
-                    System.out.println("\nSource URL: " + url);
-                    loadPropertyForSale(headline.absUrl("href"));
+                Set<String> urls = new HashSet<>();
+                for (Element headline : sales) {
+                    String u = headline.absUrl("href");
+                    // dupe href elements being ignored
+                    if (!urls.contains(u)){
+                        System.out.println("\nSource URL: " + url);
+                        loadPropertyForSale(headline.absUrl("href"));
+                        urls.add(u);
+                    }
                 }
                 offset += 20;
                 propertiesExist=false;
@@ -146,7 +154,6 @@ public class Bootstrap implements CommandLineRunner {
         Element beds = doc.select(".QuickPropertyDetails__iconCopy").first();
         Element baths = doc.select(".QuickPropertyDetails__iconCopy--WithBorder").first();
         Element priceElement = doc.select(".PropertyInformationCommonStyles__costAmountCopy").first();
-//        Elements image = doc.select("img[\\.(jpg)]");
         Element address = doc.select(".PropertyMainInformation__address").first();
 
         int price;
