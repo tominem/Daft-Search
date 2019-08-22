@@ -31,4 +31,16 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
                 })
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public Set<PropertyForSaleDTO> filterProperties(int maxPrice, int minBed) {
+        return propertyForSaleRepository.findAll()
+                .stream()
+                .filter(p -> p.getPrice() <= maxPrice && p.getBeds() >= minBed)
+                .map(propertyForSale -> {
+                    PropertyForSaleDTO dto = propertyForSaleMapper.propertyForSaleToPropertyForSaleDTO(propertyForSale);
+                    return dto;
+                })
+                .collect(Collectors.toSet());
+    }
 }

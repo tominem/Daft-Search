@@ -7,4 +7,6 @@ import java.util.Set;
 public interface PropertyForSaleService {
 
     Set<PropertyForSaleDTO> getAllProperties();
+
+    Set<PropertyForSaleDTO> filterProperties(int maxPrice, int minBed);
 }
