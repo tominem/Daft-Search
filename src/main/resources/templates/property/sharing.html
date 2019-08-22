@@ -40,6 +40,7 @@
                                 <th>Drive Time</th>
                                 <th>M/F</th>
                                 <th>Current Occupants</th>
+                                <th>Owner Occupied</th>
                                 <th>Link</th>
                             </tr>
                             </thead>
@@ -52,6 +53,7 @@
                                 <td>Test Duration</td>
                                 <td>Males/Females</td>
                                 <td>Occupants</td>
+                                <td>Yes</td>
                                 <td><a href="#">View</a></td>
                             </tr>
                             <tr th:remove="all">
@@ -63,6 +65,7 @@
                                 <td>Test Duration</td>
                                 <td>Males/Females</td>
                                 <td>Current Occs</td>
+                                <td>No</td>
                                 <td><a href="#">View</a></td>
                             </tr>
                             <tr th:each="property : ${propertiesToShare}">
@@ -74,6 +77,7 @@
                                 <td th:text="${property.readableDuration}">Duration</td>
                                 <td th:text="${property.malesOrFemales}">m/f</td>
                                 <td th:text="${property.currentOccupants}">1</td>
+                                <td th:text="${property.ownerOccupied} ? 'Yes' : 'No'">Yes</td>
                                 <td><a href="#" th:href="${property.link}">View</a></td>
                             </tr>
                         </table>
