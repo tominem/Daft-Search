@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -32,15 +33,21 @@ public class PropertyForSaleServiceImplTest {
     @Test
     public void getAllProperties() {
 
+        Property p1 = new PropertyForSale();
+        p1.setBaths(1);
+
+        Property p2 = new PropertyForSale();
+        p2.setBeds(2);
+
         //given
-        List<Property> properties = Arrays.asList(new PropertyForSale(), new PropertyForSale(), new PropertyForSale());
+        List<Property> properties = Arrays.asList(p1, p2);
 
         when(propertyRepository.findAll()).thenReturn(properties);
 
         //when
-        List<PropertyDTO> propertyDTOS = propertyService.getAllProperties();
+        Set<PropertyDTO> propertyDTOS = propertyService.getAllProperties();
 
         //then
-        assertEquals(3, propertyDTOS.size());
+        assertEquals(2, propertyDTOS.size());
     }
 }

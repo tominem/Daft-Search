@@ -1,13 +1,15 @@
 package com.danielbyrne.daftsearch.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-@Data
-@Entity
+@Getter
+@Setter
+@Document
 public abstract class Property {
 
     @Id
@@ -20,7 +22,7 @@ public abstract class Property {
     private int price;
     private String priceString;
     private String link;
-    private Enum county;
+    private County county;
 
     private Long distanceInMetres;
     private Long duration;

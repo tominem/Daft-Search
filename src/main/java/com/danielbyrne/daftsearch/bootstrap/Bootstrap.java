@@ -21,7 +21,7 @@ public class Bootstrap implements CommandLineRunner {
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
     private GoogleMapServices googleMapServices;
-    private Enum county;
+    private County county;
 
     private final String BASE_URL = "https://www.daft.ie/";
     private String FOR_SALE = "/property-for-sale/?offset=";
@@ -36,21 +36,21 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println("\nLoading Shared Properties...");
-        loadSharedProperties();
-
-        System.out.println("\nLoading Sales...");
-        loadSales();
-
-        System.out.println("\nLoading Rentals...");
-        loadRentals();
+//        System.out.println("\nLoading Shared Properties...");
+//        loadSharedProperties();
+//
+//        System.out.println("\nLoading Sales...");
+//        loadSales();
+//
+//        System.out.println("\nLoading Rentals...");
+//        loadRentals();
     }
 
     private void loadSales() throws Exception {
 
-        for (Enum county : County.values()) {
+        for (County c : County.values()) {
 
-            this.county = county;
+            this.county = c;
 
             int offset = 0;
             boolean propertiesExist = true;
@@ -71,15 +71,13 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSale(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
 
     private void loadRentals() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;
@@ -97,15 +95,13 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForRent(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
 
     private void loadSharedProperties() throws IOException {
 
-        for (Enum county : County.values()) {
+        for (County county : County.values()) {
             this.county = county;
 
             int offset = 0;
@@ -123,8 +119,6 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSharing(headline.absUrl("href"));
                 }
                 offset += 20;
-                // todo this needs to be removed in order to load all properties
-                propertiesExist=false;
             }
         }
     }
