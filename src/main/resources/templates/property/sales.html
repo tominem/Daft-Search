@@ -18,6 +18,62 @@
 
 </head>
 <body>
+<!--/*@thymesVar id="properties" type="com.danielbyrne.daftsearch.domain.PropertyForSale"*/-->
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
 
+                <div class="panel-heading">
+                    <h1 class="panel-title">Properties For Sale</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(properties)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Property Type</th>
+                                <th>Address</th>
+                                <th>County</th>
+                                <th>Price</th>
+                                <th>Distance</th>
+                                <th>Drive Time</th>
+                                <th>Link</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>Test Type</td>
+                                <td>Test Address</td>
+                                <td>Test County</td>
+                                <td>Test Price</td>
+                                <td>Test Distance</td>
+                                <td>Test Duration</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td>Test Type</td>
+                                <td>Test Address</td>
+                                <td>Test County</td>
+                                <td>Test Price</td>
+                                <td>Test Distance</td>
+                                <td>Test Duration</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:each="propertyForSale : ${properties}">
+                                <td th:text="${propertyForSale.propertyType}">334</td>
+                                <td th:text="${propertyForSale.address}">Tasty Goodnees 3</td>
+                                <td th:text="${propertyForSale.county}"}>County</td>
+                                <td th:text="${propertyForSale.priceString}">Price</td>
+                                <td th:text="${propertyForSale.readableDistance}">Tasty Goodnees 3</td>
+                                <td th:text="${propertyForSale.readableDuration}">Duration</td>
+                                <td><a href="#" th:href="${propertyForSale.link}">View</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
