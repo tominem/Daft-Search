@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +40,7 @@ public class PropertyForSaleServiceImplTest {
         p2.setBeds(2);
 
         //given
-        Set<Property> properties = new HashSet<>(Arrays.asList(p1, p2));
+        List<Property> properties = Arrays.asList(p1, p2);
 
         when(propertyRepository.findAll()).thenReturn(properties);
 
