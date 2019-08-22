@@ -51,8 +51,8 @@ public class Bootstrap implements CommandLineRunner {
 //        System.out.println("\nLoading Sales...");
 //        loadSales();
 //
-//        System.out.println("\nLoading Rentals...");
-//        loadRentals();
+        System.out.println("\nLoading Rentals...");
+        loadRentals();
     }
 
     private void loadSales() throws Exception {
@@ -66,9 +66,9 @@ public class Bootstrap implements CommandLineRunner {
 
             while (propertiesExist) {
 
-                String url = BASE_URL + county + FOR_SALE + offset;
+                String startingUrl = BASE_URL + county + FOR_SALE + offset;
 
-                Document document = Jsoup.connect(url).get();
+                Document document = Jsoup.connect(startingUrl).get();
 
                 Elements sales = document.select(".PropertyCardContainer__container > a, " +
                         ".PropertyImage__mainImageContainerStandard > a");
@@ -80,13 +80,14 @@ public class Bootstrap implements CommandLineRunner {
                     String u = headline.absUrl("href");
                     // dupe href elements being ignored
                     if (!urls.contains(u)){
-                        System.out.println("\nSource URL: " + url);
+                        System.out.println("\nSource URL: " + startingUrl);
                         loadPropertyForSale(headline.absUrl("href"));
                         urls.add(u);
                     }
                 }
                 offset += 20;
                 propertiesExist=false;
+                urls.clear();
             }
         }
     }
