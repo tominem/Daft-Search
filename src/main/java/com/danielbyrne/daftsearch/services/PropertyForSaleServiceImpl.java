@@ -6,6 +6,7 @@ import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PropertyForSaleServiceImpl implements PropertyForSaleService {
@@ -21,6 +22,10 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
 
     @Override
     public Set<PropertyForSaleDTO> getAllProperties() {
-        return null;
+
+        return propertyForSaleRepository.findAll()
+                .stream()
+                .map(propertyForSaleMapper::propertyForSaleToPropertyForSaleDTO)
+                .collect(Collectors.toSet());
     }
 }

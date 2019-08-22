@@ -1,10 +1,9 @@
 package com.danielbyrne.daftsearch.services;
 
-import com.danielbyrne.daftsearch.domain.Property;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
-import com.danielbyrne.daftsearch.domain.mappers.PropertyMapper;
-import com.danielbyrne.daftsearch.domain.model.PropertyDTO;
-import com.danielbyrne.daftsearch.repositories.PropertyRepository;
+import com.danielbyrne.daftsearch.domain.mappers.PropertyForSaleMapper;
+import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
+import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,35 +18,38 @@ import static org.mockito.Mockito.when;
 
 public class PropertyForSaleServiceImplTest {
 
-    PropertyService propertyService;
+    PropertyForSaleService propertyForSaleService;
 
     @Mock
-    PropertyRepository propertyRepository;
+    PropertyForSaleRepository propertyForSaleRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        propertyService = new PropertyServiceImpl(PropertyMapper.INSTANCE, propertyRepository);
+        propertyForSaleService = new PropertyForSaleServiceImpl(PropertyForSaleMapper.INSTANCE,
+                propertyForSaleRepository);
     }
 
     @Test
     public void getAllProperties() {
 
-        Property p1 = new PropertyForSale();
+        PropertyForSale p1 = new PropertyForSale();
         p1.setBaths(1);
 
-        Property p2 = new PropertyForSale();
+        PropertyForSale p2 = new PropertyForSale();
         p2.setBeds(2);
 
         //given
-        List<Property> properties = Arrays.asList(p1, p2);
+        List<PropertyForSale> properties = Arrays.asList(p1, p2);
 
-        when(propertyRepository.findAll()).thenReturn(properties);
+        when(propertyForSaleRepository.findAll()).thenReturn(properties);
 
         //when
-        Set<PropertyDTO> propertyDTOS = propertyService.getAllProperties();
+        Set<PropertyForSaleDTO> propertyForSaleDTOS = propertyForSaleService.getAllProperties();
 
         //then
-        assertEquals(2, propertyDTOS.size());
+        assertEquals(2, propertyForSaleDTOS.size());
+
+
     }
 }
