@@ -4,6 +4,9 @@ import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.domain.PropertyForSale;
 import com.danielbyrne.daftsearch.domain.PropertyForSharing;
+import com.danielbyrne.daftsearch.repositories.PropertyForRentRepository;
+import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
+import com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyRepository;
 import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import org.jsoup.Jsoup;
@@ -20,6 +23,9 @@ public class Bootstrap implements CommandLineRunner {
 
     private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyRepository propertyRepository;
+    private PropertyForSaleRepository propertyForSaleRepository;
+    private PropertyForRentRepository propertyForRentRepository;
+    private PropertyForSharingRepository propertyForSharingRepository;
     private GoogleMapServices googleMapServices;
     private County county;
 
@@ -28,22 +34,27 @@ public class Bootstrap implements CommandLineRunner {
     private String TO_LET = "/residential-property-for-rent/?offset=";
     private String TO_SHARE = "/rooms-to-share/?offset=";
 
-    public Bootstrap(PropertyRepository propertyRepository, GoogleMapServices googleMapServices) {
+    public Bootstrap(PropertyRepository propertyRepository, PropertyForSaleRepository propertyForSaleRepository,
+                     PropertyForRentRepository propertyForRentRepository, PropertyForSharingRepository propertyForSharingRepository,
+                     GoogleMapServices googleMapServices) {
         this.propertyRepository = propertyRepository;
+        this.propertyForSaleRepository = propertyForSaleRepository;
+        this.propertyForRentRepository = propertyForRentRepository;
+        this.propertyForSharingRepository = propertyForSharingRepository;
         this.googleMapServices = googleMapServices;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-//        System.out.println("\nLoading Shared Properties...");
-//        loadSharedProperties();
-//
-//        System.out.println("\nLoading Sales...");
-//        loadSales();
-//
-//        System.out.println("\nLoading Rentals...");
-//        loadRentals();
+        System.out.println("\nLoading Shared Properties...");
+        loadSharedProperties();
+
+        System.out.println("\nLoading Sales...");
+        loadSales();
+
+        System.out.println("\nLoading Rentals...");
+        loadRentals();
     }
 
     private void loadSales() throws Exception {
@@ -71,6 +82,7 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSale(headline.absUrl("href"));
                 }
                 offset += 20;
+                propertiesExist=false;
             }
         }
     }
@@ -95,6 +107,7 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForRent(headline.absUrl("href"));
                 }
                 offset += 20;
+                propertiesExist=false;
             }
         }
     }
@@ -119,6 +132,7 @@ public class Bootstrap implements CommandLineRunner {
                     loadPropertyForSharing(headline.absUrl("href"));
                 }
                 offset += 20;
+                propertiesExist=false;
             }
         }
     }
@@ -188,7 +202,7 @@ public class Bootstrap implements CommandLineRunner {
 //                propertyForSale.setReadableDuration(distanceMatrixElement.duration.humanReadable);
 //            }
 
-        propertyRepository.save(propertyForSale);
+        propertyForSaleRepository.save(propertyForSale);
 
 //            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
 //                System.out.println(property.toString());
@@ -263,7 +277,7 @@ public class Bootstrap implements CommandLineRunner {
 //                propertyForRent.setReadableDuration(distanceMatrixElement.duration.humanReadable);
 //            }
 
-        propertyRepository.save(propertyForRent);
+        propertyForRentRepository.save(propertyForRent);
 
 //            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
 //                System.out.println(property.toString());
@@ -321,7 +335,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setDescription(doc.getElementById("description").text());
         propertyForRent.setPrice(price);
 
-        propertyRepository.save(propertyForRent);
+        propertyForSharingRepository.save(propertyForRent);
     }
 
     private String checkIfElementIsNull(Element e) {
