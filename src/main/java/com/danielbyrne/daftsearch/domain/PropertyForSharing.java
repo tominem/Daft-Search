@@ -15,4 +15,16 @@ public class PropertyForSharing extends Property {
     private int currentOccupants;
     private boolean hasSingle;
     private boolean hasDouble;
+    private String malesOrFemales;
+
+    public void setMalesOrFemales() {
+
+        if (malesOnly) {
+            malesOrFemales = "Males Only";
+        } else if (femalesOnly) {
+            malesOrFemales = "Females Only";
+        } else {
+            malesOrFemales = "Males or Females";
+        }
+    }
 }

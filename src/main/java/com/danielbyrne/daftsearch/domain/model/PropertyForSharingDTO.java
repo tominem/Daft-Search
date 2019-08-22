@@ -28,4 +28,6 @@ public class PropertyForSharingDTO {
     private int currentOccupants;
     private boolean hasSingle;
     private boolean hasDouble;
+
+    private String malesOrFemales;
 }

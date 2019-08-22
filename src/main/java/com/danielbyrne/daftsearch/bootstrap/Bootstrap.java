@@ -313,29 +313,30 @@ public class Bootstrap implements CommandLineRunner {
 
         Elements propertyOverview = doc.getElementById("overview").select("li");
 
-        PropertyForSharing propertyForRent = new PropertyForSharing();
+        PropertyForSharing propertyForSharing = new PropertyForSharing();
 
         for (int i = 0; i < propertyOverview.size(); i++) {
             String str = propertyOverview.get(i).text().toLowerCase();
-            if (str.contains("single")) propertyForRent.setHasSingle(true);
-            if (str.contains("double")) propertyForRent.setHasDouble(true);
-            if (str.contains("currently")) propertyForRent.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
-            if (str.contains("is owner occupied")) propertyForRent.setOwnerOccupied(true);
-            if (str.contains("males only")) propertyForRent.setMalesOnly(true);
-            if (str.contains("females only")) propertyForRent.setFemalesOnly(true);
+            if (str.contains("single")) propertyForSharing.setHasSingle(true);
+            if (str.contains("double")) propertyForSharing.setHasDouble(true);
+            if (str.contains("currently")) propertyForSharing.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
+            if (str.contains("is owner occupied")) propertyForSharing.setOwnerOccupied(true);
+            if (str.contains(" males only")) propertyForSharing.setMalesOnly(true);
+            if (str.contains("females only")) propertyForSharing.setFemalesOnly(true);
         }
 
-        propertyForRent.setCounty(county);
-        propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
-        propertyForRent.setBeds(beds);
-        propertyForRent.setPriceString(priceString);
-        propertyForRent.setLink(link);
-        propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
-        propertyForRent.setAddress(address);
-        propertyForRent.setDescription(doc.getElementById("description").text());
-        propertyForRent.setPrice(price);
+        propertyForSharing.setCounty(county);
+        propertyForSharing.setPropertyType(checkIfElementIsNull(propertyType));
+        propertyForSharing.setBeds(beds);
+        propertyForSharing.setPriceString(priceString);
+        propertyForSharing.setLink(link);
+        propertyForSharing.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
+        propertyForSharing.setAddress(address);
+        propertyForSharing.setDescription(doc.getElementById("description").text());
+        propertyForSharing.setPrice(price);
+        propertyForSharing.setMalesOrFemales();
 
-        propertyForSharingRepository.save(propertyForRent);
+        propertyForSharingRepository.save(propertyForSharing);
     }
 
     private String checkIfElementIsNull(Element e) {

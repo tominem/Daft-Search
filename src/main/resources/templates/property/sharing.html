@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties To Share</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<!--/*@thymesVar id="propertiesToShare" type="com.danielbyrne.daftsearch.domain.PropertyForSharing"*/-->
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1 class="panel-title">Shared Properties</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(propertiesToShare)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Property Type</th>
+                                <th>Address</th>
+                                <th>County</th>
+                                <th>Price</th>
+                                <th>Distance</th>
+                                <th>Drive Time</th>
+                                <th>M/F</th>
+                                <th>Link</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>Test Type</td>
+                                <td>Test Address</td>
+                                <td>Test County</td>
+                                <td>Test Price</td>
+                                <td>Test Distance</td>
+                                <td>Test Duration</td>
+                                <td>Males/Females</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td>Test Type</td>
+                                <td>Test Address</td>
+                                <td>Test County</td>
+                                <td>Test Price</td>
+                                <td>Test Distance</td>
+                                <td>Test Duration</td>
+                                <td>Males/Females</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:each="property : ${propertiesToShare}">
+                                <td th:text="${property.propertyType}">334</td>
+                                <td th:text="${property.address}">Tasty Goodnees 3</td>
+                                <td th:text="${property.county}"}>County</td>
+                                <td th:text="${property.priceString}">Price</td>
+                                <td th:text="${property.readableDistance}">Tasty Goodnees 3</td>
+                                <td th:text="${property.readableDuration}">Duration</td>
+                                <td th:text="${property.malesOrFemales}">m/f</td>
+                                <td><a href="#" th:href="${property.link}">View</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
