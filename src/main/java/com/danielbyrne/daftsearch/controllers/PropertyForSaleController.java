@@ -1,5 +1,6 @@
 package com.danielbyrne.daftsearch.controllers;
 
+import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class PropertyForSaleController {
     @RequestMapping("properties/sales")
     public String getAllProperties(Model model) {
         model.addAttribute("propertiesforsale", propertyForSaleService.getAllProperties());
+        model.addAttribute("counties", County.values());
         return "property/sales";
     }
 
