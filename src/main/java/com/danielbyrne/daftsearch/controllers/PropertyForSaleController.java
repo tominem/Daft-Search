@@ -1,5 +1,6 @@
 package com.danielbyrne.daftsearch.controllers;
 
+import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,16 @@ public class PropertyForSaleController {
     @GetMapping("/find")
     public String searchProperties(Model model) {
         model.addAttribute("propertyForm", new SaleForm());
+        model.addAttribute("counties", County.values());
         return "property/sales/searchform";
     }
 
     @GetMapping
-    public String testForm(SaleForm property, BindingResult result, Model model) {
+    public String processSearchForm(SaleForm property, BindingResult result, Model model) {
         // todo handle errors and do relevant checks
         int maxPrice = property.getMaxPrice();
         int minBeds = property.getMinBeds();
+
         return "redirect:/properties/sales/search/" + property.getMaxPrice() + "/" + property.getMinBeds();
     }
 

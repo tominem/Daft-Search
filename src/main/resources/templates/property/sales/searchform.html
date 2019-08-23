@@ -19,39 +19,30 @@
 <body>
 
 <form th:action="@{/properties/sales/}" th:object="${propertyForm}" method="get" style="padding: 20px">
-    Maximum Price: <input type="text" th:field="*{maxPrice}" />
-    <br>
-    Minumum Beds: <input type="text" th:field="*{minBeds}" />
-<!--    <br>-->
-<!--    Within <input type="text" name="distance"> KM of location-->
-<!--    <br>-->
-<!--    Select up to five counties to search: <br>-->
-<!--    <input type = "checkbox" name="carlow" value="on"> Carlow<br>-->
-<!--    <input type = "checkbox" name="cavan" value="on"> Cavan<br>-->
-<!--    <input type = "checkbox" name="clare" value="on"> Clare<br>-->
-<!--    <input type = "checkbox" name="cork" value="on"> Cork<br>-->
-<!--    <input type = "checkbox" name="donegal" value="on"> Donegal<br>-->
-<!--    <input type = "checkbox" name="dublin" value="on"> Dublin<br>-->
-<!--    <input type = "checkbox" name="galway" value="on"> Galway<br>-->
-<!--    <input type = "checkbox" name="kerry" value="on"> Kerry<br>-->
-<!--    <input type = "checkbox" name="kildare" value="on"> Kildare<br>-->
-<!--    <input type = "checkbox" name="kilkenny" value="on"> Kilkenny<br>-->
-<!--    <input type = "checkbox" name="laois" value="on"> Laois<br>-->
-<!--    <input type = "checkbox" name="leitrim" value="on"> Leitrim<br>-->
-<!--    <input type = "checkbox" name="limerick" value="on"> Limerick<br>-->
-<!--    <input type = "checkbox" name="longford" value="on"> Longford<br>-->
-<!--    <input type = "checkbox" name="louth" value="on"> Louth<br>-->
-<!--    <input type = "checkbox" name="mayo" value="on"> Mayo<br>-->
-<!--    <input type = "checkbox" name="meath" value="on"> Meath<br>-->
-<!--    <input type = "checkbox" name="monaghan" value="on"> Monaghan<br>-->
-<!--    <input type = "checkbox" name="offaly" value="on"> Offaly<br>-->
-<!--    <input type = "checkbox" name="roscommon" value="on"> Roscommon<br>-->
-<!--    <input type = "checkbox" name="sligo" value="on"> Sligo<br>-->
-<!--    <input type = "checkbox" name="tipperary" value="on"> Tipperary<br>-->
-<!--    <input type = "checkbox" name="waterford" value="on"> Waterford<br>-->
-<!--    <input type = "checkbox" name="westmeath" value="on"> Westmeath<br>-->
-<!--    <input type = "checkbox" name="wexford" value="on"> Wexford<br>-->
-<!--    <input type = "checkbox" name="wicklow" value="on"> Wicklow<br>-->
+
+    <table>
+        <tr>
+            <td>Maximum Price:</td>
+            <td><input type="text" th:field="*{maxPrice}" placeholder=""/></td>
+        </tr>
+        <tr>
+            <td>Minimum Beds:</td>
+            <td><input type="text" th:field="*{minBeds}" placeholder=""/></td>
+        </tr>
+        <tr>
+            <td>Within Distance (km):</td>
+            <td><input type="text" th:field="*{distanceInKms}" placeholder=""></td>
+        </tr>
+    </table>
+
+    <p>Select a maximum of 5 counties to search:</p>
+
+    <ul>
+        <li th:each="county : ${counties}">
+            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
+            <label th:text="${#strings.capitalize(county)}"></label>
+        </li>
+    </ul>
 
     <button type="submit" class="btn btn-default">Search</button>
 </form>
