@@ -21,39 +21,39 @@
 </head>
 <body>
 
-<form id="form1">
-    <div style="padding:20px">
-        <select id="chkveg" multiple="multiple">
-            <option th:each="county : ${counties}"
-                    th:value="${county}"
-                    th:text="${county}">
-            </option>
-        </select>
+<!--<form id="form1">-->
+<!--    <div style="padding:20px">-->
+<!--        <select id="chkveg" multiple="multiple">-->
+<!--            <option th:each="county : ${counties}"-->
+<!--                    th:value="${county}"-->
+<!--                    th:text="${county}">-->
+<!--            </option>-->
+<!--        </select>-->
 
-        <br /><br />
+<!--        <br /><br />-->
 
-        <input type="button" id="btnget" value="Get Selected Values" />
+<!--        <input type="button" id="btnget" value="Get Selected Values" />-->
 
-        <script type="text/javascript">
+<!--        <script type="text/javascript">-->
 
-            $(function() {
+<!--            $(function() {-->
 
-                $('#chkveg').multiselect({
+<!--                $('#chkveg').multiselect({-->
 
-                    includeSelectAllOption: true
-                });
+<!--                    includeSelectAllOption: true-->
+<!--                });-->
 
-                $('#btnget').click(function(){
+<!--                $('#btnget').click(function(){-->
 
-                    alert($('#chkveg').val());
-                });
-            });
+<!--                    alert($('#chkveg').val());-->
+<!--                });-->
+<!--            });-->
 
-        </script>
+<!--        </script>-->
 
-    </div>
+<!--    </div>-->
 
-</form>
+<!--</form>-->
 <!--/*@thymesVar id="propertiesforsale" type="com.danielbyrne.daftsearch.domain.model.PropertyForSale"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
