@@ -179,7 +179,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSale.setPropertyType(checkIfElementIsNull(propertyType));
         propertyForSale.setAddress(checkIfElementIsNull(address));
         propertyForSale.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
-        propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text()));
+        propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text().replaceAll("[^0-9.]", "")));
         propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
 
         if (developmentDescription != null) {
