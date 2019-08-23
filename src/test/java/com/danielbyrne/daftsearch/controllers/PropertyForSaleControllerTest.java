@@ -42,7 +42,7 @@ public class PropertyForSaleControllerTest {
 
         given(propertyForSaleService.getAllProperties()).willReturn(propertyForSaleDTOS);
 
-        mockMvc.perform(get("/properties/sales"))
+        mockMvc.perform(get("/properties/sales/all"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("property/sales"))
                 .andExpect(model().attributeExists("propertiesforsale"));
