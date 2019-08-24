@@ -1,6 +1,9 @@
 package com.danielbyrne.daftsearch.controllers;
 
+import com.danielbyrne.daftsearch.domain.County;
+import com.danielbyrne.daftsearch.domain.TravelMode;
 import com.danielbyrne.daftsearch.domain.forms.SaleForm;
+import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @RequestMapping("properties/sales")
 @Controller
@@ -33,17 +37,25 @@ public class PropertyForSaleController {
             return "property/sales/searchform";
         }
 
-        // todo handle errors and do relevant checks
         int maxPrice = saleForm.getMaxPrice();
         int minBeds = saleForm.getMinBeds();
+        County[] counties = saleForm.getCounties();
 
-        return "redirect:/properties/sales/search/" + maxPrice + "/" + minBeds;
+        int distance = saleForm.getDistanceInKms();
+        String location = saleForm.getLocation();
+        TravelMode modeOfTransport = saleForm.getTravelMode();
+
+        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterProperties(maxPrice, minBeds, counties);
+
+        model.addAttribute("propertiesforsale", filteredProperties);
+        return "property/sales";
+//        return "redirect:/properties/sales/search/" + maxPrice + "/" + minBeds;
     }
 
     @GetMapping("/search/{maxPrice}/{minBeds}")
     public String filterSales(@PathVariable String maxPrice, @PathVariable String minBeds, Model model) {
-        model.addAttribute("propertiesforsale",
-                propertyForSaleService.filterProperties(Integer.parseInt(maxPrice), Integer.parseInt(minBeds)));
+//        model.addAttribute("propertiesforsale",
+//                propertyForSaleService.filterProperties(Integer.parseInt(maxPrice), Integer.parseInt(minBeds)));
         return "property/sales";
     }
 
