@@ -1,6 +1,6 @@
 package com.danielbyrne.daftsearch.domain;
 
-public enum TravelMode {
+public enum ModeOfTransport {
 
     DRIVING("Driving"),
     WALKING("Walking"),
@@ -9,7 +9,7 @@ public enum TravelMode {
 
     private final String displayName;
 
-    TravelMode(String displayName){
+    ModeOfTransport(String displayName){
         this.displayName = displayName;
     }
 

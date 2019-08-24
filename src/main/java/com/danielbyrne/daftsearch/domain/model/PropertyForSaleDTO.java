@@ -17,6 +17,9 @@ public class PropertyForSaleDTO {
     private String link;
     private County county;
 
+    private Long distanceKm;
+    private Long duranceMin;
+
     private String readableDistance;
     private String readableDuration;
 

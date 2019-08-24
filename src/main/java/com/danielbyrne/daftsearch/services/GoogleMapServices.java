@@ -1,5 +1,6 @@
 package com.danielbyrne.daftsearch.services;
 
+import com.danielbyrne.daftsearch.domain.ModeOfTransport;
 import com.google.maps.DistanceMatrixApi;
 import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
@@ -19,20 +20,16 @@ public class GoogleMapServices {
     @Value("${api.key}")
     private String API_KEY;
 
-    public DistanceMatrix getDrivingDistance(String origin, String destination)
+    public DistanceMatrix getDistanceMatrix(String origin, String destination, ModeOfTransport modeOfTransport)
             throws InterruptedException, ApiException, IOException {
 
-        GeoApiContext distCalc = new GeoApiContext.Builder()
-                                                .apiKey(API_KEY)
-                                                .build();
-
+        GeoApiContext distCalc = new GeoApiContext.Builder().apiKey(API_KEY).build();
         DistanceMatrixApiRequest request = DistanceMatrixApi.newRequest(distCalc);
-        DistanceMatrix result = request.origins(origin)
+
+        return request.origins(origin)
                 .destinations(destination)
-                .mode(TravelMode.DRIVING)
+                .mode(TravelMode.valueOf(modeOfTransport.name()))
                 .language("en-US")
                 .await();
-
-        return result;
     }
 }

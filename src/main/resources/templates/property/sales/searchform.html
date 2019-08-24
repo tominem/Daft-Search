@@ -44,8 +44,8 @@
         <tr>
             <td>Mode of Transport: </td>
             <td>
-                <select th:field="*{travelMode}">
-                    <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.TravelMode).values()}"
+                <select th:field="*{modeOfTransport}">
+                    <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.ModeOfTransport).values()}"
                             th:value="${mode}"
                             th:text="${mode.displayName}">
                     </option>

@@ -41,8 +41,8 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
                 .filter(p -> p.getPrice() <= maxPrice
                         && p.getBeds() >= minBed
                         && Arrays.asList(counties).contains(p.getCounty()))
-                .map(propertyForSale -> {
-                    PropertyForSaleDTO dto = propertyForSaleMapper.propertyForSaleToPropertyForSaleDTO(propertyForSale);
+                .map(p -> {
+                    PropertyForSaleDTO dto = propertyForSaleMapper.propertyForSaleToPropertyForSaleDTO(p);
                     return dto;
                 })
                 .collect(Collectors.toSet());
