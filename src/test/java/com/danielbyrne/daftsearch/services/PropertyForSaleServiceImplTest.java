@@ -23,11 +23,15 @@ public class PropertyForSaleServiceImplTest {
     @Mock
     PropertyForSaleRepository propertyForSaleRepository;
 
+    @Mock
+    GoogleMapServices googleMapServices;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         propertyForSaleService = new PropertyForSaleServiceImpl(PropertyForSaleMapper.INSTANCE,
-                propertyForSaleRepository);
+                propertyForSaleRepository,
+                googleMapServices);
     }
 
     @Test

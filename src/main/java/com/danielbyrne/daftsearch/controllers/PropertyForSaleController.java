@@ -4,11 +4,8 @@ import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.ModeOfTransport;
 import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
-import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import com.google.maps.errors.ApiException;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 @RequestMapping("properties/sales")
@@ -25,12 +21,9 @@ import java.util.Set;
 public class PropertyForSaleController {
 
     private final PropertyForSaleService propertyForSaleService;
-    private final GoogleMapServices googleMapServices;
 
-    public PropertyForSaleController(PropertyForSaleService propertyForSaleService,
-                                     GoogleMapServices googleMapServices) {
+    public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {
         this.propertyForSaleService = propertyForSaleService;
-        this.googleMapServices = googleMapServices;
     }
 
     @GetMapping("/find")
@@ -39,7 +32,8 @@ public class PropertyForSaleController {
     }
 
     @GetMapping
-    public String processSearchForm(@Valid SaleForm saleForm, BindingResult bindingResult, Model model) throws InterruptedException, ApiException, IOException {
+    public String processSearchForm(@Valid SaleForm saleForm, BindingResult bindingResult, Model model)
+            throws InterruptedException, ApiException, IOException {
 
         if (bindingResult.hasErrors()) {
             return "property/sales/searchform";
@@ -54,28 +48,14 @@ public class PropertyForSaleController {
         String location = saleForm.getLocation();
         ModeOfTransport modeOfTransport = saleForm.getModeOfTransport();
 
-        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterProperties(maxPrice, minBeds, counties);
+        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByAttributes(maxPrice, minBeds, counties);
 
-        Set<PropertyForSaleDTO> result = new HashSet<>();
+        Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesViaGoogle(filteredProperties,
+                                                                                    location,
+                                                                                    modeOfTransport,
+                                                                                    distance,
+                                                                                    duration);
 
-        DistanceMatrix distanceMatrix;
-        DistanceMatrixElement matrixElement;
-        for (PropertyForSaleDTO dto : filteredProperties) {
-
-            distanceMatrix = googleMapServices.getDistanceMatrix(location, dto.getAddress(), modeOfTransport);
-            matrixElement = distanceMatrix.rows[0].elements[0];
-
-            if (matrixElement != null) {
-                dto.setReadableDistance(matrixElement.distance.humanReadable);
-                dto.setReadableDuration(matrixElement.duration.humanReadable);
-                dto.setDistanceKm(matrixElement.distance.inMeters/1000);
-                dto.setDuranceMin(matrixElement.duration.inSeconds/60);
-
-                if (dto.getDistanceKm() <= distance || dto.getDuranceMin() <= duration) {
-                    result.add(dto);
-                }
-            }
-        }
         model.addAttribute("propertiesforsale", result);
         return "property/sales";
     }
