@@ -72,12 +72,13 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
             matrixElement = distanceMatrix.rows[0].elements[0];
 
             if (matrixElement != null) {
-                dto.setReadableDistance(matrixElement.distance.humanReadable);
-                dto.setReadableDuration(matrixElement.duration.humanReadable);
-                dto.setDistanceKm(matrixElement.distance.inMeters/1000);
-                dto.setDuranceMin(matrixElement.duration.inSeconds/60);
+                dto.setReadableDistance(matrixElement.distance == null ? "" : matrixElement.distance.humanReadable);
+                dto.setReadableDuration(matrixElement.duration == null ? "" : matrixElement.duration.humanReadable);
+                dto.setDistanceKm(matrixElement.distance == null ? -1 : matrixElement.distance.inMeters/1000);
+                dto.setDuranceMin(matrixElement.duration == null ? -1 : matrixElement.duration.inSeconds/60);
 
-                if (dto.getDistanceKm() <= distance || dto.getDuranceMin() <= duration) {
+                if ((dto.getDistanceKm() >= 0 && dto.getDistanceKm() <= distance)
+                    || (dto.getDuranceMin() >= 0 && dto.getDuranceMin() <= duration)) {
                     result.add(dto);
                 }
             }
