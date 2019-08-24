@@ -24,21 +24,41 @@
         <tr>
             <td>Maximum Price:</td>
             <td><input type="text" th:field="*{maxPrice}" placeholder=""/></td>
+            <td></td>
         </tr>
         <tr>
             <td>Minimum Beds:</td>
             <td><input type="text" th:field="*{minBeds}" placeholder=""/></td>
+            <td></td>
         </tr>
         <tr>
             <td>Within Distance (km):</td>
             <td><input type="text" th:field="*{distanceInKms}" placeholder=""></td>
+            <td> of <input type="text" th:field="*{location}" placeholder=""> OR </td>
+        </tr>
+        <tr>
+            <td>Within travel time (mins) </td> <td><input type="text" th:field="*{commuteInMinutes}" placeholder=""></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Mode of Transport: </td>
+            <td>
+                <select>
+                    <option th:each="travelMode : ${T(com.danielbyrne.daftsearch.domain.TravelMode).values()}"
+                            th:value="${travelMode}"
+                            th:text="${travelMode.displayName}">
+                    </option>
+                </select>
+            </td>
+            <td></td>
         </tr>
     </table>
 
     <p>Select a maximum of 5 counties to search:</p>
 
     <ul>
-        <li th:each="county : ${counties}">
+        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
+        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
             <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
             <label th:text="${#strings.capitalize(county)}"></label>
         </li>
