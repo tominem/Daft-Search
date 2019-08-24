@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @RequestMapping("properties/sales")
 @Controller
 public class PropertyForSaleController {
@@ -20,18 +22,22 @@ public class PropertyForSaleController {
     }
 
     @GetMapping("/find")
-    public String searchProperties(Model model) {
-        model.addAttribute("propertyForm", new SaleForm());
+    public String showForm(SaleForm saleForm) {
         return "property/sales/searchform";
     }
 
     @GetMapping
-    public String processSearchForm(SaleForm property, BindingResult result, Model model) {
-        // todo handle errors and do relevant checks
-        int maxPrice = property.getMaxPrice();
-        int minBeds = property.getMinBeds();
+    public String processSearchForm(@Valid SaleForm saleForm, BindingResult result, Model model) {
 
-        return "redirect:/properties/sales/search/" + property.getMaxPrice() + "/" + property.getMinBeds();
+        if (result.hasErrors()) {
+            return "property/sales/searchform";
+        }
+
+        // todo handle errors and do relevant checks
+        int maxPrice = saleForm.getMaxPrice();
+        int minBeds = saleForm.getMinBeds();
+
+        return "redirect:/properties/sales/search/" + maxPrice + "/" + minBeds;
     }
 
     @GetMapping("/search/{maxPrice}/{minBeds}")

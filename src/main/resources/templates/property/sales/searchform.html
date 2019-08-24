@@ -18,13 +18,14 @@
 </head>
 <body>
 
-<form th:action="@{/properties/sales/}" th:object="${propertyForm}" method="get" style="padding: 20px">
+<!--/*@thymesVar id="saleForm" type="com.danielbyrne.daftsearch.domain.forms.SaleForm"*/-->
+<form th:action="@{/properties/sales/}" th:object="${saleForm}" method="get" style="padding: 20px">
 
     <table>
         <tr>
             <td>Maximum Price:</td>
-            <td><input type="text" th:field="*{maxPrice}" placeholder=""/></td>
-            <td></td>
+            <td><input type="text" th:field="*{maxPrice}"  /></td>
+            <td th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}">Price Error</td>
         </tr>
         <tr>
             <td>Minimum Beds:</td>
@@ -43,10 +44,10 @@
         <tr>
             <td>Mode of Transport: </td>
             <td>
-                <select>
-                    <option th:each="travelMode : ${T(com.danielbyrne.daftsearch.domain.TravelMode).values()}"
-                            th:value="${travelMode}"
-                            th:text="${travelMode.displayName}">
+                <select th:field="*{travelMode}">
+                    <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.TravelMode).values()}"
+                            th:value="${mode}"
+                            th:text="${mode.displayName}">
                     </option>
                 </select>
             </td>
