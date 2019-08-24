@@ -53,6 +53,39 @@ public class Bootstrap implements CommandLineRunner {
 //
 //        System.out.println("\nLoading Rentals...");
 //        loadRentals();
+
+//        DistanceMatrix distanceMatrix = googleMapServices.getDistanceMatrix("The Cottage, Brownstown Road, The Curragh, Kildare, Co. Kildare | \n" +
+//                        "No 5 The Courtyard, Carnew, Co. Wicklow | \n" +
+//                        "Raingree, Knockananna, Arklow, Tinahely, Co. Wicklow | \n" +
+//                        "33 Lower Main Street, Arklow, Co. Wicklow | \n" +
+//                        "28 Clos Na Croise, Ballivor, Co. Meath | \n" +
+//                        "Follinstown, Navan, Co. Meath | \n" +
+//                        "Follistown, Navan, Co. Meath | \n" +
+//                        "23 The Lawns, Loughbollard, Clane, Co. Kildare | \n" +
+//                        "No. 14 St Brigid's Terrace, Abbey Street, Co. Wicklow., Arklow, Co. Wicklow | \n" +
+//                        "14 St. Brigid's Terrace, Arklow, Co. Wicklow | \n" +
+//                        "The School Masters Cottage, Athboy, Co. Meath | \n" +
+//                        "Clonagrowney, Carnaross, Co. Meath | \n" +
+//                        "Chapel Hill, Baltinglass, Co. Wicklow | \n" +
+//                        "83, Coill Dubh, Co. Kildare | \n" +
+//                        "12 Copper Beech, Main Street, Duleek, Co. Meath | \n" +
+//                        "32 Croghan View, Coolgreany nr, Arklow, Co. Wicklow | \n" +
+//                        "66 Buttercup Park, Darndale, Dublin 17, North Dublin City | \n" +
+//                        "121 Grange Hall, Dunshaughlin, Co. Meath | \n" +
+//                        "9 Russell Court, Proudstown Road, Navan, Co. Meath | \n" +
+//                        "2 Beechgrove, Athboy, Co. Meath | \n" +
+//                        "364 Johnstown, Maganey, Athy, Co. Kildare | \n" +
+//                        "71 Church Hill, Dunlavin, Co. Wicklow | \n" +
+//                        "5 Powell Court, Newbridge, Co. Kildare | \n" +
+//                        "Davidstown, Donard, Co. Wicklow | \n" +
+//                        "1 Parkmore, Baltinglass, Co. Wicklow | \n", "Sandyford Business Centre",
+//                ModeOfTransport.DRIVING);
+//        String address = distanceMatrix.originAddresses[0];
+//        int l = distanceMatrix.rows.length;
+//
+//        DistanceMatrixElement matrixElement = distanceMatrix.rows[0].elements[0];
+//
+//        System.out.println();
     }
 
     private void loadSales() throws Exception {
