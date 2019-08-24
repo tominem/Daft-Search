@@ -86,7 +86,6 @@ public class Bootstrap implements CommandLineRunner {
                     }
                 }
                 offset += 20;
-                propertiesExist=false;
                 urls.clear();
             }
         }
@@ -166,7 +165,7 @@ public class Bootstrap implements CommandLineRunner {
             price = Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
         } else {
             priceString = priceElement.text();
-            price = priceString.toLowerCase().equals("price on application")
+            price = priceString.toLowerCase().contains(" on application")
                     ? 0 : Integer.parseInt(priceString.replaceAll("[^0-9.]", ""));
         }
 

@@ -4,17 +4,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public enum County {
-//    antrim,
-//    armagh,
     carlow,
     cavan,
     clare,
     cork,
-//    derry,
     donegal,
-//    down,
     dublin,
-//    fermanagh,
     galway,
     kerry,
     kildare,
@@ -31,7 +26,6 @@ public enum County {
     roscommon,
     sligo,
     tipperary,
-//    tyrone,
     waterford,
     westmeath,
     wexford,
