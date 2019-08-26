@@ -21,13 +21,16 @@ public class PropertyForRentServiceImplTest {
     PropertyForRentService propertyForRentService;
 
     @Mock
+    GoogleMapServices googleMapServices;
+
+    @Mock
     PropertyForRentRepository propertyForRentRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         propertyForRentService = new PropertyForRentServiceImpl(PropertyForRentMapper.INSTANCE,
-                propertyForRentRepository);
+                propertyForRentRepository, googleMapServices);
     }
 
     @Test

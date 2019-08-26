@@ -24,4 +24,7 @@ public class PropertyForRentDTO {
     private String leaseLength;
 
     private float monthlyRent;
+
+    private Long distanceKm;
+    private Long durationMin;
 }
