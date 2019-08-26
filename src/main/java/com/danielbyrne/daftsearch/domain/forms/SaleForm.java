@@ -16,7 +16,7 @@ public class SaleForm {
     private int minBeds;
 
     @NotNull(message = "Testing")
-    private int maxPrice;
+    private float maxPrice;
 
     @NotNull
     private int distanceInKms;

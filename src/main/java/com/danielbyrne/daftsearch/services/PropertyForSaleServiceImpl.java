@@ -40,7 +40,7 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
     }
 
     @Override
-    public Set<PropertyForSaleDTO> filterPropertiesByDaftAttributes(int maxPrice, int minBed, County[] counties) {
+    public Set<PropertyForSaleDTO> filterPropertiesByDaftAttributes(float maxPrice, int minBed, County[] counties) {
         return propertyForSaleRepository.findAll()
                 .stream()
                 .filter(p -> p.getPrice() <= maxPrice

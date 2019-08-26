@@ -40,7 +40,7 @@ public class PropertyForSaleController {
             return "property/sales/searchform";
         }
 
-        int maxPrice = saleForm.getMaxPrice();
+        float maxPrice = saleForm.getMaxPrice();
         int minBeds = saleForm.getMinBeds();
         County[] counties = saleForm.getCounties();
 
