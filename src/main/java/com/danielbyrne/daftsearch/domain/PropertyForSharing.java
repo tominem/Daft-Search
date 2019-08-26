@@ -16,6 +16,7 @@ public class PropertyForSharing extends Property {
     private boolean hasSingle;
     private boolean hasDouble;
     private String malesOrFemales;
+    private boolean hasSharedRoom;
 
     public void setMalesOrFemales() {
 

@@ -287,6 +287,7 @@ public class Bootstrap implements CommandLineRunner {
 
         for (int i = 0; i < propertyOverview.size(); i++) {
             String str = propertyOverview.get(i).text().toLowerCase();
+            if (str.contains("shared")) propertyForSharing.setHasSharedRoom(true);
             if (str.contains("single")) propertyForSharing.setHasSingle(true);
             if (str.contains("double")) propertyForSharing.setHasDouble(true);
             if (str.contains("currently")) propertyForSharing.setCurrentOccupants(Integer.parseInt(str.substring(0,1)));
