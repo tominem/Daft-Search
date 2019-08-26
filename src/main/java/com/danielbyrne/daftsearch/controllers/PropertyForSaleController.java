@@ -48,7 +48,7 @@ public class PropertyForSaleController {
         String location = saleForm.getLocation();
         ModeOfTransport modeOfTransport = saleForm.getModeOfTransport();
 
-        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByAttributes(maxPrice, minBeds, counties);
+        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(maxPrice, minBeds, counties);
 
         Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties,
                                                                                     location,

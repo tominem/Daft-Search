@@ -9,7 +9,6 @@ import lombok.Setter;
 public class PropertyForSaleDTO {
 
     private String address;
-    private String eircode;
     private int beds;
     private int baths;
     private String propertyType;
@@ -22,6 +21,4 @@ public class PropertyForSaleDTO {
 
     private String readableDistance;
     private String readableDuration;
-
-    private String description;
 }

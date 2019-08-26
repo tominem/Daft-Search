@@ -11,6 +11,4 @@ public interface PropertyForSaleMapper {
     PropertyForSaleMapper INSTANCE = Mappers.getMapper(PropertyForSaleMapper.class);
 
     PropertyForSaleDTO propertyForSaleToPropertyForSaleDTO(PropertyForSale propertyForSale);
-
-    PropertyForSale propertyForSaleDTOtoPropertyForSale(PropertyForSaleDTO propertyForSaleDTO);
 }
