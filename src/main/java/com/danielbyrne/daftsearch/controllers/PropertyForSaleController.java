@@ -50,7 +50,7 @@ public class PropertyForSaleController {
 
         Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByAttributes(maxPrice, minBeds, counties);
 
-        Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesViaGoogle(filteredProperties,
+        Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties,
                                                                                     location,
                                                                                     modeOfTransport,
                                                                                     distance,

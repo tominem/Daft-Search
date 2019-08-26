@@ -14,7 +14,7 @@ public interface PropertyForSaleService {
 
     Set<PropertyForSaleDTO> filterPropertiesByAttributes(int maxPrice, int minBed, County[] counties);
 
-    Set<PropertyForSaleDTO> filterPropertiesViaGoogle(Set<PropertyForSaleDTO> preFilteredDTOs, String origin,
-                                                      ModeOfTransport modeOfTransport, int distance, int duration)
+    Set<PropertyForSaleDTO> filterPropertiesByGoogle(Set<PropertyForSaleDTO> preFilteredDTOs, String origin,
+                                                     ModeOfTransport modeOfTransport, int distance, int duration)
             throws InterruptedException, ApiException, IOException;
 }
