@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Lettings</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<!--/*@thymesVar id="saleForm" type="com.danielbyrne.daftsearch.domain.forms.SaleForm"*/-->
+<form th:action="@{/properties/sales/}" th:object="${saleForm}" method="get" style="padding: 20px">
+
+    <table>
+        <tr>
+            <td>Maximum Price (Monthly): </td>
+            <td><input type="text" th:field="*{maxPrice}"  /></td>
+            <td th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}">Price Error</td>
+        </tr>
+        <tr>
+            <td>Minimum Beds:</td>
+            <td><input type="text" th:field="*{minBeds}" placeholder=""/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Within Distance (km):</td>
+            <td><input type="text" th:field="*{distanceInKms}" placeholder=""></td>
+            <td> of <input type="text" th:field="*{location}" placeholder=""> OR </td>
+        </tr>
+        <tr>
+            <td>Within travel time (mins) </td> <td><input type="text" th:field="*{commuteInMinutes}" placeholder=""></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Mode of Transport: </td>
+            <td>
+                <select th:field="*{modeOfTransport}">
+                    <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.ModeOfTransport).values()}"
+                            th:value="${mode}"
+                            th:text="${mode.displayName}">
+                    </option>
+                </select>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+    <p>Select a maximum of 5 counties to search:</p>
+
+    <ul>
+        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
+        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
+            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
+            <label th:text="${#strings.capitalize(county)}"></label>
+        </li>
+    </ul>
+
+    <button type="submit" class="btn btn-default">Search</button>
+</form>
+
+</body>
+</html>
