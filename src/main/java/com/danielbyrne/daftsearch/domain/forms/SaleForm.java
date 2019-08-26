@@ -24,6 +24,7 @@ public class SaleForm {
     @NotNull
     private String location;
 
+    @NotNull
     @Size(min = 1, max = 5)
     private County[] counties;
 

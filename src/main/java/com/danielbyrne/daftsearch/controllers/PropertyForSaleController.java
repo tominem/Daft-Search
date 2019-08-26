@@ -16,10 +16,11 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Set;
 
-@RequestMapping("properties/sales")
+@RequestMapping(PropertyForSaleController.BASE_URL)
 @Controller
 public class PropertyForSaleController {
 
+    public final static String BASE_URL = "/properties/sales";
     private final PropertyForSaleService propertyForSaleService;
 
     public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {
