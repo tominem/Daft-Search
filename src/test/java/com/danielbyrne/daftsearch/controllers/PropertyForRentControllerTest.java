@@ -42,7 +42,7 @@ public class PropertyForRentControllerTest {
 
         given(propertyForRentService.getAllProperties()).willReturn(propertyForRentDTOS);
 
-        mockMvc.perform(get("/properties/lettings"))
+        mockMvc.perform(get(PropertyForRentController.BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("property/lettings"))
                 .andExpect(model().attributeExists("propertiesForRent"));
