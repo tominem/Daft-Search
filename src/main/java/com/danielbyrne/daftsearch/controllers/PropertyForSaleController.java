@@ -29,7 +29,7 @@ public class PropertyForSaleController {
 
     @GetMapping("/find")
     public String showForm(SaleForm saleForm) {
-        return "property/sales/searchform";
+        return BASE_URL + "/searchform";
     }
 
     @GetMapping
@@ -37,7 +37,7 @@ public class PropertyForSaleController {
             throws InterruptedException, ApiException, IOException {
 
         if (bindingResult.hasErrors()) {
-            return "property/sales/searchform";
+            return BASE_URL + "/searchform";
         }
 
         float maxPrice = saleForm.getMaxPrice();
