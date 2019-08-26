@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping(PropertyForRentController.BASE_URL)
 @Controller
 public class PropertyForRentController {
+
+    public static final String BASE_URL = "/lettings";
 
     private final PropertyForRentService propertyForRentService;
 
@@ -14,7 +17,7 @@ public class PropertyForRentController {
         this.propertyForRentService = propertyForRentService;
     }
 
-    @RequestMapping("properties/lettings")
+    @RequestMapping("/all")
     public String getAllProperties(Model model) {
         model.addAttribute("propertiesForRent", propertyForRentService.getAllProperties());
         return "property/lettings";

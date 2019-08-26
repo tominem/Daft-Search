@@ -249,6 +249,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setAddress(address);
         propertyForRent.setDescription(doc.getElementById("description").text());
         propertyForRent.setPrice(price);
+        propertyForRent.setMonthlyRent();
 
         propertyForRentRepository.save(propertyForRent);
     }

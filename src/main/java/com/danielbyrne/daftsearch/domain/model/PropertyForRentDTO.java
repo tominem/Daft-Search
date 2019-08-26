@@ -20,8 +20,8 @@ public class PropertyForRentDTO {
     private String readableDistance;
     private String readableDuration;
 
-    private String description;
-
     private String moveInDate;
     private String leaseLength;
+
+    private float monthlyRent;
 }

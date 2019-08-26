@@ -19,7 +19,7 @@ public abstract class Property {
     private int beds;
     private int baths;
     private String propertyType;
-    private int price;
+    private float price;
     private String priceString;
     private String link;
     private County county;
