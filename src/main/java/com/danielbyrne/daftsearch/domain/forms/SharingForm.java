@@ -14,9 +14,7 @@ import javax.validation.constraints.Size;
 public class SharingForm {
 
     @NotNull
-    private int minBeds;
-
-    @NotNull
+    @Min(1)
     private float maxPrice;
 
     @NotNull
@@ -36,8 +34,6 @@ public class SharingForm {
 
     private ModeOfTransport modeOfTransport;
     private boolean male;
-    private boolean ownerOccupied;
-    private int currentOccupants;
 
     private boolean hasSingle;
     private boolean hasDouble;

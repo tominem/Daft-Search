@@ -17,6 +17,7 @@ public class PropertyForSharing extends Property {
     private boolean hasDouble;
     private String malesOrFemales;
     private boolean hasSharedRoom;
+    private float monthlyRent;
 
     public void setMalesOrFemales() {
 
@@ -26,6 +27,14 @@ public class PropertyForSharing extends Property {
             malesOrFemales = "Females Only";
         } else {
             malesOrFemales = "Males or Females";
+        }
+    }
+
+    public void setMonthlyRent(){
+        if (this.getPriceString().toLowerCase().contains("week")){
+            setMonthlyRent((getPrice()*52)/12);
+        } {
+            setMonthlyRent(getPrice());
         }
     }
 }
