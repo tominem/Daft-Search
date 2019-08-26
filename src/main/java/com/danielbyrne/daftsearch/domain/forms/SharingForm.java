@@ -1,6 +1,7 @@
 package com.danielbyrne.daftsearch.domain.forms;
 
 import com.danielbyrne.daftsearch.domain.County;
+import com.danielbyrne.daftsearch.domain.ModeOfTransport;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +34,8 @@ public class SharingForm {
 
     private String roomType;
 
-    private boolean isMale;
+    private ModeOfTransport modeOfTransport;
+    private boolean male;
     private boolean ownerOccupied;
     private int currentOccupants;
 

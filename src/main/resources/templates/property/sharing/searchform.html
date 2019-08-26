@@ -18,16 +18,16 @@
 </head>
 <body>
 
-<!--/*@thymesVar id="saleForm" type="com.danielbyrne.daftsearch.domain.forms.SharingForm"*/-->
-<form th:action="@{/properties/sharing/}" th:object="${sharingForm}" method="get" style="padding: 20px">
+<!--/*@thymesVar id="sharingForm" type="com.danielbyrne.daftsearch.domain.forms.SharingForm"*/-->
+<form th:action="@{/sharing/}" th:object="${sharingForm}" method="get" style="padding: 20px">
 
     <table>
         <tr>
             <td>I am a: </td>
             <td>
-                <select th:field="*{isMale}">
-                    <option value="true">Male</option>
-                    <option value="false">Female</option>
+                <select th:field="*{male}">
+                    <option th:value="'true'">Male</option>
+                    <option th:value="'false'">Female</option>
                 </select>
             </td>
             <td></td>
