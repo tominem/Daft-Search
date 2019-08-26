@@ -30,4 +30,7 @@ public class PropertyForSharingDTO {
     private boolean hasDouble;
 
     private String malesOrFemales;
+
+    private Long distanceKm;
+    private Long durationMin;
 }

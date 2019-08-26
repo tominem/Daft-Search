@@ -23,11 +23,15 @@ public class PropertyForSharingServiceImplTest {
     @Mock
     PropertyForSharingRepository propertyForSharingRepository;
 
+    @Mock
+    GoogleMapServices googleMapServices;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         propertyForSharingService = new PropertyForSharingServiceImpl(PropertyForSharingMapper.INSTANCE,
-                propertyForSharingRepository);
+                propertyForSharingRepository,
+                googleMapServices);
     }
 
     @Test
