@@ -103,7 +103,8 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
                 index++;
                 sb.append(dto.getAddress() + " | ");
             } else {
-                distanceMatrix = getDistanceMatrix(origin, sb.toString().substring(0, sb.toString().lastIndexOf("|")-1), modeOfTransport);
+                String destStr = sb.toString().substring(0, sb.toString().lastIndexOf("|")-1);
+                distanceMatrix = getDistanceMatrix(origin, destStr, modeOfTransport);
 
                 // todo do more checks on this
                 int i, j;
