@@ -53,7 +53,15 @@ public class PropertyForSaleServiceImplTest {
 
         //then
         assertEquals(2, propertyForSaleDTOS.size());
+    }
 
+    @Test
+    public void filterPropertiesByDaftAttributes() {
+        //todo
+    }
 
+    @Test
+    public void filterPropertiesByGoogle() {
+        //todo
     }
 }
