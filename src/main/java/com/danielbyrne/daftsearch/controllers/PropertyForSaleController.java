@@ -1,7 +1,5 @@
 package com.danielbyrne.daftsearch.controllers;
 
-import com.danielbyrne.daftsearch.domain.County;
-import com.danielbyrne.daftsearch.domain.ModeOfTransport;
 import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
@@ -20,7 +18,7 @@ import java.util.Set;
 @Controller
 public class PropertyForSaleController {
 
-    public final static String BASE_URL = "/properties/sales";
+    public final static String BASE_URL = "/sales";
     private final PropertyForSaleService propertyForSaleService;
 
     public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {
@@ -40,22 +38,9 @@ public class PropertyForSaleController {
             return BASE_URL + "/searchform";
         }
 
-        float maxPrice = saleForm.getMaxPrice();
-        int minBeds = saleForm.getMinBeds();
-        County[] counties = saleForm.getCounties();
+        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(saleForm);
 
-        int distance = saleForm.getDistanceInKms();
-        int duration = saleForm.getCommuteInMinutes();
-        String location = saleForm.getLocation();
-        ModeOfTransport modeOfTransport = saleForm.getModeOfTransport();
-
-        Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(maxPrice, minBeds, counties);
-
-        Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties,
-                                                                                    location,
-                                                                                    modeOfTransport,
-                                                                                    distance,
-                                                                                    duration);
+        Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties, saleForm);
 
         model.addAttribute("propertiesforsale", result);
         return "property/sales";

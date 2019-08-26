@@ -43,7 +43,7 @@ public class PropertyForSharingControllerTest {
 
         given(propertyForSharingService.getAllProperties()).willReturn(propertyForSharingDTOS);
 
-        mockMvc.perform(get("/properties/sharing"))
+        mockMvc.perform(get(PropertyForSharingController.BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("property/sharing"))
                 .andExpect(model().attributeExists("propertiesToShare"));

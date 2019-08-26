@@ -73,6 +73,8 @@ public class PropertyForRentServiceImpl implements PropertyForRentService {
     private Set<PropertyForRentDTO> callGoogleApi(List<PropertyForRentDTO> properties, LettingForm lettingForm)
             throws InterruptedException, ApiException, IOException {
 
+        if (properties.size() == 0) return new HashSet<>();
+
         Set<PropertyForRentDTO> result = new HashSet<>();
         StringBuilder sb = new StringBuilder();
 

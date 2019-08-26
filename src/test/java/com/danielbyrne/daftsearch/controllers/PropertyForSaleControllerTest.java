@@ -1,7 +1,7 @@
 package com.danielbyrne.daftsearch.controllers;
 
 import com.danielbyrne.daftsearch.domain.County;
-import com.danielbyrne.daftsearch.domain.ModeOfTransport;
+import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class PropertyForSaleControllerTest {
     public void showForm() throws Exception {
         mockMvc.perform(get(PropertyForSaleController.BASE_URL + "/find"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("property/sales/searchform"));
+                .andExpect(view().name(PropertyForSaleController.BASE_URL + "/searchform"));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class PropertyForSaleControllerTest {
         Set<PropertyForSaleDTO> p2 = new HashSet<>(Arrays.asList(new PropertyForSaleDTO(),
                 new PropertyForSaleDTO()));
 
-        given(propertyForSaleService.filterPropertiesByDaftAttributes(200, 1, counties)).willReturn(p1);
-        given(propertyForSaleService.filterPropertiesByGoogle(p1, "", ModeOfTransport.DRIVING, 1, 1)).willReturn(p2);
+        given(propertyForSaleService.filterPropertiesByDaftAttributes(new SaleForm())).willReturn(p1);
+        given(propertyForSaleService.filterPropertiesByGoogle(p1, new SaleForm())).willReturn(p2);
 
         mockMvc.perform(get(PropertyForSaleController.BASE_URL + filterPropsUrlNoErrors))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class PropertyForSaleControllerTest {
 
         mockMvc.perform(get(PropertyForSaleController.BASE_URL + filterPropsUrlWithErrors))
                 .andExpect(status().isOk())
-                .andExpect(view().name("property/sales/searchform"));
+                .andExpect(view().name(PropertyForSaleController.BASE_URL + "/searchform"));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class PropertyForSaleControllerTest {
 
         given(propertyForSaleService.getAllProperties()).willReturn(propertyForSaleDTOS);
 
-        mockMvc.perform(get(propertyForSaleController.BASE_URL + "/all"))
+        mockMvc.perform(get(PropertyForSaleController.BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("property/sales"))
                 .andExpect(model().attributeExists("propertiesforsale"));

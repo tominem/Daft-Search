@@ -1,7 +1,6 @@
 package com.danielbyrne.daftsearch.services;
 
-import com.danielbyrne.daftsearch.domain.County;
-import com.danielbyrne.daftsearch.domain.ModeOfTransport;
+import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.domain.mappers.PropertyForSaleMapper;
 import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
 import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
@@ -40,12 +39,12 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
     }
 
     @Override
-    public Set<PropertyForSaleDTO> filterPropertiesByDaftAttributes(float maxPrice, int minBed, County[] counties) {
+    public Set<PropertyForSaleDTO> filterPropertiesByDaftAttributes(SaleForm saleForm) {
         return propertyForSaleRepository.findAll()
                 .stream()
-                .filter(p -> p.getPrice() <= maxPrice
-                        && p.getBeds() >= minBed
-                        && Arrays.asList(counties).contains(p.getCounty()))
+                .filter(p -> p.getPrice() <= saleForm.getMaxPrice()
+                        && p.getBeds() >= saleForm.getMinBeds()
+                        && Arrays.asList(saleForm.getCounties()).contains(p.getCounty()))
                 .map(p -> {
                     PropertyForSaleDTO dto = propertyForSaleMapper.propertyForSaleToPropertyForSaleDTO(p);
                     return dto;
@@ -54,8 +53,7 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
     }
 
     @Override
-    public Set<PropertyForSaleDTO> filterPropertiesByGoogle(Set<PropertyForSaleDTO> preFilteredDTOs, String origin,
-                                                            ModeOfTransport modeOfTransport, int distance, int duration)
+    public Set<PropertyForSaleDTO> filterPropertiesByGoogle(Set<PropertyForSaleDTO> preFilteredDTOs, SaleForm saleForm)
             throws InterruptedException, ApiException, IOException {
 
         List<PropertyForSaleDTO> propertiesToQuery = new ArrayList<>();
@@ -65,17 +63,16 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
             if (propertiesToQuery.size() <= 100){
                 propertiesToQuery.add(dto);
             } else {
-                postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, origin, modeOfTransport, distance, duration));
+                postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, saleForm));
                 propertiesToQuery = new ArrayList<>();
             }
         }
-        postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, origin, modeOfTransport, distance, duration));
+        postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, saleForm));
 
         return postFilteredDTOs;
     }
 
-    private Set<PropertyForSaleDTO> callGoogleApi(List<PropertyForSaleDTO> properties, String origin, ModeOfTransport mot,
-                                                  int distance, int duration)
+    private Set<PropertyForSaleDTO> callGoogleApi(List<PropertyForSaleDTO> properties, SaleForm saleForm)
             throws InterruptedException, ApiException, IOException {
 
         Set<PropertyForSaleDTO> result = new HashSet<>();
@@ -87,7 +84,7 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
 
         String destStr = sb.toString().substring(0, sb.toString().lastIndexOf("|")-1);
 
-        DistanceMatrix distanceMatrix = googleMapServices.getDistanceMatrix(origin, destStr, mot);
+        DistanceMatrix distanceMatrix = googleMapServices.getDistanceMatrix(saleForm.getLocation(), destStr, saleForm.getModeOfTransport());
 
         int i, j;
         for (i = 0; i < distanceMatrix.rows.length; i++){
@@ -102,8 +99,8 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
 
                 System.out.println(distanceMatrix.destinationAddresses[j] + " | " + tempProperty.getAddress() + " | " + tempProperty.getDistanceKm() + " | " + tempProperty.getDurationMin() );
 
-                if ((tempProperty.getDistanceKm() >= 0 && tempProperty.getDistanceKm() <= distance)
-                        || (tempProperty.getDurationMin() >= 0 && tempProperty.getDurationMin() <= duration)) {
+                if ((tempProperty.getDistanceKm() >= 0 && tempProperty.getDistanceKm() <= saleForm.getDistanceInKms())
+                        || (tempProperty.getDurationMin() >= 0 && tempProperty.getDurationMin() <= saleForm.getCommuteInMinutes())) {
                     result.add(tempProperty);
                 }
             }
