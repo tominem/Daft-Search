@@ -7,7 +7,6 @@ import com.danielbyrne.daftsearch.domain.PropertyForSharing;
 import com.danielbyrne.daftsearch.repositories.PropertyForRentRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository;
-import com.danielbyrne.daftsearch.services.GoogleMapServices;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,11 +21,9 @@ import java.util.Set;
 @Component
 public class Bootstrap implements CommandLineRunner {
 
-    private final String DESTINATION = "38 Rathgar Road, Dublin, Ireland";
     private PropertyForSaleRepository propertyForSaleRepository;
     private PropertyForRentRepository propertyForRentRepository;
     private PropertyForSharingRepository propertyForSharingRepository;
-    private GoogleMapServices googleMapServices;
     private County county;
 
     private final String BASE_URL = "https://www.daft.ie/";
@@ -35,11 +32,10 @@ public class Bootstrap implements CommandLineRunner {
     private String TO_SHARE = "/rooms-to-share/?offset=";
 
     public Bootstrap(PropertyForSaleRepository propertyForSaleRepository, PropertyForRentRepository propertyForRentRepository,
-                     PropertyForSharingRepository propertyForSharingRepository, GoogleMapServices googleMapServices) {
+                     PropertyForSharingRepository propertyForSharingRepository) {
         this.propertyForSaleRepository = propertyForSaleRepository;
         this.propertyForRentRepository = propertyForRentRepository;
         this.propertyForSharingRepository = propertyForSharingRepository;
-        this.googleMapServices = googleMapServices;
     }
 
     @Override
@@ -53,39 +49,6 @@ public class Bootstrap implements CommandLineRunner {
 //
 //        System.out.println("\nLoading Rentals...");
 //        loadRentals();
-
-//        DistanceMatrix distanceMatrix = googleMapServices.getDistanceMatrix("The Cottage, Brownstown Road, The Curragh, Kildare, Co. Kildare | \n" +
-//                        "No 5 The Courtyard, Carnew, Co. Wicklow | \n" +
-//                        "Raingree, Knockananna, Arklow, Tinahely, Co. Wicklow | \n" +
-//                        "33 Lower Main Street, Arklow, Co. Wicklow | \n" +
-//                        "28 Clos Na Croise, Ballivor, Co. Meath | \n" +
-//                        "Follinstown, Navan, Co. Meath | \n" +
-//                        "Follistown, Navan, Co. Meath | \n" +
-//                        "23 The Lawns, Loughbollard, Clane, Co. Kildare | \n" +
-//                        "No. 14 St Brigid's Terrace, Abbey Street, Co. Wicklow., Arklow, Co. Wicklow | \n" +
-//                        "14 St. Brigid's Terrace, Arklow, Co. Wicklow | \n" +
-//                        "The School Masters Cottage, Athboy, Co. Meath | \n" +
-//                        "Clonagrowney, Carnaross, Co. Meath | \n" +
-//                        "Chapel Hill, Baltinglass, Co. Wicklow | \n" +
-//                        "83, Coill Dubh, Co. Kildare | \n" +
-//                        "12 Copper Beech, Main Street, Duleek, Co. Meath | \n" +
-//                        "32 Croghan View, Coolgreany nr, Arklow, Co. Wicklow | \n" +
-//                        "66 Buttercup Park, Darndale, Dublin 17, North Dublin City | \n" +
-//                        "121 Grange Hall, Dunshaughlin, Co. Meath | \n" +
-//                        "9 Russell Court, Proudstown Road, Navan, Co. Meath | \n" +
-//                        "2 Beechgrove, Athboy, Co. Meath | \n" +
-//                        "364 Johnstown, Maganey, Athy, Co. Kildare | \n" +
-//                        "71 Church Hill, Dunlavin, Co. Wicklow | \n" +
-//                        "5 Powell Court, Newbridge, Co. Kildare | \n" +
-//                        "Davidstown, Donard, Co. Wicklow | \n" +
-//                        "1 Parkmore, Baltinglass, Co. Wicklow | \n", "Sandyford Business Centre",
-//                ModeOfTransport.DRIVING);
-//        String address = distanceMatrix.originAddresses[0];
-//        int l = distanceMatrix.rows.length;
-//
-//        DistanceMatrixElement matrixElement = distanceMatrix.rows[0].elements[0];
-//
-//        System.out.println();
     }
 
     private void loadSales() throws Exception {
@@ -228,21 +191,7 @@ public class Bootstrap implements CommandLineRunner {
 
         propertyForSale.setPrice(price);
 
-//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
-//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
-//
-//            if (distanceMatrixElement.distance != null) {
-//                propertyForSale.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-//                propertyForSale.setDuration(distanceMatrixElement.duration.inSeconds);
-//                propertyForSale.setReadableDistance(distanceMatrixElement.distance.humanReadable);
-//                propertyForSale.setReadableDuration(distanceMatrixElement.duration.humanReadable);
-//            }
-
         propertyForSaleRepository.save(propertyForSale);
-
-//            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
-//                System.out.println(property.toString());
-//            }
     }
 
     private void loadPropertyForRent(String link) throws IOException {
@@ -301,23 +250,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setDescription(doc.getElementById("description").text());
         propertyForRent.setPrice(price);
 
-        // todo move into separate method
-
-//            DistanceMatrix distanceMatrix = googleMapServices.getDrivingDistance(address, DESTINATION);
-//            DistanceMatrixElement distanceMatrixElement = distanceMatrix.rows[0].elements[0];
-//
-//            if (distanceMatrixElement.distance != null) {
-//                propertyForRent.setDistanceInMetres(distanceMatrixElement.distance.inMeters);
-//                propertyForRent.setDuration(distanceMatrixElement.duration.inSeconds);
-//                propertyForRent.setReadableDistance(distanceMatrixElement.distance.humanReadable);
-//                propertyForRent.setReadableDuration(distanceMatrixElement.duration.humanReadable);
-//            }
-
         propertyForRentRepository.save(propertyForRent);
-
-//            if (property.getDuration() != null && property.getDuration()/60 < 60 ) {
-//                System.out.println(property.toString());
-//            }
     }
 
     private void loadPropertyForSharing(String link) throws IOException {
