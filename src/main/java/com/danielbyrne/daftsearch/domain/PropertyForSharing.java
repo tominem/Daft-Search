@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @Document
-public class PropertyForSharing extends Property {
+public class PropertyForSharing extends PropertyForRent {
 
     private boolean malesOnly;
     private boolean femalesOnly;
@@ -17,7 +17,6 @@ public class PropertyForSharing extends Property {
     private boolean hasDouble;
     private String malesOrFemales;
     private boolean hasSharedRoom;
-    private float monthlyRent;
 
     public void setMalesOrFemales() {
 
@@ -27,14 +26,6 @@ public class PropertyForSharing extends Property {
             malesOrFemales = "Females Only";
         } else {
             malesOrFemales = "Males or Females";
-        }
-    }
-
-    public void setMonthlyRent(){
-        if (this.getPriceString().toLowerCase().contains("week")){
-            setMonthlyRent((getPrice()*52)/12);
-        } {
-            setMonthlyRent(getPrice());
         }
     }
 }

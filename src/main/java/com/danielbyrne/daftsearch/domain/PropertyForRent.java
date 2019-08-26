@@ -14,10 +14,7 @@ public class PropertyForRent extends Property {
     private float monthlyRent;
 
     public void setMonthlyRent(){
-        if (this.getPriceString().toLowerCase().contains("week")){
-            setMonthlyRent((getPrice()*52)/12);
-        } {
-            setMonthlyRent(getPrice());
-        }
+        boolean weekly = getPriceString().toLowerCase().contains("per week");
+        this.monthlyRent = weekly ? this.monthlyRent = (getPrice()*52)/12 : getPrice();
     }
 }
