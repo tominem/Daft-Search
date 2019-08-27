@@ -22,7 +22,7 @@ import java.util.Set;
 public class PropertyForSaleController {
 
     public final static String BASE_URL = "/sales";
-    public final static String SEARCH_FORM = "property/sales/searchform";
+    private final static String SEARCH_FORM = "property/sales/searchform";
     private final PropertyForSaleService propertyForSaleService;
 
     public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {
@@ -42,9 +42,8 @@ public class PropertyForSaleController {
             bindingResult.getAllErrors().forEach(objectError -> {
             log.debug(objectError.toString());
             });
-
-        return SEARCH_FORM;
-    }
+            return SEARCH_FORM;
+        }
 
         Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(saleForm);
 

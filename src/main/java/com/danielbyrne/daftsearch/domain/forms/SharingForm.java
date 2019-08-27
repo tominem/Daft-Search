@@ -9,6 +9,7 @@ public class SharingForm extends LettingForm {
 
     private String roomType;
     private boolean male;
+
     private boolean hasSingle;
     private boolean hasDouble;
     private boolean hasShared;
