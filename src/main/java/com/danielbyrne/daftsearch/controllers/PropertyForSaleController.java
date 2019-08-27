@@ -4,21 +4,25 @@ import com.danielbyrne.daftsearch.domain.forms.SaleForm;
 import com.danielbyrne.daftsearch.domain.model.PropertyForSaleDTO;
 import com.danielbyrne.daftsearch.services.PropertyForSaleService;
 import com.google.maps.errors.ApiException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Set;
 
+@Slf4j
 @RequestMapping(PropertyForSaleController.BASE_URL)
 @Controller
 public class PropertyForSaleController {
 
     public final static String BASE_URL = "/sales";
+    public final static String SEARCH_FORM = "property/sales/searchform";
     private final PropertyForSaleService propertyForSaleService;
 
     public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {
@@ -27,16 +31,20 @@ public class PropertyForSaleController {
 
     @GetMapping("/find")
     public String showForm(SaleForm saleForm) {
-        return BASE_URL + "/searchform";
+        return SEARCH_FORM;
     }
 
     @GetMapping
-    public String processSearchForm(@Valid SaleForm saleForm, BindingResult bindingResult, Model model)
+    public String processSearchForm(@Valid @ModelAttribute("saleForm") SaleForm saleForm, BindingResult bindingResult, Model model)
             throws InterruptedException, ApiException, IOException {
 
         if (bindingResult.hasErrors()) {
-            return BASE_URL + "/searchform";
-        }
+            bindingResult.getAllErrors().forEach(objectError -> {
+            log.debug(objectError.toString());
+            });
+
+        return SEARCH_FORM;
+    }
 
         Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(saleForm);
 

@@ -5,8 +5,7 @@ import com.danielbyrne.daftsearch.domain.ModeOfTransport;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -15,19 +14,22 @@ public class SaleForm {
     @NotNull
     private int minBeds;
 
-    @NotNull(message = "Testing")
+    @NotNull
     private float maxPrice;
 
-    @NotNull
+    @PositiveOrZero
     private int distanceInKms;
 
-    @NotNull
+    @NotBlank
     private String location;
 
     @NotNull
     @Size(min = 1, max = 5)
     private County[] counties;
 
+    @Min(0)
     private int commuteInMinutes;
+
+    @NotNull
     private ModeOfTransport modeOfTransport;
 }
