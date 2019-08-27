@@ -224,20 +224,23 @@ public class Bootstrap implements CommandLineRunner {
 
         String address = doc.getElementsByClass("smi-object-header").select("h1").text();
 
-//            String leaseAndAvailString = doc.getElementsByClass("description_block")
-//                                                    .get(1)
-//                                                    .getAllElements()
-//                                                    .first()
-//                                                    .text();
+        Element leaseAndAvailability = doc.getElementsByClass("description_block").get(1);
+
+        String lease = null;
+        String availability = null;
+        if (leaseAndAvailability != null) {
+            String str = leaseAndAvailability.text();
+
+            lease = str.substring(str.indexOf(" Lease: ")).replace(" Lease: ", "");
+            availability = str.substring(0, str.indexOf(" Lease: ")).replace("Available to Move In: ", "");
+        }
 
         PropertyForRent propertyForRent = new PropertyForRent();
 
+        propertyForRent.setLeaseLength(lease);
+        propertyForRent.setMoveInDate(availability);
         propertyForRent.setCounty(county);
 
-        //todo bit of a pain to parse, need to focus more time on it
-
-//            propertyForRent.setLeaseLength(leaseAndAvailString.substring(leaseAndAvailString.indexOf("Lease: ") + "Lease: ".length()));
-//            propertyForRent.setMoveInDate(leaseAndAvailString.substring(22, leaseAndAvailString.indexOf(" Lease: ")));
         propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
         propertyForRent.setBeds(beds);
         propertyForRent.setBaths(baths);
@@ -283,7 +286,22 @@ public class Bootstrap implements CommandLineRunner {
 
         Elements propertyOverview = doc.getElementById("overview").select("li");
 
+        Element leaseAndAvailability = doc.getElementsByClass("description_block").get(1);
+
+        String lease = null;
+        String availability = null;
+        if (leaseAndAvailability != null) {
+            String str = leaseAndAvailability.text();
+
+            lease = str.substring(str.indexOf(" Available for: ")).replace(" Available for: ", "");
+            availability = str.substring(0, str.indexOf(" Available for: ")).replace("Available to Move In: ", "");
+        }
+
+
         PropertyForSharing propertyForSharing = new PropertyForSharing();
+
+        propertyForSharing.setLeaseLength(lease);
+        propertyForSharing.setMoveInDate(availability);
 
         for (int i = 0; i < propertyOverview.size(); i++) {
             String str = propertyOverview.get(i).text().toLowerCase();

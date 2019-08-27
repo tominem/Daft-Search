@@ -32,15 +32,16 @@ public class PropertyForSaleController {
     @GetMapping("/find")
     public String showForm(SaleForm saleForm) {
         return SEARCH_FORM;
-    }
+}
 
     @GetMapping
-    public String processSearchForm(@Valid @ModelAttribute("saleForm") SaleForm saleForm, BindingResult bindingResult, Model model)
+    public String processSearchForm(@Valid @ModelAttribute("saleForm") SaleForm saleForm, BindingResult bindingResult,
+                                    Model model)
             throws InterruptedException, ApiException, IOException {
 
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(objectError -> {
-            log.debug(objectError.toString());
+                log.debug(objectError.toString());
             });
             return SEARCH_FORM;
         }
