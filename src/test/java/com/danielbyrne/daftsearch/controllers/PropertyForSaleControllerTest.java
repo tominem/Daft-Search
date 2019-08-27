@@ -65,21 +65,14 @@ public class PropertyForSaleControllerTest {
                 .andExpect(model().attributeExists("propertiesforsale"));
 
         verify(propertyForSaleService, times(1)).filterPropertiesByDaftAttributes(any());
-        verify(propertyForSaleService, times(1)).filterPropertiesByDaftAttributes(any());
+        verify(propertyForSaleService, times(1)).filterPropertiesByGoogle(any(), any());
     }
 
     @Test
     public void processSearchFormWithBindingErrors() throws Exception {
 
         mockMvc.perform(get(PropertyForSaleController.BASE_URL)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("maxPrice", "1")
-                .param("minBeds", "1")
-                .param("distanceInKms", "50")
-                .param("commuteInMinutes", "50")
-                .param("modeOfTransport", "DRIVING")
-                .param("counties", "dublin")
-                .param("location", "my address"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("property/sales/searchform"))
                 .andExpect(model().attributeExists("saleForm"));
