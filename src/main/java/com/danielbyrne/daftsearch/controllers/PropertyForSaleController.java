@@ -22,7 +22,7 @@ import java.util.Set;
 public class PropertyForSaleController {
 
     public final static String BASE_URL = "/sales";
-    public final static String SEARCH_FORM = "property/sales/searchform";
+    public final static String SEARCH_FORM = "property/sales/searchform_v2";
     private final PropertyForSaleService propertyForSaleService;
 
     public PropertyForSaleController(PropertyForSaleService propertyForSaleService) {

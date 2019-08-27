@@ -16,137 +16,116 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
-
 <!--/*@thymesVar id="saleForm" type="com.danielbyrne.daftsearch.domain.forms.SaleForm"*/-->
-<form th:action="@{/sales/}" th:object="${saleForm}" method="get" style="padding: 20px">
-
-    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-        <p>Please Correct Errors Below</p>
-    </div>
-
+<div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <div class="col-md-3 form-group" th:class="${#fields.hasErrors('maxPrice')}
+        <div class="col-md-6 col-md-offset-3">
+            <form th:object="${saleForm}" th:action="@{/sales/}" method="GET">
+
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please Correct Errors Below</p>
+                </div>
+                <!-- <input type="hidden" th:field="*{id}"/> -->
+                <div class="pannel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Search Properties For Sale</h1>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('maxPrice')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
-            <label>Max Price:</label>
-            <input type="text" class="form-control" th:field="*{maxPrice}" th:errorclass="has-error"/>
-            <span class="help-block" th:if="${#fields.hasErrors('maxPrice')}">
+                                    <label>Max Price:</label>
+                                    <input type="text" class="form-control" th:field="*{maxPrice}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('maxPrice')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('maxPrice')}" th:text="${err}"/>
                                         </ul>
                                     </span>
-        </div>
+                                </div>
 
-        <div class="row">
-            <div class="col-md-3 form-group" th:class="${#fields.hasErrors('minBeds')}
-                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
-                <label>Minimum Beds:</label>
-                <input type="text" class="form-control" th:field="*{minBeds}" th:errorclass="has-error"/>
-                <span class="help-block" th:if="${#fields.hasErrors('minBeds')}">
-                                        <ul>
-                                            <li th:each="err : ${#fields.errors('minBeds')}" th:text="${err}"/>
-                                        </ul>
-                                    </span>
-            </div>
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('minBeds')}
+                                       ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>Min Beds:</label>
+                                    <input type="text" class="form-control" th:field="*{minBeds}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('minBeds')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('minBeds')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
+                            </div>
 
-            <b></b>
-            <div class="row">
-                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('distanceInKms')}
-                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
-                    <label>Within Distance:</label>
-                    <input type="text" class="form-control" th:field="*{distanceInKms}" th:errorclass="has-error"/>
-                    <span class="help-block" th:if="${#fields.hasErrors('distanceInKms')}">
-                                        <ul>
-                                            <li th:each="err : ${#fields.errors('distanceInKms')}" th:text="${err}"/>
-                                        </ul>
-                                    </span>
-                </div>
+                            <div class="row">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('distanceInKms')}
+                                       ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>Distance From:</label>
+                                    <input type="text" placeholder="kilometres" class="form-control" th:field="*{distanceInKms}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('distanceInKms')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('distanceInKms')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-3 form-group" th:class="${#fields.hasErrors('location')}
-                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
-                        <label>Of</label>
-                        <input type="text" class="form-control" th:field="*{location}" th:errorclass="has-error"/>
-                        <span class="help-block" th:if="${#fields.hasErrors('location')}">
-                                        <ul>
-                                            <li th:each="err : ${#fields.errors('location')}" th:text="${err}"/>
-                                        </ul>
-                                    </span>
-                    </div>
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('commuteInMinutes')}
+                                       ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>or Travel Time:</label>
+                                    <input type="text" placeholder="minutes" class="form-control" th:field="*{commuteInMinutes}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('commuteInMinutes')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('commuteInMinutes')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
 
+                                <div class="col-md-6 form-group" th:class="${#fields.hasErrors('location')}
+                                       ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
+                                    <label>of location:</label>
+                                    <input type="text" class="form-control" th:field="*{location}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('location')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('location')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
 
+                            </div>
 
-
-                    <table>
-
-                        <!--        <div class="row">-->
-                        <!--            <tr>-->
-                        <!--                <td>Maximum Price:</td>-->
-                        <!--                <td><input type="text" class="form-control" th:field="*{maxPrice}" th:errorclass="has-error"/></td>-->
-                        <!--                <td></td>-->
-                        <!--                <span class="help-block" th:if="${#fields.hasErrors('maxPrice')}">-->
-                        <!--                    <ul>-->
-                        <!--                        <li th:each="err : ${#fields.errors('maxPrice')}" th:text="${err}"/>-->
-                        <!--                    </ul>-->
-                        <!--                </span>-->
-                        <!--            </tr>-->
-                        <!--        </div>-->
-                        <!--        <div class="row">-->
-                        <!--            <tr>-->
-                        <!--                <td>Minimum Beds:</td>-->
-                        <!--                <td><input type="text" class="form-control" th:field="*{minBeds}" placeholder=""/></td>-->
-                        <!--                <td th:if="${#fields.hasErrors('minBeds')}" th:errors="*{minBeds}"></td>-->
-
-                        <!--            </tr>-->
-                        <!--        </div>-->
-
-                        <!--        <div class="row">-->
-                        <!--            <tr>-->
-                        <!--                <td>Within Distance (km):</td>-->
-                        <!--                <td><input type="text" class="form-control" th:field="*{distanceInKms}" th:errorclass="has-error"></td>-->
-                        <!--                <td> of <input type="text" class="form-control" th:field="*{location}" placeholder=""> OR</td>-->
-                        <!--                <span class="help-block" th:if="${#fields.hasErrors('maxPrice')}">-->
-                        <!--                    <ul>-->
-                        <!--                        <li th:each="err : ${#fields.errors('distanceInKms')}" th:text="${err}"/>-->
-                        <!--                    </ul>-->
-                        <!--                </span>-->
-                        <!--            </tr>-->
-                        <!--        </div>-->
-                        <div class="row">
-                            <tr>
-                                <td>Within travel time (mins)</td>
-                                <td><input type="text" class="form-control" th:field="*{commuteInMinutes}" placeholder=""></td>
-                                <td></td>
-                            </tr>
-                        </div>
-                        <div class="row">
-                            <tr>
-                                <td>Mode of Transport:</td>
-                                <td>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Transport:</label>
                                     <select class="form-control" th:field="*{modeOfTransport}">
                                         <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.ModeOfTransport).values()}"
                                                 th:value="${mode}"
                                                 th:text="${mode.displayName}">
                                         </option>
                                     </select>
-                                </td>
-                                <td></td>
-                            </tr>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label>Select up to 5 counties:</label>
+                                    <ul>
+                                        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
+                                        <li class="form-control" th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
+                                            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
+                                            <label th:text="${#strings.capitalize(county)}"></label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </table>
-
-                    <p>Select a maximum of 5 counties to search:</p>
-
-                    <ul>
-                        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
-                        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
-                            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
-                            <label th:text="${#strings.capitalize(county)}"></label>
-                        </li>
-                    </ul>
-
-                    <button type="submit" class="btn btn-default">Search</button>
-</form>
-
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
