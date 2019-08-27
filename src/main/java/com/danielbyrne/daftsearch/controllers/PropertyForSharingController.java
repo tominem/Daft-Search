@@ -21,7 +21,7 @@ import java.util.Set;
 public class PropertyForSharingController {
 
     public static final String BASE_URL = "/sharing";
-    private static final String SEARCH_FORM = "property/sharing/searchform_v2";
+    private static final String SEARCH_FORM = "property/sharing/searchform";
 
     private final PropertyForSharingService propertyForSharingService;
 

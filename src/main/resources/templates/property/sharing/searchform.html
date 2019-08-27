@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Search House Shares</title>
+    <title>Search Properties For Let</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,85 +16,141 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
-
 <!--/*@thymesVar id="sharingForm" type="com.danielbyrne.daftsearch.domain.forms.SharingForm"*/-->
-<form th:action="@{/sharing/}" th:object="${sharingForm}" method="get" style="padding: 20px">
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form th:object="${sharingForm}" th:action="@{/sharing/}" method="GET">
 
-    <table>
-        <tr>
-            <td>I am a: </td>
-            <td>
-                <select th:field="*{male}">
-                    <option th:value="'true'">Male</option>
-                    <option th:value="'false'">Female</option>
-                </select>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Monthly Budget: </td>
-            <td><input type="text" th:field="*{maxPrice}"  /></td>
-            <td th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}">Price Error</td>
-        </tr>
-        <tr>
-            <td>Room Type:</td>
-            <td>
-                <select th:field="*{roomType}">
-                    <option value="double">Double</option>
-                    <option value="single">Single</option>
-                    <option value="shared">Shared</option>
-                    <option value="non-shared">Any Non-Shared Room</option>
-                    <option value="any">No Preference</option>
-                </select>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Within Distance (km):</td>
-            <td><input type="text" th:field="*{distanceInKms}" placeholder=""></td>
-            <td> of <input type="text" th:field="*{location}" placeholder=""> OR </td>
-        </tr>
-        <tr>
-            <td>Within travel time (mins) </td> <td><input type="text" th:field="*{commuteInMinutes}" placeholder=""></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Mode of Transport: </td>
-            <td>
-                <select th:field="*{modeOfTransport}">
-                    <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.ModeOfTransport).values()}"
-                            th:value="${mode}"
-                            th:text="${mode.displayName}">
-                    </option>
-                </select>
-            </td>
-            <td></td>
-        </tr>
-<!--        <tr>-->
-<!--            <td>Owner Occupied: </td>-->
-<!--            <td>-->
-<!--                <select th:field="*{ownerOccupied}">-->
-<!--                    <option th:value="false">No</option>-->
-<!--                    <option th:value="true">Yes</option>-->
-<!--                    <tr-->
-<!--                </select>-->
-<!--            </td>-->
-<!--        </tr>-->
-    </table>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please Correct Errors Below</p>
+                </div>
+                <!-- <input type="hidden" th:field="*{id}"/> -->
+                <div class="pannel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Search Properties For Let</h1>
+                        </div>
+                        <div class="panel-body">
 
-    <p>Select a maximum of 5 counties to search:</p>
+<!--                        This is to prevent validation error.
+                            minBeds is not used in the logic to filter shared properties-->
+                            <div class="hidden">
+                                <input type="text" th:value="1" th:field="*{minBeds}"/>
+                            </div>
 
-    <ul>
-        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
-        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
-            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
-            <label th:text="${#strings.capitalize(county)}"></label>
-        </li>
-    </ul>
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label>I am a:</label>
+                                    <select class="form-control" th:field="*{male}">
+                                        <option th:value="'true'">Male</option>
+                                        <option th:value="'false'">Female</option>
+                                    </select>
+                                </div>
 
-    <button type="submit" class="btn btn-default">Search</button>
-</form>
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('maxPrice')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>Monthly Budget:</label>
+                                    <input type="text" class="form-control" th:field="*{maxPrice}"
+                                           th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('maxPrice')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('maxPrice')}" th:text="${err}"/>
+                                        </ul>
+                                    </span>
+                                </div>
 
+                                <div class="col-md-3 form-group">
+                                    <label>Room Type:</label>
+                                    <select class="form-control" th:field="*{roomType}">
+                                        <option value="double">Double</option>
+                                        <option value="single">Single</option>
+                                        <option value="shared">Shared</option>
+                                        <option value="non-shared">Any Non-Shared Room</option>
+                                        <option value="any">No Preference</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('distanceInKms')}
+                                       ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>Distance From</label>
+                                    <input type="text" placeholder="kilometres" class="form-control"
+                                           th:field="*{distanceInKms}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('distanceInKms')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('distanceInKms')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
+
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('commuteInMinutes')}
+                                       ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
+                                    <label>or Travel Time to</label>
+                                    <input type="text" placeholder="minutes" class="form-control"
+                                           th:field="*{commuteInMinutes}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('commuteInMinutes')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('commuteInMinutes')}"
+                                                 th:text="${err}">
+                                             </li>
+                                          </ul>
+                                       </span>
+                                </div>
+
+                                <div class="col-md-6 form-group" th:class="${#fields.hasErrors('location')}
+                                       ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
+                                    <label>Location</label>
+                                    <input type="text" class="form-control" th:field="*{location}"
+                                           th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('location')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('location')}" th:text="${err}"></li>
+                                          </ul>
+                                       </span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Transport:</label>
+                                    <select class="form-control" th:field="*{modeOfTransport}">
+                                        <option th:each="mode : ${T(com.danielbyrne.daftsearch.domain.ModeOfTransport).values()}"
+                                                th:value="${mode}"
+                                                th:text="${mode.displayName}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label>Select up to 5 counties:</label>
+                                    <ul style="overflow:scroll; height: 300px; width: 400px;">
+                                        <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
+                                        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
+                                            <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
+                                            <label th:text="${#strings.capitalize(county)}"></label>
+                                        </li>
+                                    </ul>
+                                    <span class="help-block" th:if="${#fields.hasErrors('counties')}">
+                                          <ul>
+                                             <li th:each="err : ${#fields.errors('counties')}" th:text="${err}"/>
+                                          </ul>
+                                       </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
