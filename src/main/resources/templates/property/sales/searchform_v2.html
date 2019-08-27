@@ -110,9 +110,9 @@
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <label>Select up to 5 counties:</label>
-                                    <ul>
+                                    <ul style="overflow:scroll; height: 300px">
                                         <!--/*@thymesVar id="values" type="com.danielbyrne.daftsearch.domain.County"*/-->
-                                        <li class="form-control" th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
+                                        <li th:each="county : ${T(com.danielbyrne.daftsearch.domain.County).values()}">
                                             <input type="checkbox" th:field="*{counties}" th:value="${county}"/>
                                             <label th:text="${#strings.capitalize(county)}"></label>
                                         </li>
