@@ -12,13 +12,13 @@ import javax.validation.constraints.*;
 public class SaleForm {
 
     @NotNull
-    private int minBeds;
+    private Integer minBeds;
 
     @NotNull
-    private float maxPrice;
+    private Float maxPrice;
 
     @PositiveOrZero
-    private int distanceInKms;
+    private Integer distanceInKms;
 
     @NotBlank
     private String location;
@@ -28,7 +28,7 @@ public class SaleForm {
     private County[] counties;
 
     @Min(0)
-    private int commuteInMinutes;
+    private Integer commuteInMinutes;
 
     @NotNull
     private ModeOfTransport modeOfTransport;
