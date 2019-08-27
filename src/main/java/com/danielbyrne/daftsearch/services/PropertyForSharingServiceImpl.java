@@ -65,7 +65,7 @@ public class PropertyForSharingServiceImpl implements PropertyForSharingService 
         Set<PropertyForSharingDTO> postFilteredDTOs = new HashSet<>();
 
         for (PropertyForSharingDTO dto : preFilteredProps){
-            if (propertiesToQuery.size() <= 100) {
+            if (propertiesToQuery.size() < 100) {
                 propertiesToQuery.add(dto);
             } else {
                 postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, sharingForm));

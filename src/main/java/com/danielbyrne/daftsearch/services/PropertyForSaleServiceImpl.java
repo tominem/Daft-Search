@@ -60,7 +60,7 @@ public class PropertyForSaleServiceImpl implements PropertyForSaleService {
         Set<PropertyForSaleDTO> postFilteredDTOs = new HashSet<>();
 
         for(PropertyForSaleDTO dto : preFilteredDTOs) {
-            if (propertiesToQuery.size() <= 100){
+            if (propertiesToQuery.size() < 100){
                 propertiesToQuery.add(dto);
             } else {
                 postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, saleForm));

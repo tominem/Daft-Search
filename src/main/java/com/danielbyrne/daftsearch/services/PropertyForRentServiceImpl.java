@@ -58,7 +58,7 @@ public class PropertyForRentServiceImpl implements PropertyForRentService {
         Set<PropertyForRentDTO> postFilteredDTOs = new HashSet<>();
 
         for (PropertyForRentDTO dto : preFilteredProps){
-            if (propertiesToQuery.size() <= 100) {
+            if (propertiesToQuery.size() < 100) {
                 propertiesToQuery.add(dto);
             } else {
                 postFilteredDTOs.addAll(callGoogleApi(propertiesToQuery, lettingForm));
