@@ -40,8 +40,11 @@ public class PropertyForSaleController {
 
         Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(saleForm);
 
+        if (filteredProperties.size()==0) return "property/noresults";
+
         Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties, saleForm);
 
+        if (result.size()==0) return "property/noresults";
         model.addAttribute("propertiesforsale", result);
         return "property/sales";
     }

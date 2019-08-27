@@ -38,7 +38,10 @@ public class PropertyForRentController {
         if (bindingResult.hasErrors()) return BASE_URL + "/find";
 
         Set<PropertyForRentDTO> filteredProperties = propertyForRentService.filterPropertiesByDaftAttributes(lettingForm);
+        if (filteredProperties.size()==0) return "property/noresults";
+
         Set<PropertyForRentDTO> result = propertyForRentService.filterPropertiesByGoogle(filteredProperties, lettingForm);
+        if (result.size()==0) return "property/noresults";
 
         model.addAttribute("propertiesForRent", result);
 

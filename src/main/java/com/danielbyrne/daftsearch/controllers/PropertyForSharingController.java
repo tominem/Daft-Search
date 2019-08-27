@@ -33,12 +33,18 @@ public class PropertyForSharingController {
     @GetMapping
     public String processSearchForm(@Valid SharingForm sharingForm, BindingResult bindingResult, Model model) throws InterruptedException, ApiException, IOException {
 
-        if (bindingResult.hasErrors()) return BASE_URL + "/searchform";
+        if (bindingResult.hasErrors()) return BASE_URL + "property/sharing/searchform";
 
         sharingForm.setRoomPreferences();
 
         Set<PropertyForSharingDTO> filteredProperties = propertyForSharingService.filterPropertiesByDaftAttributes(sharingForm);
+
+        if(filteredProperties.size() == 0) return "property/noresults";
+
         Set<PropertyForSharingDTO> result = propertyForSharingService.filterPropertiesByGoogle(filteredProperties, sharingForm);
+
+        if (result.size()==0) return "property/noresults";
+
         model.addAttribute("propertiesToShare", result);
         return "property/sharing";
     }
