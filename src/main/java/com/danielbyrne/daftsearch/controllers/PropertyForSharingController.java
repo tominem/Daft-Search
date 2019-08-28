@@ -43,9 +43,7 @@ public class PropertyForSharingController {
     public String processSearchForm(@Valid SharingForm sharingForm, BindingResult bindingResult, Model model) throws InterruptedException, ApiException, IOException {
 
         if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.debug(objectError.toString());
-            });
+            bindingResult.getAllErrors().forEach(objectError -> log.debug(objectError.toString()));
             return SEARCH_FORM;
         }
 
