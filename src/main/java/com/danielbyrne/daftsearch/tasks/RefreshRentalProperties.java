@@ -150,7 +150,4 @@ public class RefreshRentalProperties {
     private String checkIfElementIsNull(Element e) {
         return e == null ? "" : e.text();
     }
-
-
-
 }

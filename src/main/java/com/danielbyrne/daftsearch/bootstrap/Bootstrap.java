@@ -16,6 +16,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -180,6 +181,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSale.setEircode(checkIfElementIsNull(eircode).replace("Eircode: ", ""));
         propertyForSale.setBeds(beds == null ? 0 : Integer.parseInt(beds.text().replaceAll("[^0-9.]", "")));
         propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
+        propertyForSale.setLocalDateTime(LocalDateTime.now());
 
         if (developmentDescription != null) {
             propertyForSale.setDescription(developmentDescription.text());
@@ -257,6 +259,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForRent.setDescription(doc.getElementById("description").text());
         propertyForRent.setPrice(price);
         propertyForRent.setMonthlyRent();
+        propertyForRent.setLocalDateTime(LocalDateTime.now());
 
         propertyForRentRepository.save(propertyForRent);
     }
@@ -328,6 +331,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSharing.setDescription(doc.getElementById("description").text());
         propertyForSharing.setPrice(price);
         propertyForSharing.setMalesOrFemales();
+        propertyForSharing.setLocalDateTime(LocalDateTime.now());
 
         propertyForSharingRepository.save(propertyForSharing);
     }

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RefreshSharedProperties {
 
-    PropertyForSharingRepository propertyForSharingRepository;
+    private final PropertyForSharingRepository propertyForSharingRepository;
 
     private County county;
     private final String BASE_URL = "https://www.daft.ie/";
