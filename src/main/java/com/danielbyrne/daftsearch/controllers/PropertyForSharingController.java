@@ -31,6 +31,10 @@ public class PropertyForSharingController {
 
     @GetMapping("/find")
     public String showForm(SharingForm sharingForm) {
+        // setting minBeds as it will fail NotNull validation otherwise,
+        // this field is not used to filter shared properties so won't have any knock on effect
+        sharingForm.setMinBeds(1);
+
         log.debug("Showing search form");
         return SEARCH_FORM;
     }
