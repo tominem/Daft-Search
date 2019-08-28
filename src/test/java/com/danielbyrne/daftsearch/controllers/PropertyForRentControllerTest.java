@@ -24,14 +24,13 @@ public class PropertyForRentControllerTest {
 
     @Mock
     PropertyForRentService propertyForRentService;
-    private PropertyForRentController propertyForRentController;
 
     private MockMvc mockMvc;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        propertyForRentController = new PropertyForRentController(propertyForRentService);
+        PropertyForRentController propertyForRentController = new PropertyForRentController(propertyForRentService);
         mockMvc = MockMvcBuilders.standaloneSetup(propertyForRentController).build();
     }
 
