@@ -3,7 +3,6 @@ package com.danielbyrne.daftsearch.tasks;
 import com.danielbyrne.daftsearch.domain.County;
 import com.danielbyrne.daftsearch.domain.PropertyForRent;
 import com.danielbyrne.daftsearch.repositories.PropertyForRentRepository;
-import com.danielbyrne.daftsearch.services.PropertyForRentService;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,21 +12,23 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
 public class RefreshRentalProperties {
 
-    PropertyForRentService propertyForRentService;
-    PropertyForRentRepository propertyForRentRepository;
+    private final PropertyForRentRepository propertyForRentRepository;
+
     private County county;
     private final String TO_LET = "/residential-property-for-rent/?offset=";
     private List<Long> propertyIds = new ArrayList<>();
 
-    public RefreshRentalProperties(PropertyForRentService propertyForRentService) {
-        this.propertyForRentService = propertyForRentService;
+    public RefreshRentalProperties(PropertyForRentRepository propertyForRentRepository) {
+        this.propertyForRentRepository = propertyForRentRepository;
     }
 
     public void loadRentals() throws IOException {
@@ -51,8 +52,14 @@ public class RefreshRentalProperties {
 
                 if (propertyElements.size() == 0) propertiesExist = false;
 
+                Set<String> urls = new HashSet<>();
                 for (Element headline : propertyElements) {
-                    loadPropertyForRent(headline.absUrl("href"));
+                    String u = headline.absUrl("href");
+                    //want to ignore dupe links
+                    if (!urls.contains(u)){
+                        loadPropertyForRent(u);
+                        urls.add(u);
+                    }
                 }
                 offset += 20;
             }
@@ -63,11 +70,15 @@ public class RefreshRentalProperties {
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    private void loadPropertyForRent(String link) throws IOException {
+    private void loadPropertyForRent(String link) {
 
-        log.debug("Attempting to save property at the following: {}", link);
-
-        Document doc = Jsoup.connect(link).get();
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(link).get();
+        } catch (IOException e) {
+            log.error("Unable to get to {}. Error: {}", link, e.getMessage());
+            return;
+        }
 
         if (doc.getElementsByClass("warning").text().contains("This Property Has been" +
                 " either let or withdrawn from Daft.ie")) {
@@ -100,8 +111,12 @@ public class RefreshRentalProperties {
         if (leaseAndAvailability != null) {
             String str = leaseAndAvailability.text();
 
-            lease = str.substring(str.indexOf(" Lease: ")).replace(" Lease: ", "");
-            availability = str.substring(0, str.indexOf(" Lease: ")).replace("Available to Move In: ", "");
+            try {
+                lease = str.substring(str.indexOf(" Lease: ")).replace(" Lease: ", "");
+                availability = str.substring(0, str.indexOf(" Lease: ")).replace("Available to Move In: ", "");
+            } catch (StringIndexOutOfBoundsException e) {
+                log.error("Error parsing lease and availability information for property {}. Error {} ", link, e.getMessage());
+            }
         }
 
         PropertyForRent propertyForRent = new PropertyForRent();
@@ -126,8 +141,9 @@ public class RefreshRentalProperties {
         propertyForRent.setPrice(price);
         propertyForRent.setMonthlyRent();
 
-        log.debug("Save property to repository: {}", propertyForRent);
         propertyForRentRepository.save(propertyForRent);
+        log.debug("Saved Property: {}", propertyForRent);
+
     }
 
     private String checkIfElementIsNull(Element e) {
