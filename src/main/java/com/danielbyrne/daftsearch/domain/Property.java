@@ -33,7 +33,13 @@ public abstract class Property {
     @Lob
     private String description;
 
-    @Lob
-    private Byte[] image;
-
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Property{");
+        sb.append("id=").append(id);
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", link='").append(link).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
