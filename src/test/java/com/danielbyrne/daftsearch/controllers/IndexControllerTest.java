@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class IndexControllerTest {
 
-    MockMvc mockMvc;
-    IndexController indexController;
+    private MockMvc mockMvc;
+    private IndexController indexController;
 
     @Before
     public void setUp() {
