@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Slf4j
 @Component
-public class TaskScheduler {
+public class ScheduleTask {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
