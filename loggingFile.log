@@ -787,3 +787,165 @@ Caused by: com.mongodb.util.JSONParseException:
 2019-08-28 15:50:49.990  INFO 14804 --- [restartedMain] c.d.daftsearch.DemoApplication           : Started DemoApplication in 2.926 seconds (JVM running for 3.6)
 2019-08-28 15:50:50.024  INFO 14804 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1453}] to localhost:27017
 2019-08-28 15:50:50.031 DEBUG 14804 --- [restartedMain] c.d.daftsearch.bootstrap.Bootstrap       : 21
+2019-08-28 15:56:16.473  INFO 13300 --- [restartedMain] c.d.daftsearch.DemoApplication           : Starting DemoApplication on W10-AA-00897 with PID 13300 (C:\Users\daniel.byrne\Documents\Daft-Search\target\classes started by daniel.byrne in C:\Users\daniel.byrne\Documents\Daft-Search)
+2019-08-28 15:56:16.474 DEBUG 13300 --- [restartedMain] c.d.daftsearch.DemoApplication           : Running with Spring Boot v2.1.7.RELEASE, Spring v5.1.9.RELEASE
+2019-08-28 15:56:16.475  INFO 13300 --- [restartedMain] c.d.daftsearch.DemoApplication           : No active profile set, falling back to default profiles: default
+2019-08-28 15:56:16.506  INFO 13300 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-08-28 15:56:16.506  INFO 13300 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-08-28 15:56:17.021  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:56:17.021  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:56:17.048  INFO 13300 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForRentRepository.
+2019-08-28 15:56:17.050  INFO 13300 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository.
+2019-08-28 15:56:17.051  INFO 13300 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository.
+2019-08-28 15:56:17.052  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+2019-08-28 15:56:17.065  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:56:17.065  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:56:17.088  INFO 13300 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23ms. Found 3 repository interfaces.
+2019-08-28 15:56:17.311  INFO 13300 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7c3e4875] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-28 15:56:17.545  INFO 13300 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-08-28 15:56:17.565  INFO 13300 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-28 15:56:17.565  INFO 13300 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-28 15:56:17.695  INFO 13300 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-28 15:56:17.696  INFO 13300 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1190 ms
+2019-08-28 15:56:17.828  INFO 13300 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-28 15:56:17.949  INFO 13300 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-28 15:56:17.984  INFO 13300 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-08-28 15:56:18.021  INFO 13300 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.10.Final}
+2019-08-28 15:56:18.022  INFO 13300 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-08-28 15:56:18.094  INFO 13300 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-08-28 15:56:18.173  INFO 13300 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-08-28 15:56:18.282  INFO 13300 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@577a0d79'
+2019-08-28 15:56:18.284  INFO 13300 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-08-28 15:56:18.312  INFO 13300 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-08-28 15:56:18.575  INFO 13300 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-08-28 15:56:18.575  INFO 13300 --- [restartedMain] org.mongodb.driver.cluster               : Adding discovered server localhost:27017 to client view of cluster
+2019-08-28 15:56:18.607  INFO 13300 --- [cluster-ClusterId{value='5d669612c3e72133f40a243a', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1456}] to localhost:27017
+2019-08-28 15:56:18.610  INFO 13300 --- [cluster-ClusterId{value='5d669612c3e72133f40a243a', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 0]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1795600}
+2019-08-28 15:56:18.610  INFO 13300 --- [cluster-ClusterId{value='5d669612c3e72133f40a243a', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Discovered cluster type of STANDALONE
+2019-08-28 15:56:18.924  INFO 13300 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-28 15:56:18.945  WARN 13300 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-08-28 15:56:19.119  INFO 13300 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-28 15:56:19.121  INFO 13300 --- [restartedMain] c.d.daftsearch.DemoApplication           : Started DemoApplication in 2.875 seconds (JVM running for 3.372)
+2019-08-28 15:58:14.316  INFO 12232 --- [restartedMain] c.d.daftsearch.DemoApplication           : Starting DemoApplication on W10-AA-00897 with PID 12232 (C:\Users\daniel.byrne\Documents\Daft-Search\target\classes started by daniel.byrne in C:\Users\daniel.byrne\Documents\Daft-Search)
+2019-08-28 15:58:14.318 DEBUG 12232 --- [restartedMain] c.d.daftsearch.DemoApplication           : Running with Spring Boot v2.1.7.RELEASE, Spring v5.1.9.RELEASE
+2019-08-28 15:58:14.319  INFO 12232 --- [restartedMain] c.d.daftsearch.DemoApplication           : No active profile set, falling back to default profiles: default
+2019-08-28 15:58:14.356  INFO 12232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-08-28 15:58:14.356  INFO 12232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-08-28 15:58:15.031  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:58:15.031  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:58:15.066  INFO 12232 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForRentRepository.
+2019-08-28 15:58:15.069  INFO 12232 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository.
+2019-08-28 15:58:15.071  INFO 12232 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository.
+2019-08-28 15:58:15.072  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34ms. Found 0 repository interfaces.
+2019-08-28 15:58:15.090  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:58:15.091  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:58:15.120  INFO 12232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29ms. Found 3 repository interfaces.
+2019-08-28 15:58:15.396  INFO 12232 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$63825285] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-28 15:58:15.634  INFO 12232 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-08-28 15:58:15.650  INFO 12232 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-28 15:58:15.650  INFO 12232 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-28 15:58:15.746  INFO 12232 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-28 15:58:15.746  INFO 12232 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1390 ms
+2019-08-28 15:58:15.851  INFO 12232 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-28 15:58:15.979  INFO 12232 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-28 15:58:16.019  INFO 12232 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-08-28 15:58:16.063  INFO 12232 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.10.Final}
+2019-08-28 15:58:16.064  INFO 12232 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-08-28 15:58:16.158  INFO 12232 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-08-28 15:58:16.253  INFO 12232 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-08-28 15:58:16.387  INFO 12232 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@2dd78c42'
+2019-08-28 15:58:16.390  INFO 12232 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-08-28 15:58:16.419  INFO 12232 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-08-28 15:58:16.685  INFO 12232 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-08-28 15:58:16.685  INFO 12232 --- [restartedMain] org.mongodb.driver.cluster               : Adding discovered server localhost:27017 to client view of cluster
+2019-08-28 15:58:16.729  INFO 12232 --- [cluster-ClusterId{value='5d669688c3e7212fc82fbb36', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1457}] to localhost:27017
+2019-08-28 15:58:16.732  INFO 12232 --- [cluster-ClusterId{value='5d669688c3e7212fc82fbb36', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 0]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2072400}
+2019-08-28 15:58:16.733  INFO 12232 --- [cluster-ClusterId{value='5d669688c3e7212fc82fbb36', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Discovered cluster type of STANDALONE
+2019-08-28 15:58:17.128  INFO 12232 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-28 15:58:17.155  WARN 12232 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-08-28 15:58:40.587  INFO 14988 --- [restartedMain] c.d.daftsearch.DemoApplication           : Starting DemoApplication on W10-AA-00897 with PID 14988 (C:\Users\daniel.byrne\Documents\Daft-Search\target\classes started by daniel.byrne in C:\Users\daniel.byrne\Documents\Daft-Search)
+2019-08-28 15:58:40.589 DEBUG 14988 --- [restartedMain] c.d.daftsearch.DemoApplication           : Running with Spring Boot v2.1.7.RELEASE, Spring v5.1.9.RELEASE
+2019-08-28 15:58:40.589  INFO 14988 --- [restartedMain] c.d.daftsearch.DemoApplication           : No active profile set, falling back to default profiles: default
+2019-08-28 15:58:40.619  INFO 14988 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-08-28 15:58:40.620  INFO 14988 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-08-28 15:58:41.120  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:58:41.121  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:58:41.148  INFO 14988 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForRentRepository.
+2019-08-28 15:58:41.150  INFO 14988 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository.
+2019-08-28 15:58:41.151  INFO 14988 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository.
+2019-08-28 15:58:41.152  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+2019-08-28 15:58:41.165  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-28 15:58:41.165  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-28 15:58:41.188  INFO 14988 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22ms. Found 3 repository interfaces.
+2019-08-28 15:58:41.427  INFO 14988 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$3e991db0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-28 15:58:41.651  INFO 14988 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-08-28 15:58:41.665  INFO 14988 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-28 15:58:41.666  INFO 14988 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-28 15:58:41.760  INFO 14988 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-28 15:58:41.760  INFO 14988 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1140 ms
+2019-08-28 15:58:41.848  INFO 14988 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-28 15:58:41.964  INFO 14988 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-28 15:58:41.996  INFO 14988 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-08-28 15:58:42.030  INFO 14988 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.10.Final}
+2019-08-28 15:58:42.031  INFO 14988 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-08-28 15:58:42.101  INFO 14988 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-08-28 15:58:42.178  INFO 14988 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-08-28 15:58:42.291  INFO 14988 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@4b6af233'
+2019-08-28 15:58:42.293  INFO 14988 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-08-28 15:58:42.317  INFO 14988 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-08-28 15:58:42.570  INFO 14988 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-08-28 15:58:42.570  INFO 14988 --- [restartedMain] org.mongodb.driver.cluster               : Adding discovered server localhost:27017 to client view of cluster
+2019-08-28 15:58:42.601  INFO 14988 --- [cluster-ClusterId{value='5d6696a2c3e7213a8cb7bf78', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1458}] to localhost:27017
+2019-08-28 15:58:42.604  INFO 14988 --- [cluster-ClusterId{value='5d6696a2c3e7213a8cb7bf78', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 0]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1780300}
+2019-08-28 15:58:42.604  INFO 14988 --- [cluster-ClusterId{value='5d6696a2c3e7213a8cb7bf78', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Discovered cluster type of STANDALONE
+2019-08-28 15:58:42.940  INFO 14988 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-28 15:58:42.962  WARN 14988 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-08-28 15:58:43.092  INFO 14988 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2019-08-28 15:58:43.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:58:43
+2019-08-28 15:58:43.148  INFO 14988 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-28 15:58:43.150  INFO 14988 --- [restartedMain] c.d.daftsearch.DemoApplication           : Started DemoApplication in 2.785 seconds (JVM running for 3.283)
+2019-08-28 15:58:48.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:58:48
+2019-08-28 15:58:53.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:58:53
+2019-08-28 15:58:58.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:58:58
+2019-08-28 15:59:03.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:03
+2019-08-28 15:59:08.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:08
+2019-08-28 15:59:13.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:13
+2019-08-28 15:59:18.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:18
+2019-08-28 15:59:23.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:23
+2019-08-28 15:59:28.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:28
+2019-08-28 15:59:33.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:33
+2019-08-28 15:59:38.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:38
+2019-08-28 15:59:43.134  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:43
+2019-08-28 15:59:48.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:48
+2019-08-28 15:59:53.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:53
+2019-08-28 15:59:58.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 15:59:58
+2019-08-28 16:00:03.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:03
+2019-08-28 16:00:08.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:08
+2019-08-28 16:00:13.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:13
+2019-08-28 16:00:18.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:18
+2019-08-28 16:00:23.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:23
+2019-08-28 16:00:28.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:28
+2019-08-28 16:00:33.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:33
+2019-08-28 16:00:38.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:38
+2019-08-28 16:00:43.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:43
+2019-08-28 16:00:48.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:48
+2019-08-28 16:00:53.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:53
+2019-08-28 16:00:58.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:00:58
+2019-08-28 16:01:03.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:03
+2019-08-28 16:01:08.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:08
+2019-08-28 16:01:13.133  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:13
+2019-08-28 16:01:18.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:18
+2019-08-28 16:01:23.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:23
+2019-08-28 16:01:28.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:28
+2019-08-28 16:01:33.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:33
+2019-08-28 16:01:38.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:38
+2019-08-28 16:01:43.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:43
+2019-08-28 16:01:48.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:48
+2019-08-28 16:01:53.132  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:53
+2019-08-28 16:01:58.131  INFO 14988 --- [scheduling-1] c.d.daftsearch.tasks.ScheduledTasks      : The time is now 16:01:58
