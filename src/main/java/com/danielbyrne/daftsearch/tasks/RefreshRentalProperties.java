@@ -24,6 +24,7 @@ public class RefreshRentalProperties {
     private final PropertyForRentRepository propertyForRentRepository;
 
     private County county;
+    private final String BASE_URL = "https://www.daft.ie/";
     private final String TO_LET = "/residential-property-for-rent/?offset=";
     private List<Long> propertyIds = new ArrayList<>();
 
@@ -44,7 +45,7 @@ public class RefreshRentalProperties {
             boolean propertiesExist = true;
             while (propertiesExist) {
 
-                String url = "https://www.daft.ie/" + county + TO_LET + offset;
+                String url = BASE_URL + county + TO_LET + offset;
                 log.debug("Current URL: {}", url);
 
                 Document document = Jsoup.connect(url).get();

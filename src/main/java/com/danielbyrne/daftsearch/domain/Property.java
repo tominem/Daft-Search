@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,6 +24,7 @@ public abstract class Property {
     private String priceString;
     private String link;
     private County county;
+    private LocalDateTime localDateTime;
 
     private Long distanceInMetres;
     private Long duration;
