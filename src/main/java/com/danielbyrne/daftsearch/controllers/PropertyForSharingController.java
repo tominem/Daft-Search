@@ -31,7 +31,7 @@ public class PropertyForSharingController {
 
     @GetMapping("/find")
     public String showForm(SharingForm sharingForm) {
-        sharingForm.setMinBeds(1);
+        log.debug("Showing search form");
         return SEARCH_FORM;
     }
 
@@ -48,10 +48,13 @@ public class PropertyForSharingController {
         sharingForm.setRoomPreferences();
 
         Set<PropertyForSharingDTO> filteredProperties = propertyForSharingService.filterPropertiesByDaftAttributes(sharingForm);
+        log.debug("Received {} properties via daft attributes.", filteredProperties.size());
+
 
         if(filteredProperties.size() == 0) return "property/noresults";
 
         Set<PropertyForSharingDTO> result = propertyForSharingService.filterPropertiesByGoogle(filteredProperties, sharingForm);
+        log.debug("Received {} properties via Google.", result.size());
 
         if (result.size()==0) return "property/noresults";
 

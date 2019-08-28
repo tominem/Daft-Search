@@ -32,6 +32,7 @@ public class PropertyForRentController {
 
     @GetMapping("/find")
     public String showForm(LettingForm lettingForm) {
+        log.debug("Showing search form");
         return SEARCH_FORM;
     }
 
@@ -47,13 +48,16 @@ public class PropertyForRentController {
         }
 
         Set<PropertyForRentDTO> filteredProperties = propertyForRentService.filterPropertiesByDaftAttributes(lettingForm);
+        log.debug("Received {} properties via daft attributes.", filteredProperties.size());
+
         if (filteredProperties.size()==0) return "property/noresults";
 
         Set<PropertyForRentDTO> result = propertyForRentService.filterPropertiesByGoogle(filteredProperties, lettingForm);
+        log.debug("Received {} properties via Google.", result.size());
+
         if (result.size()==0) return "property/noresults";
 
         model.addAttribute("propertiesForRent", result);
-
         return "property/lettings";
     }
 

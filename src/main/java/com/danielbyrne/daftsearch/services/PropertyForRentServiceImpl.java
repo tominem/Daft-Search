@@ -40,7 +40,8 @@ public class PropertyForRentServiceImpl implements PropertyForRentService {
     public Set<PropertyForRentDTO> filterPropertiesByDaftAttributes(LettingForm lettingForm) {
         return propertyForRentRepository.findAll()
                 .stream()
-                .filter(p -> p.getMonthlyRent() <= lettingForm.getMaxPrice()
+                .filter(p ->
+                        p.getMonthlyRent() <= lettingForm.getMaxPrice()
                         && p.getBeds() >= lettingForm.getMinBeds()
                         && Arrays.asList(lettingForm.getCounties()).contains(p.getCounty()))
                 .map(p -> {

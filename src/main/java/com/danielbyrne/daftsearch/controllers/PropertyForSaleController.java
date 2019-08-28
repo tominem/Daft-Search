@@ -31,6 +31,7 @@ public class PropertyForSaleController {
 
     @GetMapping("/find")
     public String showForm(SaleForm saleForm) {
+        log.debug("Showing search form");
         return SEARCH_FORM;
 }
 
@@ -45,10 +46,12 @@ public class PropertyForSaleController {
         }
 
         Set<PropertyForSaleDTO> filteredProperties = propertyForSaleService.filterPropertiesByDaftAttributes(saleForm);
+        log.debug("Received {} properties via daft attributes.", filteredProperties.size());
 
         if (filteredProperties.size()==0) return "property/noresults";
 
         Set<PropertyForSaleDTO> result = propertyForSaleService.filterPropertiesByGoogle(filteredProperties, saleForm);
+        log.debug("Received {} properties via Google.", result.size());
 
         if (result.size()==0) return "property/noresults";
         model.addAttribute("propertiesforsale", result);
