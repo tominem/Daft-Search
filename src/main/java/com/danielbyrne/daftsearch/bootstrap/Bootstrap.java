@@ -7,6 +7,7 @@ import com.danielbyrne.daftsearch.domain.PropertyForSharing;
 import com.danielbyrne.daftsearch.repositories.PropertyForRentRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSaleRepository;
 import com.danielbyrne.daftsearch.repositories.PropertyForSharingRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 @Component
 public class Bootstrap implements CommandLineRunner {
 
@@ -41,28 +43,30 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        System.out.println("\nLoading Shared Properties...");
+//        log.debug("Starting import of SharedProperties");
 //        loadSharedProperties();
 //
-//        System.out.println("\nLoading Sales...");
+//        log.debug("Starting import of Sales");
 //        loadSales();
 //
-//        System.out.println("\nLoading Rentals...");
+//        log.debug("Starting import of Lettings");
 //        loadRentals();
     }
 
     private void loadSales() throws Exception {
 
-        for (County c : County.values()) {
+        for (County county : County.values()) {
 
-            this.county = c;
+            log.debug("Loading properties for sale in {}", county);
+
+            this.county = county;
 
             int offset = 0;
             boolean propertiesExist = true;
 
             while (propertiesExist) {
 
-                String startingUrl = BASE_URL + county + FOR_SALE + offset;
+                String startingUrl = BASE_URL + this.county + FOR_SALE + offset;
 
                 Document document = Jsoup.connect(startingUrl).get();
 
