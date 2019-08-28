@@ -24,9 +24,9 @@ public class PropertyForRentControllerTest {
 
     @Mock
     PropertyForRentService propertyForRentService;
-    PropertyForRentController propertyForRentController;
+    private PropertyForRentController propertyForRentController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
