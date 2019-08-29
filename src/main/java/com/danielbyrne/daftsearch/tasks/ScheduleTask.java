@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleTask {
 
-    RefreshRentalProperties refreshRentalProperties;
-    RefreshSharedProperties refreshSharedProperties;
-    RefreshPropertiesForSale refreshPropertiesForSale;
+    private RefreshRentalProperties refreshRentalProperties;
+    private RefreshSharedProperties refreshSharedProperties;
+    private RefreshPropertiesForSale refreshPropertiesForSale;
 
     public ScheduleTask(RefreshRentalProperties refreshRentalProperties,
                         RefreshSharedProperties refreshSharedProperties,
@@ -19,7 +19,7 @@ public class ScheduleTask {
         this.refreshPropertiesForSale = refreshPropertiesForSale;
     }
 
-    //    @Scheduled(initialDelay = 5000, fixedDelay = 86400000)
+//    @Scheduled(initialDelay = 5000, fixedDelay = 86400000)
 //    public void loadRentalProperties() throws IOException {
 //        log.info("Loading Rental Properties on Thread: {}", Thread.currentThread().getName());
 //        refreshRentalProperties.loadRentals();
