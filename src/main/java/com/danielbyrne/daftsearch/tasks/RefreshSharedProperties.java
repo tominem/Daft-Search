@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -137,6 +138,20 @@ public class RefreshSharedProperties {
 
         propertyForSharingRepository.save(propertyForSharing);
         log.debug("Saved Property: {}", propertyForSharing);
+    }
+
+
+    /**
+     * Runs after refresh task. Finds properties with an datetime < the
+     * time the refresh started. This are deemed to be no longer valid
+     */
+    public void removeOlderProperties(){
+
+        log.debug("Retrieving properties that have a datetime < start of refresh task");
+        List<PropertyForSharing> pList = propertyForSharingRepository.getPropertiesWithDateBefore(this.localDateTime);
+
+        if (pList!=null) propertyForSharingRepository.deleteAll(pList);
+        log.debug("{} properties deleted", pList.size());
     }
 
     private String checkIfElementIsNull(Element e) {

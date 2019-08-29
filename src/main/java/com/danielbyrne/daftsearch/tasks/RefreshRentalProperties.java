@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -59,7 +60,7 @@ public class RefreshRentalProperties {
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    public void loadPropertyForRent(String link, County county) {
+    private void loadPropertyForRent(String link, County county) {
 
         Document doc = null;
         try {
@@ -138,6 +139,21 @@ public class RefreshRentalProperties {
 
         propertyForRentRepository.save(pfr);
         log.debug("Saved Property: {}", pfr);
+    }
+
+    /**
+     * Runs after refresh task. Finds properties with an datetime < the
+     * time the refresh started. This are deemed to be no longer valid
+     */
+    public void removeOlderProperties(){
+
+        log.debug("Retrieving properties that have a datetime < start of refresh task");
+        List<PropertyForRent> pList = propertyForRentRepository.getPropertiesWithDateBefore(this.localDateTime);
+
+        log.debug("{} properties found", pList.size());
+
+        if (pList!=null) propertyForRentRepository.deleteAll(pList);
+        log.debug("{} properties deleted", pList.size());
     }
 
     private String checkIfElementIsNull(Element e) {
