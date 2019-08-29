@@ -98,8 +98,6 @@ public class PropertyForRentServiceImpl implements PropertyForRentService {
                 tempProperty.setDistanceKm(distanceMatrix.rows[i].elements[j].distance == null ? -1 : distanceMatrix.rows[i].elements[j].distance.inMeters/1000);
                 tempProperty.setDurationMin(distanceMatrix.rows[i].elements[j].duration == null ? -1 : distanceMatrix.rows[i].elements[j].duration.inSeconds/60);
 
-                System.out.println(distanceMatrix.destinationAddresses[j] + " | " + tempProperty.getAddress() + " | " + tempProperty.getDistanceKm() + " | " + tempProperty.getDurationMin() );
-
                 if ((tempProperty.getDistanceKm() >= 0 && tempProperty.getDistanceKm() <= lettingForm.getDistanceInKms())
                         || (tempProperty.getDurationMin() >= 0 && tempProperty.getDurationMin() <= lettingForm.getCommuteInMinutes())) {
                     result.add(tempProperty);
