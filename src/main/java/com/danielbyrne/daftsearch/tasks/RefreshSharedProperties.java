@@ -127,7 +127,6 @@ public class RefreshSharedProperties {
         propertyForSharing.setLink(link);
         propertyForSharing.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
         propertyForSharing.setAddress(address);
-        propertyForSharing.setDescription(doc.getElementById("description").text());
         propertyForSharing.setPrice(price);
         propertyForSharing.setMalesOrFemales();
         propertyForSharing.setMonthlyRent();

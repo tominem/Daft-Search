@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,8 +31,8 @@ public abstract class Property {
     private String readableDistance;
     private String readableDuration;
 
-    @Lob
-    private String description;
+//    @Lob
+//    private String description;
 
     @Override
     public String toString() {

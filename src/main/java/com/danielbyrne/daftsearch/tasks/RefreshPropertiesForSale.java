@@ -103,12 +103,7 @@ public class RefreshPropertiesForSale {
         pfs.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
         pfs.setLocalDateTime(LocalDateTime.now());
 
-        if (developmentDescription != null) {
-            pfs.setDescription(developmentDescription.text());
-            pfs.setPropertyType("New Development");
-        } else {
-            pfs.setDescription(checkIfElementIsNull(description));
-        }
+        if (developmentDescription != null) pfs.setPropertyType("New Development");
 
         if (pfs.getPropertyType().equals("New Development")
                 && !pfs.getPriceString().toLowerCase().equals("price on application")) {

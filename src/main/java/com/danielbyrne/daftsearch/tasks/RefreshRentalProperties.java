@@ -125,7 +125,6 @@ public class RefreshRentalProperties {
         pfr.setId(id);
 
         pfr.setAddress(address);
-        pfr.setDescription(doc.getElementById("description").text());
         pfr.setPrice(price);
         pfr.setMonthlyRent();
         pfr.setLocalDateTime(LocalDateTime.now());

@@ -183,12 +183,7 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSale.setBaths(baths == null ? 0 : Integer.parseInt(baths.text()));
         propertyForSale.setLocalDateTime(LocalDateTime.now());
 
-        if (developmentDescription != null) {
-            propertyForSale.setDescription(developmentDescription.text());
-            propertyForSale.setPropertyType("New Development");
-        } else {
-            propertyForSale.setDescription(checkIfElementIsNull(description));
-        }
+        if (developmentDescription != null) propertyForSale.setPropertyType("New Development");
 
         if (propertyForSale.getPropertyType().equals("New Development")
                 && !propertyForSale.getPriceString().toLowerCase().equals("price on application")) {
@@ -256,7 +251,6 @@ public class Bootstrap implements CommandLineRunner {
 
         propertyForRent.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
         propertyForRent.setAddress(address);
-        propertyForRent.setDescription(doc.getElementById("description").text());
         propertyForRent.setPrice(price);
         propertyForRent.setMonthlyRent();
         propertyForRent.setLocalDateTime(LocalDateTime.now());
@@ -328,7 +322,6 @@ public class Bootstrap implements CommandLineRunner {
         propertyForSharing.setLink(link);
         propertyForSharing.setId(Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", "")));
         propertyForSharing.setAddress(address);
-        propertyForSharing.setDescription(doc.getElementById("description").text());
         propertyForSharing.setPrice(price);
         propertyForSharing.setMalesOrFemales();
         propertyForSharing.setLocalDateTime(LocalDateTime.now());

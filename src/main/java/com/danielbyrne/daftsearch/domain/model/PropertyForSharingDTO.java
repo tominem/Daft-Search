@@ -20,8 +20,6 @@ public class PropertyForSharingDTO {
     private String readableDistance;
     private String readableDuration;
 
-    private String description;
-
     private boolean malesOnly;
     private boolean femalesOnly;
     private boolean ownerOccupied;
