@@ -11,9 +11,8 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -22,11 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class RefreshRentalProperties {
 
     private final PropertyForRentRepository propertyForRentRepository;
-
-    private County county;
-    private final String BASE_URL = "https://www.daft.ie/";
-    private final String TO_LET = "/residential-property-for-rent/?offset=";
-    private List<Long> propertyIds = new ArrayList<>();
+    private LocalDateTime localDateTime;
 
     public RefreshRentalProperties(PropertyForRentRepository propertyForRentRepository) {
         this.propertyForRentRepository = propertyForRentRepository;
@@ -34,44 +29,37 @@ public class RefreshRentalProperties {
 
     public void loadRentals() throws IOException {
 
+        localDateTime = LocalDateTime.now();
+
         log.debug("Loading Rental Properties");
         long time = System.currentTimeMillis();
 
         for (County county : County.values()) {
 
-            this.county = county;
-
-            int offset = 0;
-            boolean propertiesExist = true;
+            int offset = 0; boolean propertiesExist = true; Set<String> urls;
             while (propertiesExist) {
+                String sourceUrl = "https://www.daft.ie/" + county + "/residential-property-for-rent/?offset=" + offset;
+                log.debug("Current URL: {}", sourceUrl);
 
-                String url = BASE_URL + county + TO_LET + offset;
-                log.debug("Current URL: {}", url);
-
-                Document document = Jsoup.connect(url).get();
+                Document document = Jsoup.connect(sourceUrl).get();
                 Elements propertyElements = document.select("div.image a");
 
                 if (propertyElements.size() == 0) propertiesExist = false;
 
-                Set<String> urls = new HashSet<>();
-                for (Element headline : propertyElements) {
-                    String u = headline.absUrl("href");
-                    //want to ignore dupe links
-                    if (!urls.contains(u)){
-                        loadPropertyForRent(u);
-                        urls.add(u);
-                    }
+                urls = new HashSet<>(20);
+                for (Element pe : propertyElements) {
+                    String u = pe.absUrl("href");
+                    if (urls.add(u)) loadPropertyForRent(u, county);
                 }
-                offset += 20;
+                offset+=20;
             }
         }
-
         time = System.currentTimeMillis()-time;
         log.debug("Rental properties have been refreshed. " +
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    private void loadPropertyForRent(String link) {
+    private void loadPropertyForRent(String link, County county) {
 
         Document doc = null;
         try {
@@ -120,31 +108,30 @@ public class RefreshRentalProperties {
             }
         }
 
-        PropertyForRent propertyForRent = new PropertyForRent();
+        PropertyForRent pfr = new PropertyForRent();
 
-        propertyForRent.setLeaseLength(lease);
-        propertyForRent.setMoveInDate(availability);
-        propertyForRent.setCounty(county);
+        pfr.setLeaseLength(lease);
+        pfr.setMoveInDate(availability);
+        pfr.setCounty(county);
 
-        propertyForRent.setPropertyType(checkIfElementIsNull(propertyType));
-        propertyForRent.setBeds(beds);
-        propertyForRent.setBaths(baths);
+        pfr.setPropertyType(checkIfElementIsNull(propertyType));
+        pfr.setBeds(beds);
+        pfr.setBaths(baths);
 
-        propertyForRent.setPriceString(priceString);
-        propertyForRent.setLink(link);
+        pfr.setPriceString(priceString);
+        pfr.setLink(link);
 
         Long id = Long.valueOf(link.substring(link.lastIndexOf("-")+1).replaceAll("[^0-9.]", ""));
-        propertyForRent.setId(id);
-        propertyIds.add(id);
+        pfr.setId(id);
 
-        propertyForRent.setAddress(address);
-        propertyForRent.setDescription(doc.getElementById("description").text());
-        propertyForRent.setPrice(price);
-        propertyForRent.setMonthlyRent();
+        pfr.setAddress(address);
+        pfr.setDescription(doc.getElementById("description").text());
+        pfr.setPrice(price);
+        pfr.setMonthlyRent();
+        pfr.setLocalDateTime(LocalDateTime.now());
 
-        propertyForRentRepository.save(propertyForRent);
-        log.debug("Saved Property: {}", propertyForRent);
-
+        propertyForRentRepository.save(pfr);
+        log.debug("Saved Property: {}", pfr);
     }
 
     private String checkIfElementIsNull(Element e) {

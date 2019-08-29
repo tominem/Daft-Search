@@ -9,13 +9,17 @@ public class ScheduleTask {
 
     RefreshRentalProperties refreshRentalProperties;
     RefreshSharedProperties refreshSharedProperties;
+    RefreshPropertiesForSale refreshPropertiesForSale;
 
-    public ScheduleTask(RefreshRentalProperties refreshRentalProperties, RefreshSharedProperties refreshSharedProperties) {
+    public ScheduleTask(RefreshRentalProperties refreshRentalProperties,
+                        RefreshSharedProperties refreshSharedProperties,
+                        RefreshPropertiesForSale refreshPropertiesForSale) {
         this.refreshRentalProperties = refreshRentalProperties;
         this.refreshSharedProperties = refreshSharedProperties;
+        this.refreshPropertiesForSale = refreshPropertiesForSale;
     }
 
-//    @Scheduled(initialDelay = 5000, fixedDelay = 86400000)
+    //    @Scheduled(initialDelay = 5000, fixedDelay = 86400000)
 //    public void loadRentalProperties() throws IOException {
 //        log.info("Loading Rental Properties on Thread: {}", Thread.currentThread().getName());
 //        refreshRentalProperties.loadRentals();
@@ -25,5 +29,11 @@ public class ScheduleTask {
 //    public void loadSharedProperties() throws IOException {
 //        log.info("Loading Shared Properties on Thread: {}", Thread.currentThread().getName());
 //        refreshSharedProperties.loadSharedProperties();
+//    }
+//
+//    @Scheduled(initialDelay = 5000, fixedDelay = 86400000)
+//    public void loadSaleProperties() throws Exception {
+//        log.info("Loading Properties For Sale on Thread: {}", Thread.currentThread().getName());
+//        refreshPropertiesForSale.loadSales();
 //    }
 }

@@ -21,10 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class RefreshSharedProperties {
 
     private final PropertyForSharingRepository propertyForSharingRepository;
-
-    private County county;
-    private final String BASE_URL = "https://www.daft.ie/";
-    private final String TO_SHARE = "/rooms-to-share/?offset=";
     private LocalDateTime localDateTime;
 
     public RefreshSharedProperties(PropertyForSharingRepository propertyForSharingRepository) {
@@ -33,34 +29,28 @@ public class RefreshSharedProperties {
 
     public void loadSharedProperties() throws IOException {
 
-        log.debug("Loading Shared Properties");
         localDateTime = LocalDateTime.now();
 
+        log.debug("Loading Shared Properties");
         long time = System.currentTimeMillis();
 
         for (County county : County.values()) {
-            this.county = county;
 
-            int offset = 0;
-            boolean propertiesExist = true;
+            int offset = 0; boolean propertiesExist = true;
             while (propertiesExist) {
 
-                String url = BASE_URL + county + TO_SHARE + offset;
+                String url = "https://www.daft.ie/" + county + "/rooms-to-share/?offset=" + offset;
                 log.debug("Current URL: {}", url);
 
-                Document document = Jsoup.connect(url).get();
+                Document document = Jsoup.connect(url).get(); Set<String> urls;
                 Elements propertyElements = document.select("div.image a");
 
                 if (propertyElements.size() == 0) propertiesExist = false;
 
-                Set<String> urls = new HashSet<>();
+                urls = new HashSet<>(20);
                 for (Element headline : propertyElements) {
                     String u = headline.absUrl("href");
-                    //want to ignore dupe links
-                    if (!urls.contains(u)){
-                        loadPropertyForSharing(u);
-                        urls.add(u);
-                    }
+                    if (urls.add(u)) loadPropertyForSharing(u, county);
                 }
                 offset += 20;
             }
@@ -70,7 +60,7 @@ public class RefreshSharedProperties {
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    private void loadPropertyForSharing(String link) throws IOException {
+    private void loadPropertyForSharing(String link, County county) throws IOException {
 
         Document doc = Jsoup.connect(link).get();
 
