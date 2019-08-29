@@ -59,7 +59,7 @@ public class RefreshRentalProperties {
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    private void loadPropertyForRent(String link, County county) {
+    public void loadPropertyForRent(String link, County county) {
 
         Document doc = null;
         try {
@@ -93,16 +93,23 @@ public class RefreshRentalProperties {
 
         String address = doc.getElementsByClass("smi-object-header").select("h1").text();
 
-        Element leaseAndAvailability = doc.getElementsByClass("description_block").get(1);
+        Elements laa = doc.getElementsByClass("description_block");
+        Element leaseAndAvailability = laa.get(1).text().toLowerCase().substring(0, 9).equals("available") ? laa.get(1) : laa.get(0);
 
-        String lease = null;
-        String availability = null;
+        String lease = null, availability = null, str;
         if (leaseAndAvailability != null) {
-            String str = leaseAndAvailability.text();
+            str = leaseAndAvailability.text();
 
             try {
-                lease = str.substring(str.indexOf(" Lease: ")).replace(" Lease: ", "");
-                availability = str.substring(0, str.indexOf(" Lease: ")).replace("Available to Move In: ", "");
+                if (str.toLowerCase().contains("lease")) {
+                    lease = str.substring(str.indexOf(" Lease: ")).replace(" Lease: ", "");
+                    availability = str.substring(0, str.indexOf(" Lease: ")).replace("Available to Move In: ", "");
+                } else {
+                    lease = "Available for letting on a regular basis";
+                    availability = str.substring(0, str.indexOf(" Available for letting on a regular basis."))
+                                                        .replace("Available to rent from: ", "");
+                }
+
             } catch (StringIndexOutOfBoundsException e) {
                 log.error("Error parsing lease and availability information for property {}. Error {} ", link, e.getMessage());
             }

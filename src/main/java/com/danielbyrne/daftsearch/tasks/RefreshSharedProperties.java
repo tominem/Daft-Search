@@ -60,7 +60,7 @@ public class RefreshSharedProperties {
                 "Time taken: {} minutes.", TimeUnit.MILLISECONDS.toMinutes(time));
     }
 
-    private void loadPropertyForSharing(String link, County county) throws IOException {
+    public void loadPropertyForSharing(String link, County county) throws IOException {
 
         Document doc = Jsoup.connect(link).get();
 
@@ -96,8 +96,12 @@ public class RefreshSharedProperties {
             if (leaseAndAvailability != null) {
                 String str = leaseAndAvailability.text();
 
-                lease = str.substring(str.indexOf(" Available for: ")).replace(" Available for: ", "");
-                availability = str.substring(0, str.indexOf(" Available for: ")).replace("Available to Move In: ", "");
+                if (str.toLowerCase().contains("lease")) {
+                    lease = str.substring(str.indexOf(" Available for: ")).replace(" Available for: ", "");
+                    availability = str.substring(0, str.indexOf(" Available for: ")).replace("Available to Move In: ", "");
+                } else {
+                    availability = str.replace("Available to Move In: ", "");
+                }
             }
         } catch (StringIndexOutOfBoundsException e) {
             log.error("Error parsing lease and availability information for property {}. Error {} ", link, e.getMessage());
