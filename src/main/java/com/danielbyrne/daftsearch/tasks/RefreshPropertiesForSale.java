@@ -36,12 +36,11 @@ public class RefreshPropertiesForSale {
 
         for (County county : County.values()) {
 
-            log.debug("Loading properties for sale in {}", county);
-
             int offset = 0; boolean propertiesExist = true; Set<String> urls;
             while (propertiesExist) {
 
                 String startingUrl = "https://www.daft.ie/" + county + "/property-for-sale/?offset=" + offset;
+                log.debug("Current URL: {}", startingUrl);
 
                 Document document = Jsoup.connect(startingUrl).get();
 
@@ -64,8 +63,6 @@ public class RefreshPropertiesForSale {
     }
 
     private void loadPropertyForSale(String link, County county) throws Exception {
-
-        System.out.println("Creating Property From: " + link);
 
         Document doc = Jsoup.connect(link).get();
 
